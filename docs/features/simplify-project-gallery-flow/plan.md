@@ -100,13 +100,13 @@ Nine iterations, test-first, one commit per task (`feat(<scope>): …` / `refact
 - Exports (desktop and mobile each): `galeri-belum-ada-folder`, `galeri-ada-foto`, `galeri-kedaluwarsa`, `galeri-ditutup`, `dialog-kedaluwarsa-durasi`, `dialog-kedaluwarsa-tanggal-lewat`, `dialog-lepas-folder-terakhir`, `proyek-pascaproduksi`, `proyek-terkirim`; `kartu-galeri-board` (desktop).
 - Code to follow: `src/features/gallery/ui/gallery-page-screen/`, `gallery-actions/`, `gallery-state-alert/`, `gallery-card/`, `access-card/`, `delivery-card/`, `expiry-dialog/`, `expiry-fields/`, `delete-source-dialog/`, `complete-project-button/`.
 
-- [ ] **5.1** Copy: draft new/changed strings (card states P1–P7, *Ditutup*, Alerts, expiry presets and helper, last-folder dialog, *Tandai terkirim* and its confirm/hint, *Kirim link ke klien*) with Codex; Owner approves; update `copy-deck.md` and the `*.copy.ts` files.
-- [ ] **5.2** Gallery page and card states without status; *Kirim link ke klien* placeholders wired to the dialog from iteration 6 (render hidden until then).
-- [ ] **5.3** Expiry Select of presets with the resulting date; date error (AC-GFL-010, 011).
-- [ ] **5.4** *Hasil akhir* card without publish (`deliveryCardState` drops `GALLERY_INACTIVE` and `PUBLISHED` → `DELIVERED`); *Tandai terkirim* header step on `POST_PROCESSING` and menu item on `BOOKED`/`SHOOTING`, with confirm and disabled hint (AC-GFL-017).
-- [ ] **5.5** Delete `create-gallery-dialog`, `create-gallery-folder-fields`, `use-create-gallery-*`, `publish-refused-dialog`, the publish/archive/delete parts of `gallery-lifecycle`, `use-lifecycle-runner` parts, and their tests.
+- [x] **5.1** Copy: draft new/changed strings (card states P1–P7, *Ditutup*, Alerts, expiry presets and helper, last-folder dialog, *Tandai terkirim* and its confirm/hint, *Kirim link ke klien*) with Codex; Owner approves; update `copy-deck.md` and the `*.copy.ts` files.
+- [x] **5.2** Gallery page and card states without status; *Kirim link ke klien* placeholders wired to the dialog from iteration 6 (render hidden until then).
+- [x] **5.3** Expiry Select of presets with the resulting date; date error (AC-GFL-010, 011).
+- [x] **5.4** *Hasil akhir* card without publish (`deliveryCardState` drops `GALLERY_INACTIVE` and `PUBLISHED` → `DELIVERED`); *Tandai terkirim* header step on `POST_PROCESSING` and menu item on `BOOKED`/`SHOOTING`, with confirm and disabled hint (AC-GFL-017).
+- [x] **5.5** Delete `create-gallery-dialog`, `create-gallery-folder-fields`, `use-create-gallery-*`, `publish-refused-dialog`, the publish/archive/delete parts of `gallery-lifecycle`, `use-lifecycle-runner` parts, and their tests.
 - [ ] **5.6** Fidelity pass against the exports above, one file at a time.
-- [ ] Commits per component group.
+- [x] Commit: one feature commit for the group plus a docs commit (see the iteration 5 record for why the group is one commit).
 
 **Done when** component tests for the states pass, typecheck and lint are clean, and the pages match the exports.
 

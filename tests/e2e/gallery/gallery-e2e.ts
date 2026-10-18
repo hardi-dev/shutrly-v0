@@ -6,6 +6,7 @@ import { copyTranslator } from "@tests/support/copy/copy-messages";
 import { CATALOG_COPY } from "@/features/booking/ui/catalog-copy/catalog-copy.copy";
 import { CLIENT_COPY_NAMESPACE } from "@/features/booking/ui/client-copy/client-copy.copy";
 import { PROJECT_COPY_NAMESPACE } from "@/features/booking/ui/project-copy/project-copy.copy";
+import { GALLERY_COPY_NAMESPACE } from "@/features/gallery/ui/gallery-copy/gallery-copy.copy";
 import { ONBOARDING_COPY } from "@/features/workspace/ui/onboarding-screen/onboarding-screen.copy";
 
 import { registerAndVerify, uniqueEmail } from "../auth/auth-e2e";
@@ -13,6 +14,8 @@ import { registerAndVerify, uniqueEmail } from "../auth/auth-e2e";
 const pc = copyTranslator(PROJECT_COPY_NAMESPACE, "id");
 
 const clientT = copyTranslator(CLIENT_COPY_NAMESPACE, "id");
+
+const galleryCopy = copyTranslator(GALLERY_COPY_NAMESPACE, "id");
 
 const AXE_TAGS = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"];
 
@@ -125,4 +128,14 @@ export async function createProject(
   // this takes well over 30 s.
   await expect(page).toHaveURL(/\/projects\/[0-9a-f-]+\?state=/, { timeout: 90_000 });
   return new URL(page.url()).pathname;
+}
+
+/** Books a project for *Rina* (F-27 AC-GFL-001: the booking creates its gallery, no create step) and opens the gallery page. @returns the project page path */
+export async function bookGalleryPage(page: Page, workspaceId: string): Promise<string> {
+  const projectPath = await createProject(page, workspaceId, "BOOKED");
+  await page.goto(`${projectPath}/gallery`);
+  await expect(visibleText(page, galleryCopy("sourcesEmptyTitle"))).toBeVisible({
+    timeout: 30_000,
+  });
+  return projectPath;
 }

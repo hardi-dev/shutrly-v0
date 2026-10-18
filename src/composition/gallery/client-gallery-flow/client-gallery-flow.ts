@@ -52,7 +52,7 @@ export function loadClientHomeEntry(rawToken: string): Promise<ClientScopeResult
   return withSignedInClient(rawToken, (client, scope) => getClientHome(scope, client));
 }
 
-/** Loads *Hasil akhir*: the finished files by kind, or null before final delivery (BR-DEL-001/002, D-15). @param rawToken - the untrusted route token @returns the gate outcome with the files */
+/** Loads *Hasil akhir*: the finished files by kind, or null while none is synced (BR-DEL-002, AC-GFL-019, D-15). @param rawToken - the untrusted route token @returns the gate outcome with the files */
 export function loadClientDeliveryEntry(
   rawToken: string,
 ): Promise<ClientScopeResult<DeliveryFilesView | null>> {

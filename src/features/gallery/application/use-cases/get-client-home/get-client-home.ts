@@ -12,7 +12,8 @@ import type { ClientHomeDeps, ClientHomeView } from "./get-client-home.types";
 
 /**
  * Loads Beranda for a signed-in client: where to land, the greeting, photo counts and the
- * group cards with effective limits and usage (A-24, A-31, BR-SEL-002/007, AC-SEL-001).
+ * group cards with effective limits and usage (A-24, A-31, BR-SEL-002/007, AC-SEL-001). Finished
+ * files show as soon as they are synced (AC-GFL-019); the pick actions wait for a visible proof (AC-GFL-009).
  * @param deps - selection repository and the client browse reader
  * @param client - the signed-in client context
  * @returns the Beranda view
@@ -34,13 +35,17 @@ export async function getClientHome(
     usage: group.usage,
   }));
   const delivered = client.finalDeliveryPublished;
+  const hasFinishedFiles = totals.edited + totals.print > 0;
   return {
-    landing: clientLanding(groups.length, delivered),
+    landing: clientLanding(groups.length, hasFinishedFiles),
     greeting: homeGreeting(inputs, delivered),
     finalDeliveryPublished: delivered,
     proofCount: totals.proof,
-    editedCount: delivered ? totals.edited : 0,
-    printCount: delivered ? totals.print : 0,
-    groups: homeGroupCards(inputs).map((card, index) => ({ ...card, unit: groups[index].unit })),
+    editedCount: totals.edited,
+    printCount: totals.print,
+    groups: homeGroupCards(inputs, totals.proof > 0).map((card, index) => ({
+      ...card,
+      unit: groups[index].unit,
+    })),
   };
 }

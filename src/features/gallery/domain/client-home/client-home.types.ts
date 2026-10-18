@@ -15,6 +15,8 @@ export interface HomeGroupCard extends HomeGroupInput {
   readonly action: HomeGroupAction;
   /** The client's next task gets the primary button (beranda exports). */
   readonly isPrimary: boolean;
+  /** A pick action while no photo is visible (AC-GFL-009). */
+  readonly isDisabled: boolean;
   /** 0…1 for the usage bar. */
   readonly progress: number;
 }

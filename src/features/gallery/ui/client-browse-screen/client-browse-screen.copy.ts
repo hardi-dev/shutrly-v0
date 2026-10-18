@@ -48,10 +48,9 @@ export const CLIENT_BROWSE_COPY = {
       unavailableTitle: "Photos can’t be shown yet",
       // PROPOSED (pending Owner review)
       unavailableBody: "We couldn’t get the photos right now.",
-      // PROPOSED (pending Owner review)
       emptyTitle: "No photos yet",
-      // PROPOSED (pending Owner review)
-      emptyBody: "Your photographer hasn’t added photos here yet.",
+      // Owner-approved (F-27 copy draft, iteration 7).
+      emptyBody: "The photographer hasn’t added photos to this gallery yet. Try again later.",
       // PROPOSED (pending Owner review)
       searchEmptyTitle: "No photos “{text}”",
       // PROPOSED (pending Owner review)
@@ -118,7 +117,7 @@ export const CLIENT_BROWSE_COPY = {
       unavailableTitle: "Foto belum bisa ditampilkan",
       unavailableBody: "Kami tidak bisa mengambil foto saat ini.",
       emptyTitle: "Belum ada foto",
-      emptyBody: "Fotografer belum menambahkan foto di sini.",
+      emptyBody: "Fotografer belum menambahkan foto ke galeri ini. Coba lagi nanti.",
       searchEmptyTitle: "Tidak ada foto “{text}”",
       searchEmptyBody: "Coba nama file lain.",
       loadingMore: "Memuat foto lainnya…",

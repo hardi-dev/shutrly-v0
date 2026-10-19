@@ -87,7 +87,7 @@ export const GALLERY_COPY = {
       saveFailedBody: "Check your connection, then try again.",
       retry: "Try again",
       sourcesTitle: "Photo sources",
-      sourcesDescription: "Link publicly shared Drive folders, then sync to read their photos.",
+      sourcesDescription: "Google Drive folders shared as “Anyone with the link”.",
       sourcesEmptyTitle: "No folders yet",
       sourcesEmptyBody:
         "No folder yet. Add a Google Drive folder with this project’s photos; then you can send the gallery link to the client.",
@@ -98,7 +98,7 @@ export const GALLERY_COPY = {
       photosDescriptionEmpty: "Photos appear after syncing, ordered by filename.",
       photosDescriptionMobile: "Ordered by filename.",
       photosEmptyTitle: "No photos yet",
-      photosEmptyBody: "Photos appear here after the folder is synced.",
+      photosEmptyBody: "Photos appear after the Google Drive folder is linked and synced.",
       photosDescription:
         "The first 8 photos. View all to browse folders, search and preview photos.",
       viewAll: "View all photos",
@@ -397,7 +397,7 @@ export const GALLERY_COPY = {
       retry: "Coba lagi",
       sourcesTitle: "Sumber foto",
       sourcesDescription:
-        "Tautkan folder Drive yang dibagikan lewat tautan publik, lalu sinkronkan untuk membaca fotonya.",
+        "Folder Google Drive yang dibagikan sebagai “Siapa saja yang memiliki link”.",
       sourcesEmptyTitle: "Belum ada folder",
       sourcesEmptyBody:
         "Belum ada folder. Tambahkan folder Google Drive berisi foto proyek ini; setelah itu kamu bisa mengirim link galeri ke klien.",
@@ -408,7 +408,7 @@ export const GALLERY_COPY = {
       photosDescriptionEmpty: "Foto muncul setelah sinkronisasi, urut nama file.",
       photosDescriptionMobile: "Urut nama file.",
       photosEmptyTitle: "Belum ada foto",
-      photosEmptyBody: "Foto muncul di sini setelah folder disinkronkan.",
+      photosEmptyBody: "Foto muncul setelah folder Google Drive ditautkan dan disinkronkan.",
       photosDescription:
         "Cuplikan 8 foto pertama. Buka semua untuk menjelajah folder, mencari, dan melihat pratinjau.",
       viewAll: "Lihat semua foto",

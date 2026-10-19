@@ -1374,7 +1374,7 @@ The missing-count summary replaces word-based `.replace(" proof", …)` processi
 | Element / context | English | Bahasa Indonesia |
 |---|---|---|
 | Sources section | Photo sources | Sumber foto |
-| Sources description | Link publicly shared Drive folders, then sync to read their photos. | Tautkan folder Drive yang dibagikan lewat tautan publik, lalu sinkronkan untuk membaca fotonya. |
+| Sources description · Owner 2026-10-19, design wording | Google Drive folders shared as “Anyone with the link”. | Folder Google Drive yang dibagikan sebagai “Siapa saja yang memiliki link”. |
 | Empty title | No folders yet | Belum ada folder |
 | Empty body · Approved (Owner, 2026-10-12) | No folder yet. Add a Google Drive folder with this project’s photos; then you can send the gallery link to the client. | Belum ada folder. Tambahkan folder Google Drive berisi foto proyek ini; setelah itu kamu bisa mengirim link galeri ke klien. |
 | Empty body mobile | Link the project’s Google Drive folder. | Tautkan folder Google Drive proyek ini. |
@@ -1445,7 +1445,7 @@ A failed multi-step sync may have already saved earlier steps. These error messa
 | Empty description | Photos appear after syncing, ordered by filename. | Foto muncul setelah sinkronisasi, urut nama file. |
 | Mobile ordering note | Ordered by filename. | Urut nama file. |
 | Empty title | No photos yet | Belum ada foto |
-| Empty body | Photos appear here after the folder is synced. | Foto muncul di sini setelah folder disinkronkan. |
+| Empty body · Owner 2026-10-19, design wording | Photos appear after the Google Drive folder is linked and synced. | Foto muncul setelah folder Google Drive ditautkan dan disinkronkan. |
 | Preview description | The first 8 photos. View all to browse folders, search and preview photos. | Cuplikan 8 foto pertama. Buka semua untuk menjelajah folder, mencari, dan melihat pratinjau. |
 | Preview mobile description | A preview of the first photos. | Cuplikan foto pertama. |
 | View-all action | View all photos | Lihat semua foto |

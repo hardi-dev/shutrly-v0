@@ -91,7 +91,6 @@ export const GALLERY_COPY = {
       sourcesEmptyTitle: "No folders yet",
       sourcesEmptyBody:
         "No folder yet. Add a Google Drive folder with this project’s photos; then you can send the gallery link to the client.",
-      sourcesEmptyBodyMobile: "Link the project’s Google Drive folder.",
       addFolder: "Add folder",
       addFolderMobile: "Add",
       photosTitle: "Photos",
@@ -401,7 +400,6 @@ export const GALLERY_COPY = {
       sourcesEmptyTitle: "Belum ada folder",
       sourcesEmptyBody:
         "Belum ada folder. Tambahkan folder Google Drive berisi foto proyek ini; setelah itu kamu bisa mengirim link galeri ke klien.",
-      sourcesEmptyBodyMobile: "Tautkan folder Google Drive proyek ini.",
       addFolder: "Tambah folder",
       addFolderMobile: "Tambah",
       photosTitle: "Foto",

@@ -192,9 +192,10 @@ describe("GalleryCard share entry (AC-GFL-020)", () => {
     expect(screen.queryByRole("button", { name: "Kirim link ke klien" })).not.toBeInTheDocument();
   });
 
-  it("leaves the share to the gallery page on phones", () => {
+  it("shows the share as a full-width block under the facts on phones (design P4, P7)", () => {
     stubViewport(true);
     renderWithHost({ project: PROJECT, canCreate: false, gallery: GALLERY });
-    expect(screen.queryByRole("button", { name: "Kirim link ke klien" })).not.toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Kirim link ke klien" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Kelola" })).toBeInTheDocument();
   });
 });

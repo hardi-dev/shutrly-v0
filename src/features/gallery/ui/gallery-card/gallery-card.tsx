@@ -42,7 +42,7 @@ import type {
 } from "./gallery-card.types";
 import { GallerySummaryRows } from "./gallery-summary-rows";
 
-/** The project detail's Galeri card (design `kartu-galeri-board`, F-27 P1–P6): the booking hint, the no-folder prompt, or the gallery facts with the *Pilihan klien* and *Hasil akhir* rows (AC-GFL-004, 006, 007, 012, 016). The *Kirim link ke klien* button joins the card with the share dialog (iteration 6). @param props - workspace, the card view and the optional summaries @returns the card */
+/** The project detail's Galeri card (design `kartu-galeri-board`, F-27 P1–P6): the booking hint, the no-folder prompt, or the gallery facts with the *Pilihan klien* and *Hasil akhir* rows (AC-GFL-004, 006, 007, 012, 016). On phones the button is a full-width block under the facts (design P4, P7); on desktop it sits in the header. @param props - workspace, the card view and the optional summaries @returns the card */
 export function GalleryCard(props: Readonly<GalleryCardProps>) {
   const t = useTranslations(GALLERY_CARD_COPY_NAMESPACE);
   const summaryT = useTranslations(GALLERY_CARD_SUMMARY_NAMESPACE);
@@ -61,7 +61,6 @@ export function GalleryCard(props: Readonly<GalleryCardProps>) {
     return <NoFolder galleryHref={galleryHref} />;
   }
   const manageLabel = isMobile ? t("manageMobile") : t("manage");
-  const showShare = !isMobile && canShareCard(card);
   return (
     <SectionCard
       title={t("cardTitle")}
@@ -71,7 +70,7 @@ export function GalleryCard(props: Readonly<GalleryCardProps>) {
           <Button variant="secondary" iconLeading="arrow-right" onPress={handleManage}>
             {card.gallery.state === "CLOSED" ? t("view") : manageLabel}
           </Button>
-          {showShare ? <ShareButton projectId={card.project.id} /> : null}
+          {isMobile ? null : <DesktopShare card={card} />}
         </>
       }
     >
@@ -81,6 +80,7 @@ export function GalleryCard(props: Readonly<GalleryCardProps>) {
           rows={summaryRows(props, { summaryT, selectionT, deliveryT }, isMobile, locale)}
         />
       </div>
+      {isMobile ? <MobileShare card={card} /> : null}
       {card.gallery.failedSourceCount > 0 ? (
         <div className="px-(--space-4) pb-(--space-4) md:px-(--space-6) md:pb-(--space-6)">
           <Alert
@@ -104,6 +104,21 @@ function canShareCard(card: GalleryCardView): boolean {
   });
 }
 
+/** The header *Kirim link ke klien* on desktop, when BR-GAL-010 allows the share. @param props - the card view @returns the button, or null */
+function DesktopShare({ card }: Readonly<{ card: GalleryCardView }>) {
+  return canShareCard(card) ? <ShareButton projectId={card.project.id} /> : null;
+}
+
+/** The phone *Kirim link ke klien* block under the facts, full width (design P4, P7). @param props - the card view @returns the block, or null */
+function MobileShare({ card }: Readonly<{ card: GalleryCardView }>) {
+  if (!canShareCard(card)) return null;
+  return (
+    <div className="p-(--space-4)">
+      <ShareButton projectId={card.project.id} />
+    </div>
+  );
+}
+
 /** The desktop *Kirim link ke klien* on the Galeri card: it asks the app host to open the share dialog (AC-GFL-020). @param props - the project id @returns the primary button */
 function ShareButton({ projectId }: Readonly<{ projectId: string }>) {
   const t = useTranslations(GALLERY_CARD_COPY_NAMESPACE);
@@ -112,7 +127,7 @@ function ShareButton({ projectId }: Readonly<{ projectId: string }>) {
     gallery?.openShare(projectId);
   };
   return (
-    <Button variant="primary" iconLeading="send" onPress={handleShare}>
+    <Button variant="primary" iconLeading="send" className="w-full md:w-auto" onPress={handleShare}>
       {t("sendLink")}
     </Button>
   );

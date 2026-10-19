@@ -54,9 +54,13 @@ export function createDrizzleGalleryRepository(db: DbExecutor): GalleryRepositor
         return work(facts, createWriter(tx, context));
       }),
     async findCard(context, projectId) {
-      const facts = await selectProjectFacts(db, context, projectId, false);
+      // The facts and the summary are independent reads, so they run together (one round trip).
+      const [facts, summary] = await Promise.all([
+        selectProjectFacts(db, context, projectId, false),
+        selectSummary(db, context, projectId),
+      ]);
       if (!facts) return null;
-      return { project: facts, summary: await selectSummary(db, context, projectId) };
+      return { project: facts, summary };
     },
     async findPage(context, projectId) {
       const facts = await selectProjectFacts(db, context, projectId, false);

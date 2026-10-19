@@ -34,8 +34,11 @@ export async function getGalleryShare(
   ) {
     return { shareable: false };
   }
-  const token = await deps.links.findToken(context, projectId);
-  const recipient = await deps.recipients.findRecipient(context, projectId);
+  // Read only for a shareable gallery (AC-GFL-025); the two reads are independent, so they run together.
+  const [token, recipient] = await Promise.all([
+    deps.links.findToken(context, projectId),
+    deps.recipients.findRecipient(context, projectId),
+  ]);
   if (!token || !recipient) throw new GalleryError("NOT_FOUND");
   return {
     shareable: true,

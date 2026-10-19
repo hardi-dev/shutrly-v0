@@ -134,6 +134,7 @@ function addOnCardSlot(workspaceId: string, projectId: string, card: AddOnCardVi
   if (!card.canCreate && card.addOns.length === 0) return null;
   return (
     <AddOnCard
+      key="add-on-card"
       workspaceId={workspaceId}
       projectId={projectId}
       card={card}
@@ -149,6 +150,7 @@ function galleryCardSlot(
 ) {
   return (
     <GalleryCard
+      key="gallery-card"
       workspaceId={workspaceId}
       card={views.gallery}
       selection={views.selection}
@@ -183,6 +185,7 @@ function headerActionSlot(
   if (project.status === "DELIVERED") {
     return (
       <FinishProjectButton
+        key="finish-project"
         workspaceId={workspaceId}
         projectId={projectId}
         title={project.title}
@@ -203,6 +206,7 @@ function markDeliveredSlot(
   if (nextStep !== "MARK_DELIVERED") return null;
   return (
     <MarkDeliveredButton
+      key="mark-delivered"
       workspaceId={workspaceId}
       projectId={projectId}
       card={card}

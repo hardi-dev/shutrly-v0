@@ -1,6 +1,7 @@
 import "server-only";
 
 import { notFound } from "next/navigation";
+import { cache } from "react";
 
 import { createDrizzleDeliveryReader } from "@/adapters/db/gallery-repository/drizzle-delivery-reader";
 import { createDrizzleProjectRepository } from "@/adapters/db/project-repository/drizzle-project-repository";
@@ -26,7 +27,7 @@ function saveError(error: unknown, workspaceId: string, operation: string): neve
 }
 
 /** Loads the project page's *Hasil akhir* card (D-20, AC-DEL-001). @param rawWorkspaceId - untrusted workspace id @param rawProjectId - untrusted project id @returns the card view */
-export async function loadDeliveryCard(
+async function loadDeliveryCardUncached(
   rawWorkspaceId: string,
   rawProjectId: string,
 ): Promise<DeliveryCardView> {
@@ -44,6 +45,9 @@ export async function loadDeliveryCard(
     return saveError(error, verified.context.workspaceId, "delivery-card");
   }
 }
+
+/** The request-cached card, so the page heading and the page read it once. */
+export const loadDeliveryCard = cache(loadDeliveryCardUncached);
 
 /** *Publikasikan hasil akhir*: the gallery and the project move together, or neither (AC-DEL-001, -002). @param rawWorkspaceId - untrusted workspace id @param rawProjectId - untrusted project id @returns undefined, or the refusal with its reasons */
 export async function markDeliveredEntry(

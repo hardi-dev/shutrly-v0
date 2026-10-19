@@ -3,18 +3,23 @@ import userEvent from "@testing-library/user-event";
 import { copyMessages } from "@tests/support/copy/copy-messages";
 import { NextIntlClientProvider } from "next-intl";
 import { useState } from "react";
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
 const push = vi.hoisted(() => vi.fn());
+const route = vi.hoisted(() => ({ pathname: "/w/A/message-templates/gallery-share" }));
 
 vi.mock("next/navigation", () => ({
-  usePathname: () => "/w/A/message-templates/gallery-share",
+  usePathname: () => route.pathname,
   useRouter: () => ({ push }),
 }));
 
 const { MobileWorkspaceSheet, MobileWorkspaceSwitcherSheet, OwnerShell } =
   await import("./owner-shell");
-const { PageHeadingOverride } = await import("../page-heading-override/page-heading-override");
+const { OwnerPageHeading } = await import("../owner-page-heading/owner-page-heading");
+
+afterEach(() => {
+  route.pathname = "/w/A/message-templates/gallery-share";
+});
 
 const workspaces = [
   { id: "workspace-1", name: "Studio Lime", isCurrent: true },
@@ -148,12 +153,15 @@ describe("OwnerShell sub-pages", () => {
         workspaces={workspaces}
         onSwitch={vi.fn()}
         onCreate={vi.fn()}
+        pageHeading={
+          <OwnerPageHeading
+            title="Wisuda Basic"
+            subtitle="Paket foto wisuda."
+            parent={{ label: "Layanan", href: "/w/A/services" }}
+            backLabel="Kembali"
+          />
+        }
       >
-        <PageHeadingOverride
-          title="Wisuda Basic"
-          subtitle="Paket foto wisuda."
-          parent={{ label: "Layanan", href: "/w/A/services" }}
-        />
         <p>isi</p>
       </OwnerShell>,
     );
@@ -166,7 +174,10 @@ describe("OwnerShell sub-pages", () => {
         .getAllByRole("link", { name: "Layanan" })
         .find((link) => link.getAttribute("href") === "/w/A/services"),
     ).toHaveAttribute("href", "/w/A/services");
-    expect(screen.getByRole("link", { name: "Kembali" })).toHaveAttribute("href", "/w/A/services");
+    expect(screen.getAllByRole("link", { name: "Kembali" })[0]).toHaveAttribute(
+      "href",
+      "/w/A/services",
+    );
   });
 
   it("F-23 shows the trail it is given, not one built in the browser", () => {
@@ -181,11 +192,14 @@ describe("OwnerShell sub-pages", () => {
         onSwitch={vi.fn()}
         onCreate={vi.fn()}
         trail={<span>Aster Wedding › Template pesan › Bagikan gallery</span>}
+        pageHeading={
+          <OwnerPageHeading
+            title="Wisuda Basic"
+            parent={{ label: "Layanan", href: "/w/A/services" }}
+            backLabel="Kembali"
+          />
+        }
       >
-        <PageHeadingOverride
-          title="Wisuda Basic"
-          parent={{ label: "Layanan", href: "/w/A/services" }}
-        />
         <p>isi</p>
       </OwnerShell>,
     );
@@ -193,7 +207,10 @@ describe("OwnerShell sub-pages", () => {
     expect(
       screen.getByText("Aster Wedding › Template pesan › Bagikan gallery"),
     ).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Kembali" })).toHaveAttribute("href", "/w/A/services");
+    expect(screen.getAllByRole("link", { name: "Kembali" })[0]).toHaveAttribute(
+      "href",
+      "/w/A/services",
+    );
   });
 
   it("AC-PRJ-007 the phone create action opens Proyek baru", async () => {
@@ -217,6 +234,7 @@ describe("OwnerShell sub-pages", () => {
   });
 
   it("AC-PRJ-007 a page can hide the phone Bottom Nav while its sticky bar is shown", () => {
+    route.pathname = "/w/A/projects/new";
     render(
       <OwnerShell
         workspaceId="A"
@@ -227,19 +245,24 @@ describe("OwnerShell sub-pages", () => {
         workspaces={workspaces}
         onSwitch={vi.fn()}
         onCreate={vi.fn()}
+        pageHeading={
+          <OwnerPageHeading
+            title="Proyek baru"
+            parent={{ label: "Proyek", href: "/w/A/projects" }}
+            backLabel="Kembali"
+          />
+        }
       >
-        <PageHeadingOverride
-          title="Proyek baru"
-          parent={{ label: "Proyek", href: "/w/A/projects" }}
-          hidesBottomNav
-        />
         <p>isi</p>
       </OwnerShell>,
     );
 
     // The desktop sidebar and the phone menu keep their "Utama" navigations; the Bottom Nav is the third.
     expect(screen.getAllByRole("navigation", { name: "Navigasi utama" })).toHaveLength(2);
-    expect(screen.getByRole("link", { name: "Kembali" })).toHaveAttribute("href", "/w/A/projects");
+    expect(screen.getAllByRole("link", { name: "Kembali" })[0]).toHaveAttribute(
+      "href",
+      "/w/A/projects",
+    );
   });
 
   it("AC-PRJ-007 keeps the phone Bottom Nav on other pages", () => {

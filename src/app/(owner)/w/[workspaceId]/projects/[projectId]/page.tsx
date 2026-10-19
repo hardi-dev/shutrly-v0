@@ -32,24 +32,17 @@ import type { AddOnCardView } from "@/features/booking/application/use-cases/lis
 import { AddOnCard } from "@/features/booking/ui/add-on-card/add-on-card";
 import type { ProjectTranslate } from "@/features/booking/ui/project-copy/project-copy.types";
 import { ProjectDetailScreen } from "@/features/booking/ui/project-detail-screen/project-detail-screen";
-import {
-  projectMetaLine,
-  projectMetaText,
-} from "@/features/booking/ui/project-session-summary/project-session-summary";
-import { projectStatusChip } from "@/features/booking/ui/project-status-chip/project-status-props";
 import { TeamQuickAddProvider } from "@/features/booking/ui/team-quick-add/team-quick-add";
 import type { GalleryCardView } from "@/features/gallery/application/use-cases/gallery-views/gallery-views.types";
 import type { DeliveryCardView } from "@/features/gallery/application/use-cases/get-delivery-card/get-delivery-card.types";
 import type { SelectionCardView } from "@/features/gallery/application/use-cases/owner-selection-views/owner-selection-views.types";
-import { deliveredHeaderMeta } from "@/features/gallery/ui/delivery-text/delivery-text";
 import { FinishProjectButton } from "@/features/gallery/ui/finish-project-button/finish-project-button";
 import { GalleryCard } from "@/features/gallery/ui/gallery-card/gallery-card";
 import { MarkDeliveredButton } from "@/features/gallery/ui/mark-delivered-button/mark-delivered-button";
-import { PageHeadingOverride } from "@/features/workspace/ui/page-heading-override/page-heading-override";
-import type { FormattingLocale } from "@/shared/locale/locale.types";
 import { ToastOnMount } from "@/ui/patterns/toast/toast";
 
-import { PROJECT_DETAIL_DELIVERY_NAMESPACE, PROJECT_DETAIL_PAGE_COPY_NAMESPACE } from "./page.copy";
+import { PROJECT_DETAIL_PAGE_COPY_NAMESPACE } from "./page.copy";
+import { deliveredMetaOf } from "./project-heading";
 
 export default async function ProjectDetailPage({
   params,
@@ -66,13 +59,6 @@ export default async function ProjectDetailPage({
   const deliveredMeta = await deliveredMetaOf(delivery, locale);
   return (
     <>
-      <PageHeadingOverride
-        title={project.title}
-        status={projectStatusChip(t, project.status)}
-        meta={headerMetaText(t, project, deliveredMeta, locale)}
-        parent={{ label: t("parentLabel"), href: `/w/${workspaceId}/projects` }}
-        hidesBottomNav
-      />
       <TeamQuickAddProvider value={{ workspaceId, roles, ...TEAM_QUICK_ADD_ACTIONS }}>
         <ProjectDetailScreen
           workspaceId={workspaceId}
@@ -157,19 +143,6 @@ function galleryCardSlot(
   );
 }
 
-// A delivered project names when final delivery was published instead of its session (owner-7 `r71J5`).
-function headerMetaText(
-  t: ProjectTranslate,
-  project: ProjectDetailView,
-  deliveredMeta: string | null,
-  locale: FormattingLocale,
-) {
-  if (deliveredMeta === null) {
-    return projectMetaText(t, project.client.name, project.shownSession, locale);
-  }
-  return projectMetaLine(project.client.name, deliveredMeta);
-}
-
 const DELIVERY_ACTIONS = { markDeliveredAction };
 const FINISH_ACTIONS = { completeAction: completeProjectAction };
 
@@ -219,12 +192,4 @@ function resolveToast(t: ProjectTranslate, state: string | undefined, title: str
     return { title: t("toastDraftSavedTitle"), body: t("toastDraftSavedBody", { title }) };
   }
   return null;
-}
-
-async function deliveredMetaOf(
-  delivery: Parameters<typeof deliveredHeaderMeta>[1],
-  locale: Parameters<typeof deliveredHeaderMeta>[2],
-): Promise<string | null> {
-  const t = await getTranslations(PROJECT_DETAIL_DELIVERY_NAMESPACE);
-  return deliveredHeaderMeta(t, delivery, locale);
 }

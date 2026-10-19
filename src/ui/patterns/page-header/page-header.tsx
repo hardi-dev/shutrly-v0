@@ -1,4 +1,5 @@
 import { useTranslations } from "next-intl";
+import type { ReactNode } from "react";
 
 import { cn } from "@/ui/cn/cn";
 
@@ -26,6 +27,7 @@ export function PageHeader({
   utilities,
   trail,
   leading,
+  titleBlock,
   tabs,
   isFlush = false,
 }: Readonly<PageHeaderProps>) {
@@ -51,18 +53,31 @@ export function PageHeader({
           isFlush ? "px-0" : "px-(--component-page-header-hero-padding-x)",
         )}
       >
-        <div className="flex min-w-0 flex-1 flex-col gap-(--space-1-5)">
-          <HeaderTitle title={title} adornment={titleAdornment} />
-          {(meta ?? subtitle) ? (
-            <p className="text-(length:--font-size-body) text-(--component-page-header-subtitle)">
-              {meta ?? subtitle}
-            </p>
-          ) : null}
-        </div>
+        {titleBlock ?? (
+          <PageTitleBlock title={title} adornment={titleAdornment} line={meta ?? subtitle} />
+        )}
         {action ? <div className="flex shrink-0 items-center gap-(--space-2)">{action}</div> : null}
       </div>
       {tabs ? <HeaderTabs tabs={tabs} isFlush={isFlush} /> : null}
     </header>
+  );
+}
+
+/** The title block of a Page Header: the title with its adornment, then the meta or subtitle line. @param props - the title, adornment and line @returns the block */
+function PageTitleBlock({
+  title,
+  adornment,
+  line,
+}: Readonly<{ title: string; adornment?: ReactNode; line?: string }>) {
+  return (
+    <div className="flex min-w-0 flex-1 flex-col gap-(--space-1-5)">
+      <HeaderTitle title={title} adornment={adornment} />
+      {line ? (
+        <p className="text-(length:--font-size-body) text-(--component-page-header-subtitle)">
+          {line}
+        </p>
+      ) : null}
+    </div>
   );
 }
 
@@ -106,7 +121,8 @@ function HeaderTabs({ tabs, isFlush }: Readonly<HeaderTabsProps>) {
   );
 }
 
-function HeaderTitle({ title, adornment }: Readonly<HeaderTitleProps>) {
+/** The page title h1 with its optional adornment, shared with the server-rendered heading (`OwnerPageHeading`). @param props - the title and adornment @returns the title */
+export function HeaderTitle({ title, adornment }: Readonly<HeaderTitleProps>) {
   const heading = (
     <h1 className="text-(length:--font-size-display) font-bold tracking-(--font-letter-spacing-display) text-(--component-page-header-title)">
       {title}

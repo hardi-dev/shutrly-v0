@@ -25,4 +25,6 @@ export interface OwnerShellProps {
   subPages?: readonly OwnerSubPage[];
   /** The breadcrumb rendered on the server (`@crumbs` slot or the profile layout, ADR-026). */
   trail?: ReactNode;
+  /** The page heading rendered on the server (`@heading` slot); omitted on pages without one. */
+  pageHeading?: ReactNode;
 }

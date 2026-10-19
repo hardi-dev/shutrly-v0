@@ -10,13 +10,13 @@ import { IconButton } from "@/ui/primitives/icon-button/icon-button";
 
 import { AppPanel, PageContent } from "../app-panel/app-panel";
 import { BottomNav } from "../bottom-nav/bottom-nav";
-import { CompactBar } from "../compact-bar/compact-bar";
+import { CompactBar, CompactBarFrame } from "../compact-bar/compact-bar";
 import { COMPACT_BAR_ACTIONS_ID } from "../compact-bar/compact-bar-actions";
 import { MobileAppShell } from "../mobile-app-shell/mobile-app-shell";
 import { Sidebar } from "../sidebar/sidebar";
 import type { SidebarAccountMenu } from "../sidebar/sidebar.types";
 import { APP_SHELL_COPY_NAMESPACE, SIDEBAR_COPY_NAMESPACE } from "./app-shell.copy";
-import type { AppShellProps } from "./app-shell.types";
+import type { AppShellProps, AppShellSubPage } from "./app-shell.types";
 import { readCollapsed, writeCollapsed } from "./sidebar-collapse-preference";
 
 /** Renders the responsive desktop, tablet and mobile Owner shell (C30/C35/C37). */
@@ -34,8 +34,6 @@ export function AppShell({
   nav,
   navBottom,
   panelActions,
-  panelTitleAdornment,
-  panelMeta,
   panelUtilities,
   panelTabs,
   panelBreadcrumbs,
@@ -48,6 +46,8 @@ export function AppShell({
   onLayoutChange,
   workspaceSwitcher,
   subPage,
+  heading,
+  hidesBottomNav,
 }: Readonly<AppShellProps>) {
   const t = useTranslations(APP_SHELL_COPY_NAMESPACE);
   const sidebarT = useTranslations(SIDEBAR_COPY_NAMESPACE);
@@ -136,12 +136,11 @@ export function AppShell({
         subtitle={subtitle}
         parent={subPage?.parent.label ?? workspace.name}
         panelActions={panelActions}
-        panelTitleAdornment={panelTitleAdornment}
-        panelMeta={panelMeta}
         panelUtilities={panelUtilities}
         panelTabs={panelTabs}
         panelBreadcrumbs={panelBreadcrumbs}
         panelTrail={panelTrail}
+        titleBlock={heading}
         sidebarToggle={sidebarToggle}
       >
         {children}
@@ -151,23 +150,13 @@ export function AppShell({
         subtitle={subtitle}
         mobileSubtitle={mobileSubtitle}
         mobileBottomNav={mobileBottomNav}
-        isMobileBottomNavHidden={subPage?.hidesBottomNav}
+        isMobileBottomNavHidden={hidesBottomNav ?? subPage?.hidesBottomNav}
         isMobileOverlayOpen={isMobileOverlayOpen}
         mobileSheet={mobileSheet}
         workspaceName={workspace.name}
         mobileUtilities={mobileUtilities}
         onMobileWorkspacePress={onMobileWorkspacePress}
-        header={
-          subPage ? (
-            <CompactBar
-              title={title}
-              parent={subPage.parent}
-              actions={
-                <div id={COMPACT_BAR_ACTIONS_ID} className="flex items-center gap-(--space-2)" />
-              }
-            />
-          ) : undefined
-        }
+        header={mobileHeaderOf(heading, title, subPage)}
       >
         {children}
       </MobileContent>
@@ -187,6 +176,31 @@ export function AppShell({
 }
 
 const APP_SHELL_CONTENT_ID = "app-shell-content";
+
+/** The phone header: the server heading in a compact bar, else a sub-page compact bar, else the app bar (undefined). @param heading - the server heading @param title - the page title @param subPage - the sub-page parent @returns the header element, or undefined */
+function mobileHeaderOf(
+  heading: ReactNode,
+  title: string,
+  subPage: AppShellSubPage | undefined,
+): ReactNode {
+  if (heading) {
+    return (
+      <CompactBarFrame
+        actions={<div id={COMPACT_BAR_ACTIONS_ID} className="flex items-center gap-(--space-2)" />}
+      >
+        {heading}
+      </CompactBarFrame>
+    );
+  }
+  if (!subPage) return undefined;
+  return (
+    <CompactBar
+      title={title}
+      parent={subPage.parent}
+      actions={<div id={COMPACT_BAR_ACTIONS_ID} className="flex items-center gap-(--space-2)" />}
+    />
+  );
+}
 
 function isVisible(element: Element | null): element is HTMLElement {
   return element instanceof HTMLElement && element.getClientRects().length > 0;
@@ -268,12 +282,11 @@ function DesktopContent({
   subtitle,
   parent,
   panelActions,
-  panelTitleAdornment,
-  panelMeta,
   panelUtilities,
   panelTabs,
   panelBreadcrumbs,
   panelTrail,
+  titleBlock,
   sidebarToggle,
   children,
 }: Readonly<{
@@ -282,12 +295,11 @@ function DesktopContent({
   subtitle: AppShellProps["subtitle"];
   parent: string;
   panelActions: AppShellProps["panelActions"];
-  panelTitleAdornment: AppShellProps["panelTitleAdornment"];
-  panelMeta: AppShellProps["panelMeta"];
   panelUtilities: AppShellProps["panelUtilities"];
   panelTabs: AppShellProps["panelTabs"];
   panelBreadcrumbs: AppShellProps["panelBreadcrumbs"];
   panelTrail: AppShellProps["panelTrail"];
+  titleBlock: ReactNode;
   sidebarToggle: ReactNode;
   children: AppShellProps["children"];
 }>) {
@@ -299,12 +311,11 @@ function DesktopContent({
         subtitle={subtitle}
         parent={parent}
         actions={panelActions}
-        titleAdornment={panelTitleAdornment}
-        meta={panelMeta}
         utilities={panelUtilities}
         tabs={panelTabs}
         breadcrumbs={panelBreadcrumbs}
         trail={panelTrail}
+        titleBlock={titleBlock}
         leading={sidebarToggle}
       >
         <PageContent>{children}</PageContent>

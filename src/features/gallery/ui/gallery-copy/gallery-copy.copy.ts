@@ -88,7 +88,6 @@ export const GALLERY_COPY = {
       retry: "Try again",
       sourcesTitle: "Photo sources",
       sourcesDescription: "Google Drive folders shared as “Anyone with the link”.",
-      sourcesEmptyTitle: "No folders yet",
       sourcesEmptyBody:
         "No folder yet. Add a Google Drive folder with this project’s photos; then you can send the gallery link to the client.",
       addFolder: "Add folder",
@@ -397,7 +396,6 @@ export const GALLERY_COPY = {
       sourcesTitle: "Sumber foto",
       sourcesDescription:
         "Folder Google Drive yang dibagikan sebagai “Siapa saja yang memiliki link”.",
-      sourcesEmptyTitle: "Belum ada folder",
       sourcesEmptyBody:
         "Belum ada folder. Tambahkan folder Google Drive berisi foto proyek ini; setelah itu kamu bisa mengirim link galeri ke klien.",
       addFolder: "Tambah folder",

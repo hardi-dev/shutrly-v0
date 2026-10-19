@@ -134,7 +134,7 @@ export async function createProject(
 export async function bookGalleryPage(page: Page, workspaceId: string): Promise<string> {
   const projectPath = await createProject(page, workspaceId, "BOOKED");
   await page.goto(`${projectPath}/gallery`);
-  await expect(visibleText(page, galleryCopy("sourcesEmptyTitle"))).toBeVisible({
+  await expect(visibleText(page, galleryCopy("sourcesEmptyBody"))).toBeVisible({
     timeout: 30_000,
   });
   return projectPath;

@@ -1375,7 +1375,7 @@ The missing-count summary replaces word-based `.replace(" proof", …)` processi
 |---|---|---|
 | Sources section | Photo sources | Sumber foto |
 | Sources description · Owner 2026-10-19, design wording | Google Drive folders shared as “Anyone with the link”. | Folder Google Drive yang dibagikan sebagai “Siapa saja yang memiliki link”. |
-| Empty title | No folders yet | Belum ada folder |
+| Empty title · REMOVED (2026-10-19, unused; the gallery e2e waits on the empty body instead) | ~~No folders yet~~ | ~~Belum ada folder~~ |
 | Empty body · Approved (Owner, 2026-10-12) | No folder yet. Add a Google Drive folder with this project’s photos; then you can send the gallery link to the client. | Belum ada folder. Tambahkan folder Google Drive berisi foto proyek ini; setelah itu kamu bisa mengirim link galeri ke klien. |
 | Empty body mobile · REMOVED (Owner 2026-10-19, unused; no key in the code) | ~~Link the project’s Google Drive folder.~~ | ~~Tautkan folder Google Drive proyek ini.~~ |
 | Add-folder title/action | Add folder | Tambah folder |

@@ -41,7 +41,12 @@ function ReadyBody({ message, workspaceId, onAddNumber }: Readonly<GalleryShareR
   return (
     <div className="flex flex-col gap-(--space-4)">
       {hasNumber ? null : (
-        <Alert tone="warning" title={t("noNumberTitle", { name })} body={t("noNumberBody")} />
+        <Alert
+          tone="warning"
+          title={t("noNumberTitle", { name })}
+          body={t("noNumberBody")}
+          action={{ label: t("addNumber"), onAction: onAddNumber }}
+        />
       )}
       <div className="flex flex-col gap-(--space-1)">
         <span className={LABEL}>{t("recipientLabel")}</span>
@@ -62,16 +67,6 @@ function ReadyBody({ message, workspaceId, onAddNumber }: Readonly<GalleryShareR
         >
           {t("editTemplate")}
         </Button>
-        {hasNumber ? null : (
-          <Button
-            variant="secondary"
-            iconLeading="plus"
-            className="w-full md:w-auto"
-            onPress={onAddNumber}
-          >
-            {t("addNumber")}
-          </Button>
-        )}
       </div>
     </div>
   );

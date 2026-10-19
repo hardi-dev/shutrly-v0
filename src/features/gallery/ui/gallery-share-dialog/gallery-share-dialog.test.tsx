@@ -1,4 +1,4 @@
-import { screen, waitFor } from "@testing-library/react";
+import { screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { renderInLocale } from "@tests/support/copy/render-in-locale";
 import type { ReactElement } from "react";
@@ -74,7 +74,12 @@ describe("GalleryShareDialog (K1, K2, AC-GFL-021 to 025)", () => {
       true,
     );
     const user = userEvent.setup();
-    await user.click(screen.getByRole("button", { name: "Add WhatsApp number" }));
+    const alert = screen
+      .getByText("Rina Wijaya doesn’t have a WhatsApp number yet")
+      .closest("[data-tone='warning']") as HTMLElement;
+    expect(within(alert).getByRole("button", { name: "Add WhatsApp number" })).toBeTruthy();
+    expect(screen.getAllByRole("button", { name: "Add WhatsApp number" })).toHaveLength(1);
+    await user.click(within(alert).getByRole("button", { name: "Add WhatsApp number" }));
     expect(value.onAddNumber).toHaveBeenCalledTimes(1);
   });
 

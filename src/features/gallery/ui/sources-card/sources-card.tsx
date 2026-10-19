@@ -3,13 +3,12 @@
 import { useTranslations } from "next-intl";
 
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
-import { EmptyState } from "@/ui/patterns/empty-state/empty-state";
 import { SectionCard } from "@/ui/patterns/section-card/section-card";
 
 import { SOURCES_CARD_COPY_NAMESPACE } from "./sources-card.copy";
 import type { SourcesCardProps } from "./sources-card.types";
 
-/** *Sumber foto*: the linked Drive folders, or an empty state prompting the first folder (AC-GAL-014). */
+/** *Sumber foto*: the linked Drive folders, or the no-folder text; the empty state puts *Tambah folder* in the header (AC-GAL-014, design `galeri-belum-ada-folder`). */
 export function SourcesCard({
   sources,
   actions,
@@ -23,17 +22,13 @@ export function SourcesCard({
       title={t("sourcesTitle")}
       description={isMobile ? undefined : t("sourcesDescription")}
       content="flush"
-      actions={sources.length === 0 ? undefined : actions}
+      actions={sources.length === 0 ? emptyAction : actions}
     >
       {sources.length === 0 ? (
         <div className="px-(--space-1) py-(--space-1) md:px-(--space-3)">
-          <EmptyState
-            icon="folder"
-            placement="in-card"
-            title={t("sourcesEmptyTitle")}
-            body={isMobile ? t("sourcesEmptyBodyMobile") : t("sourcesEmptyBody")}
-            action={emptyAction}
-          />
+          <p className="p-(--space-3) text-(length:--font-size-body) text-(--color-semantic-text-primary)">
+            {t("sourcesEmptyBody")}
+          </p>
         </div>
       ) : (
         children

@@ -258,4 +258,33 @@ describe("ProjectDetailScreen", () => {
     renderScreen(projectDetailView("POST_PROCESSING"));
     expect(screen.queryByRole("button", { name: /booking|pemotretan/i })).not.toBeInTheDocument();
   });
+
+  it("renders the gallery, add-on and header slots without a React key warning", () => {
+    const consoleError = vi.spyOn(console, "error").mockImplementation(() => undefined);
+    try {
+      render(
+        <ProjectDetailScreen
+          workspaceId="ws"
+          project={projectDetailView("POST_PROCESSING")}
+          menuActions={menuActions(vi.fn(() => Promise.resolve(undefined)))}
+          editActions={EDIT_ACTIONS}
+          assignableMembers={[]}
+          addAssignmentAction={vi.fn()}
+          removeAssignmentAction={vi.fn()}
+          definitions={[]}
+          galleryCard={<section>Galeri slot</section>}
+          addOnCard={<section>Add-on slot</section>}
+          headerAction={<button type="button">Tandai terkirim</button>}
+        />,
+      );
+      const warnings = consoleError.mock.calls
+        .map((args) => args.map(String).join(" "))
+        .filter((message) => message.includes('unique "key" prop'));
+      expect(warnings).toEqual([]);
+      expect(screen.getByText("Galeri slot")).toBeInTheDocument();
+      expect(screen.getByText("Add-on slot")).toBeInTheDocument();
+    } finally {
+      consoleError.mockRestore();
+    }
+  });
 });

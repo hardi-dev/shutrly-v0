@@ -1,6 +1,6 @@
 # ADR-027: The non-production database is shutrly-v0 in ap-southeast-1
 
-Status: Accepted (Owner, 2026-10-18)
+Status: Superseded by [ADR-029](ADR-029-production-and-staging-neon-branches.md) (2026-10-19); was Accepted (Owner, 2026-10-18)
 Date: 2026-10-18
 Supersedes: [ADR-024](ADR-024-single-non-production-database.md) points 1 and 2 (the database and its region). Points 3 and 4 of ADR-024 still apply.
 Amends: [ADR-020](ADR-020-staging-on-netlify.md) (point 4 and Consequences), [ADR-009](ADR-009-neon-serverless-driver.md) (the non-production amendment)

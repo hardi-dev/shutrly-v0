@@ -9,7 +9,7 @@ Start with [docs/HANDOFF.md](docs/HANDOFF.md) › _Current handoff_. It says wha
 - **Commits:** conventional commits in English, lowercase, no trailing period.
 - **Hard stops:**
   - Never commit secrets. `.dev.vars` and `.env.test` are git-ignored and non-production only.
-  - `pnpm db:migrate` runs only against the single **non-production** database from `.dev.vars` (Neon `shutrly-v0` `main`, ap-southeast-1, which the staging site also reads; ADR-027), and only for a migration you generated, reviewed and committed (Owner 2026-10-02, see `docs/architecture/tech-stack.md` › Deployment). Keep migrations safe for other branches and for the deployed staging code (no drops or renames of columns they use), and report each run. Never run migrations against production.
+  - `pnpm db:migrate` runs only against the single **non-production** database from `.dev.vars` (Neon project `shutrly-app`, branch `staging`, ap-southeast-1, which the staging site also reads; ADR-029). The branch `main` of that project is production, and only for a migration you generated, reviewed and committed (Owner 2026-10-02, see `docs/architecture/tech-stack.md` › Deployment). Keep migrations safe for other branches and for the deployed staging code (no drops or renames of columns they use), and report each run. Never run migrations against production.
   - Never read or edit `.pen` files directly; they're edited only through the Pencil tool.
 - **Machine note:** `head` on this machine isn't coreutils; use `sed -n '1,20p'`.
 - **Workflow commands (`sdv`, local copy, edit freely):**

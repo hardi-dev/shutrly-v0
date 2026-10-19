@@ -54,10 +54,11 @@ describe("GalleryShareDialog (K1, K2, AC-GFL-021 to 025)", () => {
     );
   });
 
-  it("K1: shows the recipient, the rendered text and a new-tab WhatsApp link", async () => {
+  it("K1: shows the recipient, the rendered text read-only as a message bubble and a new-tab WhatsApp link", async () => {
     renderInLocale(renderDialog(props()), "en");
     expect(await screen.findByText("Rina Wijaya · +62 812-3456-7890")).toBeTruthy();
     expect(screen.getByText(/Kata sandi: mawar-4821/)).toBeTruthy();
+    expect(screen.queryByRole("textbox")).toBeNull();
     const link = screen.getByRole("link", { name: "Open WhatsApp" });
     expect(link.getAttribute("href")).toBe(WA_URL);
     expect(link.getAttribute("target")).toBe("_blank");

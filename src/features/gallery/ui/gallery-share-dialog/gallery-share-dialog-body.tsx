@@ -9,13 +9,15 @@ import { Button } from "@/ui/primitives/button/button";
 import { GALLERY_SHARE_DIALOG_COPY_NAMESPACE } from "./gallery-share-dialog.copy";
 import type { GalleryShareBodyProps, GalleryShareReadyProps } from "./gallery-share-dialog.types";
 
-const LABEL = "text-(length:--font-size-label) text-(--color-semantic-text-muted)";
-const VALUE = "text-(length:--font-size-body-sm) text-(--color-semantic-text-secondary)";
+const LABEL = "text-(length:--font-size-caption) text-(--color-semantic-text-muted)";
+const VALUE = "text-(length:--font-size-body) text-(--color-semantic-text-primary)";
 const NOTE = "text-(length:--font-size-caption) text-(--color-semantic-text-muted)";
+const PREVIEW =
+  "flex w-full min-w-0 flex-col rounded-(--radius-md) bg-(--color-semantic-surface-subtle) p-(--space-4)";
 const BUBBLE = cn(
-  "rounded-(--radius-md) border border-(--color-semantic-border-subtle)",
-  "bg-(--color-semantic-surface-panel) p-(--space-3) whitespace-pre-line",
-  "text-(length:--font-size-body-sm)",
+  "flex w-full min-w-0 flex-col rounded-(--radius-md) bg-(--color-semantic-surface-panel)",
+  "border border-(--color-semantic-border-subtle) p-(--space-3) break-words whitespace-pre-line",
+  "text-(length:--font-size-body) leading-[21px] text-(--color-semantic-text-primary)",
 );
 
 /** The recipient row and the rendered message (K1, K2); the state's first line says "preparing" while loading. @param props - the state, the workspace and *Tambah nomor WhatsApp* @returns the dialog body */
@@ -47,18 +49,26 @@ function ReadyBody({ message, workspaceId, onAddNumber }: Readonly<GalleryShareR
           {hasNumber ? t("recipientValue", { name, phone }) : t("recipientNoNumber", { name })}
         </span>
       </div>
-      <div className={BUBBLE}>{message.text}</div>
+      <div className={PREVIEW}>
+        <div className={BUBBLE}>{message.text}</div>
+      </div>
       <p className={NOTE}>{t("passwordNote")}</p>
-      <div className="flex flex-wrap gap-(--space-2)">
+      <div className="flex flex-col gap-(--space-2) md:flex-row md:flex-wrap">
         <Button
           variant="secondary"
           iconLeading="pencil"
           href={`/w/${workspaceId}/message-templates/gallery-share`}
+          className="w-full md:w-auto"
         >
           {t("editTemplate")}
         </Button>
         {hasNumber ? null : (
-          <Button variant="secondary" iconLeading="plus" onPress={onAddNumber}>
+          <Button
+            variant="secondary"
+            iconLeading="plus"
+            className="w-full md:w-auto"
+            onPress={onAddNumber}
+          >
             {t("addNumber")}
           </Button>
         )}

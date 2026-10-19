@@ -14,7 +14,7 @@ export default async function ClientDeliveryPage({
   if (result.kind === "PASSWORD") {
     return <ClientGateScreen gate={result.gate} action={signInGalleryAction.bind(null, token)} />;
   }
-  // Before final delivery there is nothing here: back to Beranda (TD › Server / API Interface).
+  // No synced finished file yet: nothing to show, so back to Beranda (TD › Server / API Interface).
   if (result.value === null) redirect(`/g/${token}`);
   return <DeliveryScreen gate={result.gate} token={token} files={result.value} />;
 }

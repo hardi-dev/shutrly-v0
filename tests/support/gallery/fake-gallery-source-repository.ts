@@ -114,11 +114,8 @@ export class FakeGallerySourceRepository implements GallerySourceRepositoryPort 
         if (source) source.label = label;
         return source !== undefined;
       },
-      publish: async (expiry: { expiresAt: Date | null; expiryDays: number | null }) => {
-        set({ status: "PUBLISHED", ...expiry });
-      },
-      setExpiry: async (expiry: { expiresAt: Date | null; expiryDays: number | null }) => {
-        set(expiry);
+      setExpiry: async (expiresAt: Date | null) => {
+        set({ expiresAt });
       },
       rotatePassword: async (rotated: { passwordHash: string }, actorId: string) => {
         set({
@@ -126,12 +123,6 @@ export class FakeGallerySourceRepository implements GallerySourceRepositoryPort 
           passwordVersion: gallery.passwordVersion + 1,
           passwordChangedBy: actorId,
         });
-      },
-      archive: async (actorId: string) => {
-        set({ status: "ARCHIVED", archivedBy: actorId });
-      },
-      deleteGallery: async () => {
-        set({ deleted: true });
       },
       createSelectionGroups: async () => {
         this.selectionGroupCalls += 1;

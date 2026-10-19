@@ -1,10 +1,7 @@
 import "server-only";
 
 import type { DriveFolderRef } from "@/features/gallery/domain/drive-folder-link/drive-folder-link.types";
-import type {
-  GalleryProjectStatus,
-  GalleryStoredStatus,
-} from "@/features/gallery/domain/gallery-status/gallery-status.types";
+import type { GalleryProjectStatus } from "@/features/gallery/domain/gallery-state/gallery-state.types";
 import type { FolderMapping } from "@/features/gallery/domain/photo-classification/photo-classification.types";
 import type { PickMode } from "@/features/gallery/domain/pick-list/pick-list.types";
 import type {
@@ -16,12 +13,10 @@ import type { WorkspaceContext } from "@/shared/workspace-context/workspace-cont
 
 import type { EncryptedPassword } from "../gallery-password-cipher/gallery-password-cipher.port";
 
-// The gallery and project state a source write re-checks under lock (D-8, D-14).
+// The gallery and project state a source write re-checks under lock (D-8, D-14). F-27: no stored status.
 export interface LockedGalleryState {
   readonly galleryId: string;
-  readonly status: GalleryStoredStatus;
   readonly expiresAt: Date | null;
-  readonly expiryDays: number | null;
   readonly projectStatus: GalleryProjectStatus;
 }
 
@@ -34,11 +29,6 @@ export interface NewGallerySource {
 
 export interface InsertedSource {
   readonly sourceId: string;
-}
-
-export interface GalleryExpiryColumns {
-  readonly expiresAt: Date | null;
-  readonly expiryDays: number | null;
 }
 
 export interface RotatedPassword {
@@ -61,12 +51,9 @@ export interface GalleryLifecycleWriter {
   readonly deleteSource: (sourceId: string, now: Date) => Promise<boolean>;
   /** Sets an active source's label, null to show the folder name; false when it isn't an active source of this gallery. */
   readonly renameSource: (sourceId: string, label: string | null, now: Date) => Promise<boolean>;
-  readonly publish: (expiry: GalleryExpiryColumns, actorId: string, now: Date) => Promise<void>;
-  readonly setExpiry: (expiry: GalleryExpiryColumns, actorId: string, now: Date) => Promise<void>;
+  /** Sets the expiry instant (null for none) and bumps the content version (BR-GAL-005, D-15). */
+  readonly setExpiry: (expiresAt: Date | null, actorId: string, now: Date) => Promise<void>;
   readonly rotatePassword: (rotated: RotatedPassword, actorId: string, now: Date) => Promise<void>;
-  readonly archive: (actorId: string, now: Date) => Promise<void>;
-  /** Deletes the gallery with its sources and photo records (cascade). */
-  readonly deleteGallery: () => Promise<void>;
   /** Creates one OPEN group per selection item that has none yet (F-10 D-10a); returns how many. */
   readonly createSelectionGroups: () => Promise<number>;
   /** Visible, not-missing EDITED and PRINT photos of active sources (BR-DEL-003, F-10 D-17). */

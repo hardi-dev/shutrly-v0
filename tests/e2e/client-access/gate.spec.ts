@@ -7,12 +7,13 @@ import { CLIENT_PASSWORD_FORM_COPY_NAMESPACE } from "@/features/gallery/ui/clien
 import { CLIENT_UNAVAILABLE_COPY_NAMESPACE } from "@/features/gallery/ui/client-unavailable/client-unavailable.copy";
 
 import { expectGalleryA11y } from "../gallery/gallery-e2e";
-import { FOLDER_URL, GALLERY_PASSWORD, publishedGallery } from "./client-access-e2e";
+import { FOLDER_URL, GALLERY_PASSWORD, linkedGallery } from "./client-access-e2e";
 
 const browseCopy = copyTranslator(CLIENT_BROWSE_COPY_NAMESPACE, "id");
 const gateCopy = copyTranslator(CLIENT_GATE_SCREEN_COPY_NAMESPACE, "id");
 const passwordCopy = copyTranslator(CLIENT_PASSWORD_FORM_COPY_NAMESPACE, "id");
-const unavailableCopy = copyTranslator(CLIENT_UNAVAILABLE_COPY_NAMESPACE, "id");
+// An unknown link has no owner, so its neutral page uses the default language (English).
+const unavailableCopy = copyTranslator(CLIENT_UNAVAILABLE_COPY_NAMESPACE, "en");
 
 // Needs the dev server without E2E_FAKE_DRIVE and the real public folder from .env.test.
 test.skip(!FOLDER_URL, "GALLERY_SMOKE_FOLDER_URL is not set");
@@ -27,10 +28,10 @@ test("AC-ACC-001 AC-ACC-002 AC-ACC-004 AC-ACC-007 AC-ACC-012 the client gate end
   page,
   browser,
 }) => {
-  const { clientPath } = await publishedGallery(page);
+  const { clientPath } = await linkedGallery(page);
 
-  // AC-ACC-007: the signed-in Owner still gets the password screen. The publish can reach the
-  // client route a moment after the Owner UI shows it, so retry the first load until it answers.
+  // AC-ACC-007: the signed-in Owner still gets the password screen. The sync can finish a moment
+  // before the client route reads the gallery, so retry the first load until it answers.
   await expect(async () => {
     await page.goto(clientPath);
     await expect(page.getByRole("heading", { name: gateCopy("title") })).toBeVisible({
@@ -58,8 +59,11 @@ test("AC-ACC-001 AC-ACC-002 AC-ACC-004 AC-ACC-007 AC-ACC-012 the client gate end
     await enterPassword(visitor, GALLERY_PASSWORD);
     await expect(visitor.getByRole("heading", { name: gateCopy("title") })).toBeHidden();
     await expect(visitor).toHaveURL(clientPath);
+    // The session survives a reload: Beranda again, then *Semua foto* opens without the gate.
     await visitor.reload();
-    await expect(visitor).toHaveURL(`${clientPath}/photos`);
+    await expect(visitor).toHaveURL(clientPath);
+    await expect(visitor.getByRole("heading", { name: gateCopy("title") })).toBeHidden();
+    await visitor.goto(`${clientPath}/photos`);
     await expect(visitor.getByText(browseCopy("cardTitle"), { exact: true }).first()).toBeVisible();
     const cookie = (await client.cookies()).find((item) => item.name === "shutrly_gallery");
     expect(cookie).toMatchObject({ httpOnly: true, secure: true, path: clientPath });

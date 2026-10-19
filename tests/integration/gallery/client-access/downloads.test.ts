@@ -97,19 +97,21 @@ describe("finished-file downloads (D-18)", () => {
     }
   });
 
-  it("AC-DEL-004 serves no finished file before delivery, no missing file and no other project's file", async () => {
+  it("AC-GFL-019 AC-DEL-004 serves a synced finished file before delivery, but no missing file and no other project's file", async () => {
     const before = await seedDelivered(false);
     const after = await seedDelivered(true);
     const { provider, download } = drive();
+    expect(
+      (await serveClientFile(deps(provider), before.client, before.photoIds["E_001.jpg"])).ok,
+    ).toBe(true);
     const refused = [
-      [before.client, before.photoIds["E_001.jpg"]],
       [after.client, after.photoIds["E_009.jpg"]],
       [after.client, before.photoIds["E_001.jpg"]],
     ] as const;
     for (const [client, photoId] of refused) {
       expect(await serveClientFile(deps(provider), client, photoId)).toEqual({ ok: false });
     }
-    expect(download).not.toHaveBeenCalled();
+    expect(download).toHaveBeenCalledTimes(1);
   });
 
   it("F-20 serves the original of a proof before and after delivery", async () => {
@@ -182,7 +184,7 @@ describe("finished-file downloads (D-18)", () => {
     });
   });
 
-  it("BR-DEL-002 before delivery an Edited query reads proofs and reports no finished files", async () => {
+  it("AC-GFL-019 BR-DEL-002 before delivery an Edited query lists the synced finished files", async () => {
     const { client } = await seedDelivered(false);
     const browse = {
       browse: createDrizzleGalleryBrowseReader(db, { client: true }),
@@ -196,8 +198,8 @@ describe("finished-file downloads (D-18)", () => {
       search: "",
       cursor: null,
     });
-    expect([page.editedTotal, page.printTotal]).toEqual([0, 0]);
-    expect(JSON.stringify(page)).not.toContain("E_00");
+    expect(page.editedTotal).toBeGreaterThan(0);
+    expect(page.printTotal).toBeGreaterThan(0);
   });
 
   it("BR-ACC-005 no client view or file result carries the folder ID", async () => {

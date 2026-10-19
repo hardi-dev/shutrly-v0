@@ -78,7 +78,7 @@ describe("Beranda (A-24, A-31)", () => {
       landing: "HOME",
       greeting: { kind: "START" },
       proofCount: 2,
-      editedCount: 0,
+      editedCount: 1,
     });
     expect(
       view.groups.map((group) => [group.name, group.usage, group.limit, group.unit, group.action]),
@@ -89,10 +89,16 @@ describe("Beranda (A-24, A-31)", () => {
     expect(view.groups.map((group) => group.isPrimary)).toEqual([true, false]);
   });
 
-  it("AC-SEL-012 AC-SEL-020 opens Semua foto without groups, Beranda once delivered", async () => {
+  it("AC-SEL-012 AC-GFL-019 opens Semua foto without groups, Beranda once a finished file is synced", async () => {
     const target = await project();
     await addProjectItems(db, target, [{ name: "Album", value: 1, pickMode: null }]);
     expect((await home(target)).landing).toBe("ALL_PHOTOS");
+    await seedPhotos(db, target, [{ fileName: "E_001.jpg", kind: "EDITED" }]);
+    expect(await home(target)).toMatchObject({
+      landing: "HOME",
+      greeting: { kind: "START" },
+      editedCount: 1,
+    });
     const delivered = await home(target, true);
     expect(delivered).toMatchObject({ landing: "HOME", greeting: { kind: "DELIVERED" } });
     expect(delivered.groups).toEqual([]);

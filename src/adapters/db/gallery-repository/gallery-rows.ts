@@ -5,14 +5,8 @@ import type {
   GallerySyncErrorCode,
   GallerySyncStatus,
 } from "@/features/gallery/application/ports/gallery-repository/gallery-repository.port";
-import {
-  GALLERY_PROJECT_STATUSES,
-  GALLERY_STORED_STATUSES,
-} from "@/features/gallery/domain/gallery-status/gallery-status";
-import type {
-  GalleryProjectStatus,
-  GalleryStoredStatus,
-} from "@/features/gallery/domain/gallery-status/gallery-status.types";
+import { GALLERY_PROJECT_STATUSES } from "@/features/gallery/domain/gallery-state/gallery-state";
+import type { GalleryProjectStatus } from "@/features/gallery/domain/gallery-state/gallery-state.types";
 
 import type { gallerySource } from "../schema/gallery/gallery";
 
@@ -31,11 +25,6 @@ function pick<T extends string>(values: readonly T[], value: string | null): T |
 /** Narrows a stored project status; the check constraint guarantees one matches. @param value - the column value @returns the status or null */
 export function toProjectStatus(value: string): GalleryProjectStatus | null {
   return pick(GALLERY_PROJECT_STATUSES, value);
-}
-
-/** Narrows a stored gallery status (check `gallery_status_ck`). @param value - the column value @returns the status or null */
-export function toGalleryStatus(value: string): GalleryStoredStatus | null {
-  return pick(GALLERY_STORED_STATUSES, value);
 }
 
 /** Maps a `gallery_source` row joined with its workspace source name to the port record. @param row - the row @param workspaceSourceName - the F-04 source name @returns the source record */

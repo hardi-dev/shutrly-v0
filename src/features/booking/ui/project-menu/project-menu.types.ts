@@ -2,15 +2,17 @@ import type {
   ProjectMenuGroups,
   ProjectMenuItem,
 } from "@/features/booking/domain/project-menu/project-menu.types";
-import type { ProjectStep } from "@/features/booking/domain/project-status/project-status.types";
+import type { ManualStep } from "@/features/booking/domain/project-status/project-status.types";
 import type { IconName } from "@/ui/primitives/icon/icon.types";
 
 export interface ProjectMenuHandlers {
-  readonly onStep: (step: ProjectStep) => void;
+  readonly onStep: (step: ManualStep) => void;
   readonly onEditInfo: () => void;
   readonly onCancel: () => void;
   readonly onDeleteDraft: () => void;
   readonly onAddNumber: () => void;
+  readonly onShareGallery: () => void;
+  readonly onMarkDelivered: () => void;
 }
 
 export interface ProjectMenuProps {
@@ -29,6 +31,8 @@ export interface ResolvedMenuItem {
   readonly label: string;
   readonly icon: IconName;
   readonly isDestructive: boolean;
+  readonly isDisabled?: boolean;
+  readonly description?: string;
   readonly href?: string;
   readonly run?: () => void;
 }

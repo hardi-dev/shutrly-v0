@@ -7,10 +7,22 @@ const edit: HomeGroupInput = { id: "e", name: "Foto edit", status: "OPEN", limit
 const print: HomeGroupInput = { id: "p", name: "Foto cetak", status: "OPEN", limit: 4, usage: 0 };
 
 describe("client home (A-24, A-31)", () => {
-  it("AC-SEL-012 AC-SEL-020 skips Beranda only without groups and without final delivery", () => {
+  it("AC-SEL-012 AC-GFL-019 skips Beranda only without groups and without a synced finished file", () => {
     expect(clientLanding(0, false)).toBe("ALL_PHOTOS");
     expect(clientLanding(0, true)).toBe("HOME");
     expect(clientLanding(2, false)).toBe("HOME");
+  });
+
+  it("AC-GFL-009 disables the pick action of every group while no photo is visible", () => {
+    const cards = homeGroupCards([edit, print], false);
+    expect(cards.map((card) => [card.action, card.isDisabled])).toEqual([
+      ["CONTINUE", true],
+      ["START", true],
+    ]);
+    expect(homeGroupCards([{ ...edit, status: "SUBMITTED" }], false)[0]).toMatchObject({
+      action: "VIEW",
+      isDisabled: false,
+    });
   });
 
   it("AC-SEL-001 makes the first open group the primary task", () => {

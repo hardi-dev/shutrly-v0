@@ -11,6 +11,7 @@ import type { DeleteFolderDialogProps } from "./delete-folder-dialog.types";
 export function DeleteFolderDialog({
   workspaceId,
   source,
+  isLast,
   deleteSourceAction,
   onClose,
 }: Readonly<DeleteFolderDialogProps>) {
@@ -30,7 +31,11 @@ export function DeleteFolderDialog({
   return (
     <GalleryConfirmDialog
       title={t("deleteFolderTitle", { name: name })}
-      description={t("deleteFolderBody", { count: photos })}
+      description={
+        isLast
+          ? t("deleteLastFolderBody", { count: photos })
+          : t("deleteFolderBody", { count: photos })
+      }
       confirmLabel={t("deleteFolder")}
       isDestructive
       isPending={runner.isPending}

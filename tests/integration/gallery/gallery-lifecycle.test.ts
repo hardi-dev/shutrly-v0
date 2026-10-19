@@ -12,13 +12,13 @@ import { createWebCryptoGalleryPasswordCipher } from "@/adapters/crypto/gallery-
 import type { Db } from "@/adapters/db/client/client.types";
 import { createDrizzleGalleryRepository } from "@/adapters/db/gallery-repository/drizzle-gallery-repository";
 import { createDrizzleGallerySourceRepository } from "@/adapters/db/gallery-repository/drizzle-gallery-source-repository";
-import { gallery, galleryPhoto, gallerySource } from "@/adapters/db/schema/gallery/gallery";
-import { archiveGallery } from "@/features/gallery/application/use-cases/archive-gallery/archive-gallery";
-import { createGallery } from "@/features/gallery/application/use-cases/create-gallery/create-gallery";
-import { deleteDraftGallery } from "@/features/gallery/application/use-cases/delete-draft-gallery/delete-draft-gallery";
+import { gallery } from "@/adapters/db/schema/gallery/gallery";
+import {
+  createGalleryForBooking,
+  prepareGalleryPassword,
+} from "@/features/gallery/application/use-cases/create-gallery-for-booking/create-gallery-for-booking";
 import { deleteGallerySource } from "@/features/gallery/application/use-cases/delete-gallery-source/delete-gallery-source";
 import { linkGallerySource } from "@/features/gallery/application/use-cases/link-gallery-source/link-gallery-source";
-import { publishGallery } from "@/features/gallery/application/use-cases/publish-gallery/publish-gallery";
 import { rotateGalleryPassword } from "@/features/gallery/application/use-cases/rotate-gallery-password/rotate-gallery-password";
 import { setGalleryExpiry } from "@/features/gallery/application/use-cases/set-gallery-expiry/set-gallery-expiry";
 
@@ -49,22 +49,29 @@ function deps() {
   };
 }
 
-async function linkedGallery(seed: GallerySeed) {
-  const created = await createGallery(
-    {
-      galleries: createDrizzleGalleryRepository(db),
-      cipher,
-      hasher: fakeHasher,
-      newId: () => crypto.randomUUID(),
-      now: new Date(),
-    },
+const bookingDeps = () => ({
+  cipher,
+  hasher: fakeHasher,
+  passwords: { propose: () => "mawar-4821" },
+  newId: () => crypto.randomUUID(),
+});
+
+async function createBookedGallery(seed: GallerySeed) {
+  const prepared = await prepareGalleryPassword(bookingDeps(), seed.context);
+  const created = await createGalleryForBooking(
+    { galleries: createDrizzleGalleryRepository(db) },
     seed.context,
     seed.ownerId,
     seed.bookedProjectId,
-    { password: "mawar-4821", expiry: { type: "DAYS", days: 30 } },
+    prepared,
   );
-  if (!created.ok) throw new Error("create failed");
-  const linked = await linkGallerySource(deps(), seed.context, seed.ownerId, created.galleryId, {
+  if (!created.ok || !created.created) throw new Error("create failed");
+  return prepared.galleryId;
+}
+
+async function linkedGallery(seed: GallerySeed) {
+  const galleryId = await createBookedGallery(seed);
+  const linked = await linkGallerySource(deps(), seed.context, seed.ownerId, galleryId, {
     workspaceSourceId: seed.sourceConfigId,
     link: `https://drive.google.com/drive/folders/${RINA_FOLDER_ID}`,
     label: "",
@@ -72,7 +79,7 @@ async function linkedGallery(seed: GallerySeed) {
   if (!linked.ok) throw new Error("link failed");
   await mapFixtureFolders(db, seed.context, linked.sourceId);
   await syncSourceToEnd(deps(), seed.context, linked.sourceId);
-  return { galleryId: created.galleryId, sourceId: linked.sourceId };
+  return { galleryId, sourceId: linked.sourceId };
 }
 
 async function galleryRow(galleryId: string) {
@@ -81,16 +88,13 @@ async function galleryRow(galleryId: string) {
 }
 
 describe("gallery lifecycle against Postgres", () => {
-  it("AC-GAL-016 AC-GAL-018 AC-GAL-021 AC-GAL-022 publish, re-date, rotate and archive", async () => {
+  // AC-GFL-006 supersedes AC-GAL-016 (publish) and AC-GAL-022 (archive): the gallery opens with its
+  // project, so there is nothing to publish or archive.
+  it("AC-GAL-018 AC-GAL-021 re-date and rotate an open gallery, and remove its last folder", async () => {
     const seed = await seedGalleryWorkspace(db);
     const { galleryId, sourceId } = await linkedGallery(seed);
-    expect(await publishGallery(deps(), seed.context, seed.ownerId, galleryId)).toEqual({
-      ok: true,
-    });
-    const published = await galleryRow(galleryId);
-    expect(published.status).toBe("PUBLISHED");
-    expect(published.expiryDays).toBeNull();
-    expect(published.expiresAt?.getTime()).toBeGreaterThan(Date.now() + 29 * 86_400_000);
+    const opened = await galleryRow(galleryId);
+    expect(opened.expiresAt).toBeNull();
 
     expect(
       await setGalleryExpiry(deps(), seed.context, seed.ownerId, galleryId, {
@@ -109,107 +113,27 @@ describe("gallery lifecycle against Postgres", () => {
     expect(rotated.passwordChangedAt).not.toBeNull();
     expect(JSON.stringify({ ...rotated, passwordHash: null })).not.toContain("baru2026");
 
-    expect(await deleteGallerySource(deps(), seed.context, sourceId)).toEqual({
-      ok: false,
-      code: "LAST_ACTIVE_SOURCE",
-    });
-    expect(await archiveGallery(deps(), seed.context, seed.ownerId, galleryId)).toEqual({
-      ok: true,
-    });
-    expect(await galleryRow(galleryId)).toMatchObject({
-      status: "ARCHIVED",
-      archivedBy: seed.ownerId,
-    });
-    expect(await deleteDraftGallery(deps(), seed.context, galleryId)).toEqual({
-      ok: false,
-      code: "INVALID_STATE",
-    });
+    // AC-GFL-015: the last folder of an open gallery can go when no photo is picked.
+    expect(await deleteGallerySource(deps(), seed.context, sourceId)).toEqual({ ok: true });
+    expect(await galleryRow(galleryId)).toMatchObject({ id: galleryId });
   });
 
-  it("AC-GAL-001 Revision OT #3 creates a gallery with its first folder, or nothing when the source is inactive", async () => {
-    const seed = await seedGalleryWorkspace(db);
-    const galleryDeps = () => ({
-      galleries: createDrizzleGalleryRepository(db),
-      cipher,
-      hasher: fakeHasher,
-      newId: () => crypto.randomUUID(),
-      now: new Date(),
-    });
-    const input = (workspaceSourceId: string) => ({
-      password: "mawar-4821",
-      expiry: { type: "NONE" },
-      folder: {
-        workspaceSourceId,
-        link: `https://drive.google.com/drive/folders/${RINA_FOLDER_ID}`,
-        label: "",
-      },
-    });
-    const refused = await createGallery(
-      galleryDeps(),
-      seed.context,
-      seed.ownerId,
-      seed.bookedProjectId,
-      input(crypto.randomUUID()),
-    );
-    expect(refused).toEqual({
-      ok: false,
-      code: "VALIDATION_FAILED",
-      fieldErrors: { "folder.workspaceSourceId": "SOURCE_NOT_ACTIVE" },
-    });
-    expect(
-      await db.select().from(gallery).where(eq(gallery.projectId, seed.bookedProjectId)),
-    ).toHaveLength(0);
-    const created = await createGallery(
-      galleryDeps(),
-      seed.context,
-      seed.ownerId,
-      seed.bookedProjectId,
-      input(seed.sourceConfigId),
-    );
-    if (!created.ok) throw new Error("create failed");
-    const [source] = await db
-      .select()
-      .from(gallerySource)
-      .where(eq(gallerySource.galleryId, created.galleryId));
-    expect(source).toMatchObject({ id: created.sourceId, providerFolderId: RINA_FOLDER_ID });
-    await syncSourceToEnd(deps(), seed.context, source.id);
-    expect(
-      await db.select().from(galleryPhoto).where(eq(galleryPhoto.gallerySourceId, source.id)),
-    ).toHaveLength(8);
-  });
-
-  it("AC-GAL-023 deletes a draft with its sources and photo records", async () => {
-    const seed = await seedGalleryWorkspace(db);
-    const { galleryId, sourceId } = await linkedGallery(seed);
-    expect(await deleteDraftGallery(deps(), seed.context, galleryId)).toEqual({ ok: true });
-    expect(await db.select().from(gallery).where(eq(gallery.id, galleryId))).toHaveLength(0);
-    expect(
-      await db.select().from(gallerySource).where(eq(gallerySource.id, sourceId)),
-    ).toHaveLength(0);
-    expect(
-      await db.select().from(galleryPhoto).where(eq(galleryPhoto.gallerySourceId, sourceId)),
-    ).toHaveLength(0);
-  });
-
-  it("AC-GAL-036 the content version rises on each change a client could see, and not on an unchanged re-sync", async () => {
+  it("AC-GFL-001 AC-GAL-036 a booked gallery starts at version 2 and the version rises on each change a client could see", async () => {
     const seed = await seedGalleryWorkspace(db);
     const { galleryId, sourceId } = await linkedGallery(seed);
     const version = async () => (await galleryRow(galleryId)).contentVersion;
     expect(await version()).toBe(2);
     await syncSourceToEnd(deps(), seed.context, sourceId);
     expect(await version()).toBe(2);
-    await publishGallery(deps(), seed.context, seed.ownerId, galleryId);
-    expect(await version()).toBe(3);
+    // No publish or archive step (AC-GFL-006): only the changes below bump the version (D-15).
     await setGalleryExpiry(deps(), seed.context, seed.ownerId, galleryId, {
       expiry: { type: "NONE" },
     });
-    expect(await version()).toBe(4);
+    expect(await version()).toBe(3);
     await rotateGalleryPassword(deps(), seed.context, seed.ownerId, galleryId, {
       password: "baru2026",
     });
-    expect(await version()).toBe(5);
-    await archiveGallery(deps(), seed.context, seed.ownerId, galleryId);
-    expect(await version()).toBe(6);
+    expect(await version()).toBe(4);
   });
 
   it("AC-GAL-036 deleting a folder and a sync that finds a renamed file each bump the version", async () => {
@@ -222,7 +146,6 @@ describe("gallery lifecycle against Postgres", () => {
     });
     if (!second.ok) throw new Error("link failed");
     await syncSourceToEnd(deps(), seed.context, second.sourceId);
-    await publishGallery(deps(), seed.context, seed.ownerId, galleryId);
     const before = (await galleryRow(galleryId)).contentVersion;
     await deleteGallerySource(deps(), seed.context, second.sourceId);
     expect((await galleryRow(galleryId)).contentVersion).toBe(before + 1);

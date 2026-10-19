@@ -8,7 +8,12 @@ import {
   GALLERY_SYNC_ERROR_MESSAGE_KEY,
 } from "@/features/gallery/ui/gallery-copy/gallery-copy.copy";
 
-import { createProject, expectGalleryA11y, openGalleryWorkspace, visibleText } from "./gallery-e2e";
+import {
+  bookGalleryPage,
+  expectGalleryA11y,
+  openGalleryWorkspace,
+  visibleText,
+} from "./gallery-e2e";
 
 const galleryCopy = copyTranslator(GALLERY_COPY_NAMESPACE, "id");
 
@@ -19,13 +24,10 @@ test.describe.configure({ retries: 2 });
 const RINA = "https://drive.google.com/drive/folders/fixtureRinaWisuda01";
 const NOT_PUBLIC = "https://drive.google.com/drive/folders/fixtureNotPublic01";
 
-async function createGallery(page: Page): Promise<void> {
+/** Books the project for *Rina*: the booking has already created the gallery, so the spec only links folders on it (AC-GFL-001, AC-GFL-007). */
+async function bookGallery(page: Page): Promise<void> {
   const workspaceId = await openGalleryWorkspace(page);
-  await createProject(page, workspaceId, "BOOKED");
-  await page.getByRole("button", { name: galleryCopy("create") }).click();
-  const dialog = page.getByRole("dialog", { name: galleryCopy("createDialogTitle") });
-  await dialog.getByRole("button", { name: galleryCopy("create") }).click();
-  await expect(visibleText(page, galleryCopy("createdTitle"))).toBeVisible();
+  await bookGalleryPage(page, workspaceId);
 }
 
 async function linkFolder(page: Page, url: string): Promise<void> {
@@ -38,10 +40,10 @@ async function linkFolder(page: Page, url: string): Promise<void> {
   await link.getByRole("button", { name: galleryCopy("addFolder") }).click();
 }
 
-test("AC-GAL-005 AC-GAL-006 AC-GAL-008 AC-GAL-032 links a folder, syncs it step by step, re-syncs and shows a failed folder", async ({
+test("AC-GFL-001 AC-GAL-005 AC-GAL-006 AC-GAL-008 AC-GAL-032 links a folder on the booked gallery, syncs it step by step, re-syncs and shows a failed folder", async ({
   page,
 }) => {
-  await createGallery(page);
+  await bookGallery(page);
 
   await linkFolder(page, RINA);
   await expect(
@@ -50,7 +52,7 @@ test("AC-GAL-005 AC-GAL-006 AC-GAL-008 AC-GAL-032 links a folder, syncs it step 
     timeout: 60_000,
   });
   // F-21: no folder is recognised by name, so the whole unmapped fixture is proofs.
-  await expect(visibleText(page, "8 proof · 0 hasil akhir")).toBeVisible();
+  await expect(visibleText(page, "8 foto pilihan · 0 hasil akhir")).toBeVisible();
   // AC-GAL-015: with the fixture Drive the tiles use the Owner media route, never a Drive URL.
   const thumbnail = page.locator("main img").first();
   await expect(thumbnail).toHaveAttribute(
@@ -70,7 +72,7 @@ test("AC-GAL-005 AC-GAL-006 AC-GAL-008 AC-GAL-032 links a folder, syncs it step 
   ).toBeVisible({
     timeout: 60_000,
   });
-  await expect(visibleText(page, "8 proof · 0 hasil akhir")).toBeVisible();
+  await expect(visibleText(page, "8 foto pilihan · 0 hasil akhir")).toBeVisible();
 
   await linkFolder(page, NOT_PUBLIC);
   await expect(visibleText(page, galleryCopy(GALLERY_SOURCE_CHIP_MESSAGE_KEY.FAILED))).toBeVisible({

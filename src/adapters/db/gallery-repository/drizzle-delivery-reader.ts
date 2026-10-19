@@ -13,7 +13,7 @@ import type { DbExecutor } from "../client/client.types";
 import { project } from "../schema/booking/project";
 import { projectItem } from "../schema/booking/project";
 import { gallery, galleryPhoto, gallerySource } from "../schema/gallery/gallery";
-import { toGalleryStatus, toProjectStatus } from "./gallery-rows";
+import { toProjectStatus } from "./gallery-rows";
 
 // Visible finished files: not missing, from an active source (BR-DEL-001/002, BR-GAL-009).
 const finishedCount = (kind: "EDITED" | "PRINT") => sql<number>`(select count(*)::int
@@ -75,7 +75,7 @@ async function selectFinishedItems(
 }
 
 interface GalleryRow {
-  readonly status: string | null;
+  readonly galleryId: string | null;
   readonly expiresAt: Date | null;
   readonly finalDeliveryPublishedAt: Date | null;
   readonly editedCount: number | null;
@@ -86,10 +86,8 @@ function toGalleryFacts(
   row: GalleryRow,
   items: readonly FinishedItemCount[],
 ): DeliveryGalleryFacts | null {
-  const status = row.status ? toGalleryStatus(row.status) : null;
-  if (!status) return null;
+  if (row.galleryId === null) return null;
   return {
-    status,
     expiresAt: row.expiresAt,
     finalDeliveryPublishedAt: row.finalDeliveryPublishedAt,
     editedCount: row.editedCount ?? 0,
@@ -108,7 +106,6 @@ export function createDrizzleDeliveryReader(db: DbExecutor): DeliveryReaderPort 
           projectStatus: project.status,
           completedAt: project.completedAt,
           galleryId: gallery.id,
-          status: gallery.status,
           expiresAt: gallery.expiresAt,
           finalDeliveryPublishedAt: gallery.finalDeliveryPublishedAt,
           editedCount: finishedCount("EDITED"),

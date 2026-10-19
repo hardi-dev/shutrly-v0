@@ -46,11 +46,7 @@ function AccessRows({ card }: Readonly<Pick<ProjectAccessCardProps, "card">>) {
         value={card.gallery.password}
         copy={{ text: card.gallery.password, label: t("copyPassword") }}
       />
-      {card.state === "DRAFT" ? (
-        <p className={NOTE}>{t("draftNote")}</p>
-      ) : (
-        <AccessRow label={t("expiry")} value={expiry.text} isMuted={expiry.isMuted} />
-      )}
+      <AccessRow label={t("expiry")} value={expiry.text} isMuted={expiry.isMuted} />
     </>
   );
 }

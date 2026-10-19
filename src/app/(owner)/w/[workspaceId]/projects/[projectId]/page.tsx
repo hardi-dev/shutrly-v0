@@ -15,12 +15,7 @@ import {
   removeSessionAssignmentAction,
 } from "@/app/actions/booking/session-team";
 import { TEAM_QUICK_ADD_ACTIONS } from "@/app/actions/booking/team-quick-add-actions";
-import { completeProjectAction, publishFinalDeliveryAction } from "@/app/actions/gallery/delivery";
-import {
-  checkNewGalleryFolderAction,
-  createGalleryAction,
-  proposeGalleryPasswordAction,
-} from "@/app/actions/gallery/galleries";
+import { completeProjectAction, markDeliveredAction } from "@/app/actions/gallery/delivery";
 import { loadAddOnCard } from "@/composition/booking/add-on-flow/add-on-flow";
 import {
   loadProjectDefinitions,
@@ -29,6 +24,7 @@ import {
 import { loadAssignableMembers, loadTeamRoles } from "@/composition/booking/team-flow/team-flow";
 import { loadDeliveryCard } from "@/composition/gallery/delivery-flow/delivery-flow";
 import { loadGalleryCard } from "@/composition/gallery/gallery-flow/gallery-flow";
+import { isGalleryShareable } from "@/composition/gallery/gallery-share-flow/gallery-share-eligibility";
 import { loadSelectionCard } from "@/composition/gallery/selection-owner-flow/selection-owner-flow";
 import { getRequestFormattingLocale } from "@/composition/locale/request-formatting-locale/request-formatting-locale";
 import type { ProjectDetailView } from "@/features/booking/application/use-cases/get-project-detail/get-project-detail.types";
@@ -45,9 +41,10 @@ import { TeamQuickAddProvider } from "@/features/booking/ui/team-quick-add/team-
 import type { GalleryCardView } from "@/features/gallery/application/use-cases/gallery-views/gallery-views.types";
 import type { DeliveryCardView } from "@/features/gallery/application/use-cases/get-delivery-card/get-delivery-card.types";
 import type { SelectionCardView } from "@/features/gallery/application/use-cases/owner-selection-views/owner-selection-views.types";
-import { CompleteProjectButton } from "@/features/gallery/ui/complete-project-button/complete-project-button";
 import { deliveredHeaderMeta } from "@/features/gallery/ui/delivery-text/delivery-text";
+import { FinishProjectButton } from "@/features/gallery/ui/finish-project-button/finish-project-button";
 import { GalleryCard } from "@/features/gallery/ui/gallery-card/gallery-card";
+import { MarkDeliveredButton } from "@/features/gallery/ui/mark-delivered-button/mark-delivered-button";
 import { PageHeadingOverride } from "@/features/workspace/ui/page-heading-override/page-heading-override";
 import type { FormattingLocale } from "@/shared/locale/locale.types";
 import { ToastOnMount } from "@/ui/patterns/toast/toast";
@@ -63,10 +60,8 @@ export default async function ProjectDetailPage({
 }>) {
   const locale = await getRequestFormattingLocale();
   const [{ workspaceId, projectId }, { state }] = await Promise.all([params, searchParams]);
-  const { project, definitions, assignableMembers, roles, delivery, cards, t } = await loadPage(
-    workspaceId,
-    projectId,
-  );
+  const { project, definitions, assignableMembers, roles, gallery, delivery, cards, t } =
+    await loadPage(workspaceId, projectId);
   const toast = resolveToast(t, state, project.title);
   const deliveredMeta = await deliveredMetaOf(delivery, locale);
   return (
@@ -86,8 +81,10 @@ export default async function ProjectDetailPage({
           editActions={PROJECT_EDIT_ACTIONS}
           definitions={definitions}
           {...cards}
-          headerAction={completeSlot(workspaceId, projectId, delivery)}
+          headerAction={headerActionSlot(workspaceId, projectId, project, delivery)}
           headerMeta={deliveredMeta ?? undefined}
+          canShareGallery={isGalleryShareable(gallery)}
+          hasFinishedFiles={delivery.editedCount + delivery.printCount > 0}
           assignableMembers={assignableMembers}
           addAssignmentAction={addSessionAssignmentAction}
           removeAssignmentAction={removeSessionAssignmentAction}
@@ -122,7 +119,7 @@ async function loadPage(workspaceId: string, projectId: string) {
     addOnCard: addOnCardSlot(workspaceId, projectId, addOn),
   };
   const t = await getTranslations(PROJECT_DETAIL_PAGE_COPY_NAMESPACE);
-  return { project, definitions, assignableMembers, roles, delivery, cards, t };
+  return { project, definitions, assignableMembers, roles, gallery, delivery, cards, t };
 }
 
 const ADD_ON_ACTIONS = {
@@ -156,9 +153,6 @@ function galleryCardSlot(
       card={views.gallery}
       selection={views.selection}
       delivery={views.delivery}
-      createAction={createGalleryAction}
-      proposeAction={proposeGalleryPasswordAction}
-      checkFolderAction={checkNewGalleryFolderAction}
     />
   );
 }
@@ -176,16 +170,39 @@ function headerMetaText(
   return projectMetaLine(project.client.name, deliveredMeta);
 }
 
-const DELIVERY_ACTIONS = {
-  publishAction: publishFinalDeliveryAction,
-  completeAction: completeProjectAction,
-};
+const DELIVERY_ACTIONS = { markDeliveredAction };
+const FINISH_ACTIONS = { completeAction: completeProjectAction };
 
-// *Tandai selesai* is the header's main action on a DELIVERED project (A-34, AC-DEL-007).
-function completeSlot(workspaceId: string, projectId: string, card: DeliveryCardView) {
-  if (!card.canComplete) return null;
+// A DELIVERED project's header offers *Tandai selesai* (BR-PRJ-004); POST_PROCESSING offers *Tandai terkirim*.
+function headerActionSlot(
+  workspaceId: string,
+  projectId: string,
+  project: ProjectDetailView,
+  delivery: DeliveryCardView,
+) {
+  if (project.status === "DELIVERED") {
+    return (
+      <FinishProjectButton
+        workspaceId={workspaceId}
+        projectId={projectId}
+        title={project.title}
+        actions={FINISH_ACTIONS}
+      />
+    );
+  }
+  return markDeliveredSlot(workspaceId, projectId, delivery, project.nextStep);
+}
+
+// *Tandai terkirim* is the header's step on POST_PROCESSING (F-27 AC-GFL-017); the project detail hides its step button and shows this one.
+function markDeliveredSlot(
+  workspaceId: string,
+  projectId: string,
+  card: DeliveryCardView,
+  nextStep: ProjectDetailView["nextStep"],
+) {
+  if (nextStep !== "MARK_DELIVERED") return null;
   return (
-    <CompleteProjectButton
+    <MarkDeliveredButton
       workspaceId={workspaceId}
       projectId={projectId}
       card={card}

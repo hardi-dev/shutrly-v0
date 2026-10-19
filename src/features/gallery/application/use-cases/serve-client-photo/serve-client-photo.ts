@@ -24,7 +24,7 @@ export async function serveClientPhoto(
     isMissing: photo.missing,
     isSourceRemoved: photo.sourceRemoved,
   };
-  if (!isServableToClient(facts, client.finalDeliveryPublished)) return { ok: false };
+  if (!isServableToClient(facts)) return { ok: false };
   return deps.provider.thumbnail(
     { fileId: photo.externalFileId, resourceKey: photo.resourceKey },
     size,

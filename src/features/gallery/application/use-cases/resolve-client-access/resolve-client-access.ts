@@ -31,7 +31,11 @@ export async function findAvailableGallery(
     await deps.rateLimiter.hit(unknownKey, UNKNOWN_TOKEN_PER_ADDRESS);
     return null;
   }
-  const available = isAvailableToClient({ ...record, now: deps.now });
+  const available = isAvailableToClient({
+    projectStatus: record.projectStatus,
+    expiresAt: record.expiresAt,
+    now: deps.now,
+  });
   return available ? record : null;
 }
 

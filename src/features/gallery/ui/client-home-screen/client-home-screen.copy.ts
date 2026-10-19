@@ -41,8 +41,13 @@ export const CLIENT_HOME_COPY = {
         "{count, plural, one {# photo} other {# photos}} · browse and pick from previews",
       // PROPOSED (pending Owner review)
       allPhotosMetaNoGroups: "{count, plural, one {# photo} other {# photos}} · browse previews",
-      // PROPOSED (pending Owner review)
-      finalPendingMeta: "Not available yet · appears here when your photos are edited.",
+      // Owner-approved (F-27 copy draft, iteration 7).
+      finalUnavailable: "Not available yet · it appears here once the photos are edited.",
+      // Owner-approved (F-27 copy draft, iteration 7).
+      finalReadyNoDate:
+        "{edited, plural, one {# edited photo} other {# edited photos}} · {print, plural, one {# print photo} other {# print photos}}",
+      // Owner-approved (F-27 copy draft, iteration 7).
+      subtitleNoPhotos: "No photos yet · the photographer hasn’t added any. Try again later.",
       // PROPOSED (pending Owner review)
       pickTitle: "Choose photos",
       // PROPOSED (pending Owner review)
@@ -72,7 +77,11 @@ export const CLIENT_HOME_COPY = {
       photosDescriptionDelivered: "Lihat semua foto pratinjau dari sesi Anda.",
       allPhotosMeta: "{count, plural, other {# foto}} · lihat-lihat dan pilih dari pratinjau",
       allPhotosMetaNoGroups: "{count, plural, other {# foto}} · lihat-lihat pratinjau",
-      finalPendingMeta: "Belum tersedia · muncul di sini setelah foto selesai diedit.",
+      finalUnavailable: "Belum tersedia · muncul di sini setelah foto selesai diedit.",
+      // Same wording as the EN row, with a plural wrapper so the catalog parity check holds.
+      finalReadyNoDate:
+        "{edited, plural, other {# Foto edit}} · {print, plural, other {# Foto cetak}}",
+      subtitleNoPhotos: "Belum ada foto · fotografer belum menambahkan foto. Coba lagi nanti.",
       pickTitle: "Pilih foto",
       pickDescription:
         "Satu baris untuk tiap bagian paket Anda. Pilih dan kirim tiap bagian sendiri.",

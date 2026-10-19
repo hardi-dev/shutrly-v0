@@ -1,5 +1,7 @@
 # Feature: Client access
 
+> **Superseded in part by F-27 (2026-10-19):** [simplify-project-gallery-flow](../simplify-project-gallery-flow/spec.md) and [ADR-028](../../architecture/decisions/ADR-028-gallery-without-stored-status.md) replace the publish preconditions of client access, *Publikasikan hasil akhir* (now the project step *Tandai terkirim*, BR-DEL-003) and the rule that finished files stay hidden until delivery (now visible once synced, BR-DEL-002). Where they differ, F-27 wins.
+
 ID: F-10 · Slug: `client-access` (F-10 *Client gallery access*, F-11 *Selection*, F-12 *Final delivery* and F-13 *Add-ons* merged, Owner 2026-10-05)
 Status: IN PROGRESS (build started 2026-10-06; planned 2026-10-06; specified 2026-10-05, designed 2026-10-06) · Technical design: [technical-design.md](technical-design.md) · Plan: [plan.md](plan.md) · Intent: [intent.md](intent.md) (ACCEPTED 2026-10-05) · Design: [design.md](design.md) (APPROVED 2026-10-06) · Journeys: J-04 (client half and Owner review), J-05, J-06
 Builds on: F-07 `projects` (token, project items, lifecycle), F-09 `gallery` (published gallery, password hash and `passwordVersion`, photo kinds, media route, `contentVersion`)

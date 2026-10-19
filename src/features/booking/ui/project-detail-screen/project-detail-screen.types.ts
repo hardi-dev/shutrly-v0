@@ -20,6 +20,10 @@ export interface ProjectDetailScreenProps {
   readonly addOnCard?: ReactNode;
   /** The header's main action when the project has no status step, e.g. *Tandai selesai* on a DELIVERED project (client-access D-20, A-34). */
   readonly headerAction?: ReactNode;
+  /** BR-GAL-010: the gallery can be shared, so the ⋯ menu offers *Kirim link ke klien* (AC-GFL-013, 020). */
+  readonly canShareGallery?: boolean;
+  /** A visible finished file is synced, so *Tandai terkirim* in the ⋯ menu is enabled (AC-GFL-017). */
+  readonly hasFinishedFiles?: boolean;
   /** Replaces the phone header's session line, e.g. *Hasil akhir dipublikasikan …* (Owner 7). */
   readonly headerMeta?: string;
   /** Active members with their roles, for the Penugasan form (D-13). */

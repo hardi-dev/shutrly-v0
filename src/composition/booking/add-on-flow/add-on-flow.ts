@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 
 import { createDrizzleAddOnRepository } from "@/adapters/db/add-on-repository/drizzle-add-on-repository";
 import { createDrizzleSelectionRepository } from "@/adapters/db/selection-repository/drizzle-selection-repository";
+import { getRequestFormattingLocale } from "@/composition/locale/request-formatting-locale/request-formatting-locale";
 import { ProjectError } from "@/features/booking/application/errors/project-errors/project-errors";
 import { projectIdSchema } from "@/features/booking/application/schemas/project-ids/project-ids.schema";
 import type {
@@ -58,13 +59,14 @@ async function runAddOnChange<T>(
 }
 
 /** Creates a draft add-on (AC-ADD-001…003, -006). @param ws - untrusted workspace id @param id - untrusted project id @param values - untrusted form values @returns the new id or a failure */
-export function createAddOnEntry(
+export async function createAddOnEntry(
   ws: string,
   id: string,
   values: unknown,
 ): Promise<CreateAddOnResult | AddOnTargetFailure> {
+  const locale = await getRequestFormattingLocale();
   return runAddOnChange(ws, id, "create", (scope, target) =>
-    createAddOnWithTarget(scope, target, values),
+    createAddOnWithTarget(scope, target, values, locale),
   );
 }
 

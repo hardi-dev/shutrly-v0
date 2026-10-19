@@ -32,13 +32,15 @@ export function GalleryPageScreen({
     <main className="mx-auto flex w-full max-w-(--size-content-narrow) flex-col gap-(--space-4) pb-(--space-6) md:gap-(--component-panel-app-content-gap)">
       {isMobile ? (
         <header className="flex flex-col items-start gap-(--space-2)">
-          <StatusChip {...galleryStatusChip(t, gallery.status)} />
+          {gallery.state === "OPEN" ? null : (
+            <StatusChip {...galleryStatusChip(t, gallery.state)} />
+          )}
           <p className="text-(length:--font-size-body-sm) text-(--component-page-header-subtitle)">
             {galleryMetaText(t, gallery, null, locale)}
           </p>
         </header>
       ) : null}
-      <GalleryStateAlert gallery={gallery} projectStatus={page.project.status} />
+      <GalleryStateAlert gallery={gallery} />
       {accessCard}
       {selectionCard}
       {deliveryCard}

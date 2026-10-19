@@ -52,46 +52,36 @@ export function selectionSummary(
   return { title, meta, chip: groupStatusChip(selectionT, status) };
 }
 
-// F-21: one part per package item with files, "3 Foto edit · 1 Foto cetak".
-function finishedKinds(t: SummaryTranslate, card: DeliveryCardView): string {
-  return card.items
-    .filter((item) => item.count > 0)
-    .map((item) => t("item", { count: item.count, name: item.name }))
-    .join(JOIN);
-}
-
 /**
- * The Galeri card's *Hasil akhir* row: ready files or the publication date (with the kinds on
- * desktop) and its chip; the refusal reason while nothing can be published (Owner 7, A-34).
- * @param t - the summary translator
- * @param deliveryT - the delivery translator, for the title, the reasons and the chips
+ * The Galeri card's *Hasil akhir* row (F-27 P4, P7): the ready files with their kinds, or the delivery
+ * date, with its chip; the note while no finished file is synced (AC-GFL-006, 019).
+ * @param deliveryT - the delivery translator, for the title, the note and the chips
  * @param card - the *Hasil akhir* card view
- * @param isMobile - phones leave out the kinds
  * @param locale - the formatting locale
  * @returns the row, or null where final delivery never applies
  */
 export function deliverySummary(
-  t: SummaryTranslate,
   deliveryT: DeliveryTranslate,
   card: DeliveryCardView,
-  isMobile: boolean,
   locale: FormattingLocale,
 ): GallerySummaryRow | null {
   const title = deliveryT("cardTitle");
   if (!card.isShown) return null;
-  if (card.state === "NO_FILES" || card.state === "GALLERY_INACTIVE") {
-    const meta =
-      card.state === "NO_FILES"
-        ? deliveryT("reasonNoFinishedFile")
-        : deliveryT("reasonGalleryNotPublished");
-    return { title, meta, chip: null };
+  const counts = { edited: card.editedCount, print: card.printCount };
+  if (card.state === "NO_FILES") {
+    return { title, meta: deliveryT("reasonNoFinishedFile"), chip: null };
   }
   if (card.state === "READY") {
-    const meta = isMobile ? t("readyMobile") : t("ready", { files: finishedKinds(t, card) });
-    return { title, meta, chip: { label: deliveryT("chipReady"), tone: "info" } };
+    return {
+      title,
+      meta: deliveryT("readyRowMeta", counts),
+      chip: { label: deliveryT("readyStatus"), tone: "info" },
+    };
   }
   const when = card.publishedAt ? formatGalleryDate(card.publishedAt, locale) : "";
-  const published = t("published", { when });
-  const meta = isMobile ? published : [published, finishedKinds(t, card)].join(JOIN);
-  return { title, meta, chip: { label: deliveryT("chipPublished"), tone: "success" } };
+  return {
+    title,
+    meta: deliveryT("deliveredRowTitle", { when, ...counts }),
+    chip: { label: deliveryT("deliveredStatus"), tone: "success" },
+  };
 }

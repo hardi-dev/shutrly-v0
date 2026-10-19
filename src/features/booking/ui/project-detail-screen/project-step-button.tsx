@@ -2,7 +2,7 @@
 
 import { useTranslations } from "next-intl";
 
-import type { ProjectStep } from "@/features/booking/domain/project-status/project-status.types";
+import type { ManualStep } from "@/features/booking/domain/project-status/project-status.types";
 import { Button } from "@/ui/primitives/button/button";
 
 import { projectStepCopy } from "../project-step-copy/project-step-copy";
@@ -17,12 +17,12 @@ export function ProjectStepButton({
   className,
   onAdvance,
 }: Readonly<{
-  step: ProjectStep;
+  step: ManualStep;
   isPending: boolean;
   isDisabled: boolean;
   size: "md" | "lg";
   className?: string;
-  onAdvance: (step: ProjectStep) => Promise<void>;
+  onAdvance: (step: ManualStep) => Promise<void>;
 }>) {
   const t = useTranslations(PROJECT_DETAIL_SCREEN_COPY_NAMESPACE);
   const copy = projectStepCopy(t, step);

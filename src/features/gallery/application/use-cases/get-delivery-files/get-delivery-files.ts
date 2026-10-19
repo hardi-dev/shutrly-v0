@@ -14,22 +14,23 @@ const FALLBACK = { EDITED: "Edited", PRINT: "Print" } as const;
 /**
  * Loads *Hasil akhir* for the signed-in client: every visible, not-missing EDITED and PRINT file
  * with its image and download URLs, grouped per package item with every selection item shown even when
- * empty (F-21, Owner 2026-10-08), or null before final delivery is published (BR-DEL-001/002,
- * BR-DEL-004, D-15, D-18, AC-DEL-003, -004, -006).
+ * empty (F-21, Owner 2026-10-08). Synced files are visible without a delivery step (AC-GFL-019), so
+ * the result is null only while no finished file is synced (BR-DEL-002, BR-DEL-004, D-15, D-18,
+ * AC-DEL-003, -004, -006).
  * @param deps - the client reader and whether images load straight from Google
  * @param client - the signed-in client context
- * @returns the files per item, or null before delivery
+ * @returns the files per item, or null when no finished file is synced
  */
 export async function getDeliveryFiles(
   deps: GetDeliveryFilesDeps,
   client: ClientContext,
 ): Promise<DeliveryFilesView | null> {
-  if (!client.finalDeliveryPublished) return null;
   const context = { workspaceId: client.workspaceId };
   const [items, photos] = await Promise.all([
     deps.reader.listDeliveryItems(context, client.galleryId),
     deps.reader.listFinishedPhotos(context, client.galleryId),
   ]);
+  if (photos.length === 0) return null;
   const groups = new Map<string, { id: string; name: string; files: DeliveryFileView[] }>(
     items.map((item) => [item.id, { id: item.id, name: item.name, files: [] }]),
   );

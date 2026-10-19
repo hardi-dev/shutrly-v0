@@ -1,5 +1,7 @@
 # Acceptance Criteria — Client access (F-10)
 
+> **Superseded in part by F-27 (2026-10-19):** [simplify-project-gallery-flow](../simplify-project-gallery-flow/spec.md) and [ADR-028](../../architecture/decisions/ADR-028-gallery-without-stored-status.md) replace the publish preconditions of client access, *Publikasikan hasil akhir* (now the project step *Tandai terkirim*, BR-DEL-003) and the rule that finished files stay hidden until delivery (now visible once synced, BR-DEL-002). Where they differ, F-27 wins.
+
 Assumption references (A-n) point to [spec.md](spec.md#assumptions-low-risk-reversible--confirm-or-change-anytime). UI labels are working copy; the design may rename them.
 
 Shared fixture, used unless an AC says otherwise. The Owner's workspace has:

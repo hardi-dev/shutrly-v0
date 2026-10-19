@@ -25,7 +25,7 @@ const PAGE = {
   project: { id: "p-1", title: "Wisuda Rina", status: "BOOKED" as const },
   gallery: {
     id: "g-1",
-    status: "DRAFT" as const,
+    state: "OPEN" as const,
     password: "mawar-4821",
     expiresAt: null,
     expiryDays: null,
@@ -51,7 +51,7 @@ describe("GalleryPhotosSection", () => {
     );
     expect(screen.getByText("8 foto pilihan (1 hilang) · 3 hasil akhir")).toBeInTheDocument();
     expect(
-      screen.getByText(/Terlihat oleh klien setelah galeri dipublikasikan\./),
+      screen.getByText(/Terlihat oleh klien yang punya link dan kata sandi\./),
     ).toBeInTheDocument();
     expect(container.querySelectorAll("img")).toHaveLength(6);
     expect(screen.getByText("Hilang")).toBeInTheDocument();

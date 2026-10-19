@@ -12,6 +12,7 @@ import { gallery } from "../schema/gallery/gallery";
 import { selectMediaPhoto, selectPreviewPhotos } from "./gallery-photo-sql";
 import { selectProjectFacts, selectSources, selectSummary } from "./gallery-read-sql";
 import { insertGallerySource, isWorkspaceSourceActive } from "./gallery-source-link-sql";
+import { insertSelectionGroups } from "./selection-group-sql";
 
 function createWriter(db: DbExecutor, context: WorkspaceContext): GalleryCreateWriter {
   return {
@@ -28,7 +29,6 @@ function createWriter(db: DbExecutor, context: WorkspaceContext): GalleryCreateW
           passwordKeyVersion: row.password.keyVersion,
           passwordHash: row.passwordHash,
           expiresAt: row.expiresAt,
-          expiryDays: row.expiryDays,
           createdBy: row.actorId,
           updatedBy: row.actorId,
         })
@@ -39,6 +39,7 @@ function createWriter(db: DbExecutor, context: WorkspaceContext): GalleryCreateW
     isWorkspaceSourceActive: (workspaceSourceId) =>
       isWorkspaceSourceActive(db, context, workspaceSourceId),
     insertSource: (galleryId, source) => insertGallerySource(db, context, galleryId, source),
+    createSelectionGroups: (galleryId) => insertSelectionGroups(db, context, galleryId),
   };
 }
 

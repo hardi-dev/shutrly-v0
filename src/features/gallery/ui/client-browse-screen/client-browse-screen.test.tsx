@@ -102,6 +102,21 @@ describe("ClientBrowseScreen (D-15, A-26)", () => {
     expect(screen.getAllByRole("link", { name: "Beranda" })[0]).toHaveAttribute("href", "/g/T1");
   });
 
+  it("klien-semua-foto-tanpa-foto: an empty gallery shows Semua foto with no Unduh or search", () => {
+    const empty = { ...ROOT, proofTotal: 0, folders: [], photos: [], summary: null };
+    renderScreen(vi.fn(), empty, {}, true);
+    expect(screen.getAllByRole("heading", { level: 1, name: "Semua foto" }).length).toBeGreaterThan(
+      0,
+    );
+    expect(
+      screen.getAllByText("Lihat-lihat foto Anda. Buka foto untuk memilihnya ke bagian paket.")
+        .length,
+    ).toBeGreaterThan(0);
+    expect(screen.getAllByText("Belum ada foto").length).toBeGreaterThan(0);
+    expect(screen.queryByRole("button", { name: "Unduh" })).toBeNull();
+    expect(screen.queryByLabelText("Cari nama file")).toBeNull();
+  });
+
   it("opens a folder through the action and shows its trail", async () => {
     const action = vi.fn<ClientBrowseAction>().mockResolvedValue({
       ...ROOT,

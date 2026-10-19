@@ -24,6 +24,7 @@
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:seed": "tsx --conditions=react-server scripts/dev/seed.ts",
+    "db:backfill-galleries": "tsx --conditions=react-server scripts/dev/backfill-galleries.ts",
     "auth:set-status": "tsx --conditions=react-server scripts/auth/set-user-status.ts",
     "auth:purge-rate-limits": "tsx --conditions=react-server scripts/auth/purge-auth-rate-limits.ts",
     "storybook": "storybook dev -p 6006",

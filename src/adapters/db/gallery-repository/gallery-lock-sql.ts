@@ -8,7 +8,7 @@ import type { WorkspaceContext } from "@/shared/workspace-context/workspace-cont
 import type { DbExecutor } from "../client/client.types";
 import { project } from "../schema/booking/project";
 import { gallery } from "../schema/gallery/gallery";
-import { toGalleryStatus, toProjectStatus } from "./gallery-rows";
+import { toProjectStatus } from "./gallery-rows";
 
 /** Locks the gallery's project FOR SHARE, then the gallery FOR UPDATE, inside a transaction. Cancelling takes the project FOR UPDATE first, so the same order everywhere avoids deadlocks (D-14, D-15, C-005). @param tx - the transaction @param context - verified workspace @param galleryId - the gallery id @returns the locked state, or null when missing */
 export async function lockGallery(
@@ -28,18 +28,9 @@ export async function lockGallery(
       .for("share")
   ).at(0);
   const row = (
-    await tx
-      .select({
-        status: gallery.status,
-        expiresAt: gallery.expiresAt,
-        expiryDays: gallery.expiryDays,
-      })
-      .from(gallery)
-      .where(scope)
-      .for("update")
+    await tx.select({ expiresAt: gallery.expiresAt }).from(gallery).where(scope).for("update")
   ).at(0);
-  const status = row ? toGalleryStatus(row.status) : null;
   const projectStatus = owner ? toProjectStatus(owner.status) : null;
-  if (!row || !status || !projectStatus) return null;
-  return { galleryId, status, expiresAt: row.expiresAt, expiryDays: row.expiryDays, projectStatus };
+  if (!row || !projectStatus) return null;
+  return { galleryId, expiresAt: row.expiresAt, projectStatus };
 }

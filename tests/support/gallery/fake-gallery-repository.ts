@@ -11,15 +11,11 @@ import type {
   NewGallery,
 } from "@/features/gallery/application/ports/gallery-repository/gallery-repository.port";
 import type { NewGallerySource } from "@/features/gallery/application/ports/gallery-source-repository/gallery-source-repository.port";
-import type { GalleryStoredStatus } from "@/features/gallery/domain/gallery-status/gallery-status.types";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
 export interface StoredGallery extends NewGallery {
   workspaceId: string;
-  status: GalleryStoredStatus;
   passwordVersion: number;
-  publishedAt: Date | null;
-  archivedAt: Date | null;
 }
 
 export interface StoredProject extends GalleryProjectFacts {
@@ -35,6 +31,8 @@ export class FakeGalleryRepository implements GalleryRepositoryPort {
   /** Folders linked while creating a gallery (Revision OT #3). */
   readonly linkedFolders: (NewGallerySource & { galleryId: string })[] = [];
   readonly photos: (GalleryPhotoRecord & { galleryId: string; workspaceId: string })[] = [];
+  /** The galleries whose selection groups were created, in order. */
+  readonly selectionGroups: string[] = [];
 
   addProject(project: StoredProject): void {
     this.projects.push(project);
@@ -52,13 +50,12 @@ export class FakeGalleryRepository implements GalleryRepositoryPort {
     return {
       gallery: {
         id: gallery.id,
-        status: gallery.status,
+        // A gallery whose project is unknown fails closed (the state is CLOSED for CANCELLED).
+        projectStatus:
+          this.projects.find((row) => row.id === gallery.projectId)?.status ?? "CANCELLED",
         password: gallery.password,
         passwordVersion: gallery.passwordVersion,
         expiresAt: gallery.expiresAt,
-        expiryDays: gallery.expiryDays,
-        publishedAt: gallery.publishedAt,
-        archivedAt: gallery.archivedAt,
       },
       activeSourceCount: active.length,
       failedSourceCount: active.filter((row) => row.syncStatus === "FAILED").length,
@@ -88,15 +85,16 @@ export class FakeGalleryRepository implements GalleryRepositoryPort {
         this.galleries.push({
           ...gallery,
           workspaceId: context.workspaceId,
-          status: "DRAFT",
           passwordVersion: 1,
-          publishedAt: null,
-          archivedAt: null,
         });
         return "CREATED" as const;
       },
       isWorkspaceSourceActive: async (workspaceSourceId: string) =>
         this.activeWorkspaceSources.has(workspaceSourceId),
+      createSelectionGroups: async (galleryId: string) => {
+        this.selectionGroups.push(galleryId);
+        return 1;
+      },
       insertSource: async (galleryId: string, source: NewGallerySource) => {
         this.linkedFolders.push({ ...source, galleryId });
         return { sourceId: `source-${String(this.linkedFolders.length)}` };

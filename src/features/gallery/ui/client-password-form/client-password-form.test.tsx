@@ -50,7 +50,7 @@ describe("ClientPasswordForm (D-5)", () => {
   it("asks for a password before calling the server", async () => {
     const action = renderForm({ kind: "WRONG_PASSWORD" });
     await submit("");
-    expect(await screen.findByText("Isi password dari fotografer.")).toBeVisible();
+    expect(await screen.findByText("Isi kata sandi dari fotografer.")).toBeVisible();
     expect(action).not.toHaveBeenCalled();
   });
 

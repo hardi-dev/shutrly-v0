@@ -10,7 +10,10 @@ import {
 } from "@tests/support/gallery/gallery-fixtures";
 import { describe, expect, it } from "vitest";
 
-import { createGallery } from "../create-gallery/create-gallery";
+import {
+  createGalleryForBooking,
+  prepareGalleryPassword,
+} from "../create-gallery-for-booking/create-gallery-for-booking";
 import { getGalleryCard } from "./get-gallery-card";
 
 const NOW = new Date("2026-10-04T03:00:00Z");
@@ -35,22 +38,21 @@ describe("getGalleryCard", () => {
     }
   });
 
-  it("AC-GAL-001 shows the draft gallery with its decrypted password", async () => {
+  it("AC-GAL-001 shows the new gallery in its derived state, and its decrypted password", async () => {
     const galleries = fixtureGalleries();
-    const deps = {
-      galleries,
-      cipher: fakeCipher,
-      hasher: fakeHasher,
-      newId: () => "g-1",
-      now: NOW,
-    };
-    await createGallery(deps, WORKSPACE, OWNER_ID, BOOKED_PROJECT_ID, {
-      password: "mawar-4821",
-      expiry: { type: "NONE" },
-    });
+    const prepared = await prepareGalleryPassword(
+      {
+        cipher: fakeCipher,
+        hasher: fakeHasher,
+        passwords: { propose: () => "mawar-4821" },
+        newId: () => "g-1",
+      },
+      WORKSPACE,
+    );
+    await createGalleryForBooking({ galleries }, WORKSPACE, OWNER_ID, BOOKED_PROJECT_ID, prepared);
     const card = await getGalleryCard(galleries, fakeCipher, WORKSPACE, BOOKED_PROJECT_ID, NOW);
     expect(card.canCreate).toBe(false);
-    expect(card.gallery).toMatchObject({ id: "g-1", status: "DRAFT", password: "mawar-4821" });
+    expect(card.gallery).toMatchObject({ id: "g-1", state: "OPEN", password: "mawar-4821" });
   });
 
   it("AC-GAL-025 treats another workspace's project as not found", async () => {

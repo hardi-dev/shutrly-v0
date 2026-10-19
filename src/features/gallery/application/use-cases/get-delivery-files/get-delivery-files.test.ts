@@ -37,14 +37,14 @@ const photo = (
   missing: false,
 });
 
-function deps() {
-  const listFinishedPhotos = vi.fn(() =>
-    Promise.resolve([
-      photo("E_001", "EDITED", { itemId: "i-edit", itemName: "Foto edit" }),
-      photo("E_002", "EDITED", { itemId: "i-edit", itemName: "Foto edit" }),
-      photo("P_001", "PRINT"),
-    ]),
-  );
+function deps(
+  photos: readonly FinishedPhotoRecord[] = [
+    photo("E_001", "EDITED", { itemId: "i-edit", itemName: "Foto edit" }),
+    photo("E_002", "EDITED", { itemId: "i-edit", itemName: "Foto edit" }),
+    photo("P_001", "PRINT"),
+  ],
+) {
+  const listFinishedPhotos = vi.fn(() => Promise.resolve(photos));
   const listDeliveryItems = vi.fn(() =>
     Promise.resolve([
       { id: "i-edit", name: "Foto edit" },
@@ -69,9 +69,15 @@ describe("getDeliveryFiles (klien-8)", () => {
     expect(files?.groups[0]?.files[0]?.downloadUrl).toBe("/g/tok/download/E_001");
   });
 
-  it("BR-DEL-002 nothing before final delivery, without reading", async () => {
-    const { value, listFinishedPhotos } = deps();
-    expect(await getDeliveryFiles(value, { ...CLIENT, finalDeliveryPublished: false })).toBeNull();
-    expect(listFinishedPhotos).not.toHaveBeenCalled();
+  it("AC-GFL-019 shows a synced finished file before any delivery step", async () => {
+    const { value } = deps();
+    const files = await getDeliveryFiles(value, { ...CLIENT, finalDeliveryPublished: false });
+    expect(files?.groups[0]?.files).toHaveLength(2);
+  });
+
+  it("BR-DEL-002 nothing when no finished file is synced yet", async () => {
+    const { value, listFinishedPhotos } = deps([]);
+    expect(await getDeliveryFiles(value, CLIENT)).toBeNull();
+    expect(listFinishedPhotos).toHaveBeenCalledOnce();
   });
 });

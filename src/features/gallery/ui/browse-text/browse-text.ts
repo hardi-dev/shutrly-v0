@@ -1,5 +1,5 @@
 import type { GalleryPhotoView } from "@/features/gallery/application/use-cases/gallery-views/gallery-views.types";
-import type { GalleryStatus } from "@/features/gallery/domain/gallery-status/gallery-status.types";
+import type { GalleryState } from "@/features/gallery/domain/gallery-state/gallery-state.types";
 
 import {
   GALLERY_KIND_LOWER_MESSAGE_KEY,
@@ -48,9 +48,9 @@ export function searchMeta(t: GalleryTranslate, photo: GalleryPhotoView): string
 export function kindVisibility(
   t: GalleryTranslate,
   kind: BrowseLocation["kind"],
-  status: GalleryStatus,
+  state: GalleryState,
 ): string {
   return kind === "PROOF"
-    ? t(GALLERY_VISIBILITY_MESSAGE_KEY[status])
+    ? t(GALLERY_VISIBILITY_MESSAGE_KEY[state])
     : t(GALLERY_VISIBILITY_FOLDED_MESSAGE_KEY[kind]);
 }

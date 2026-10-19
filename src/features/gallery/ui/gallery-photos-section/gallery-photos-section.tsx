@@ -88,12 +88,12 @@ function ViewAllButton({ onPress }: Readonly<ViewAllButtonProps>) {
 
 function PreviewBody({ workspaceId, page, onOpenPhoto }: Readonly<PreviewBodyProps>) {
   const t = useTranslations(GALLERY_PHOTOS_SECTION_COPY_NAMESPACE);
-  const { counts, status } = page.gallery;
+  const { counts, state } = page.gallery;
   const photos = page.previewPhotos;
   const visibility =
     counts.missing > 0
-      ? `${galleryVisibilityText(t, status, page.project.status)} ${t("visibilityMissing")}`
-      : galleryVisibilityText(t, status, page.project.status);
+      ? `${galleryVisibilityText(t, state)} ${t("visibilityMissing")}`
+      : galleryVisibilityText(t, state);
   return (
     <div className="flex flex-col gap-(--space-4) md:gap-(--space-5)">
       <p className="text-(length:--font-size-body) font-semibold text-(--component-photo-tile-name)">

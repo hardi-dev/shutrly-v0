@@ -28,7 +28,7 @@ Status: ACCEPTED (migrated from `_source/` on 2026-09-25). Business-oriented; pe
 - **SessionAssignment** — one member on one session, in one role (BR-TEAM-006). No fee and no status; sessions have no stored status either (BR-TEAM-002).
 
 **Gallery & selection**
-- **Gallery** — client-facing access boundary for a project's photos; password-protected; also the final delivery point.
+- **Gallery** — client-facing access boundary for a project's photos; password-protected; also the final delivery point. Created with the project when it becomes `BOOKED`; it has no status of its own: open, expired or closed is derived from its expiry and the project status (BR-GAL-001, BR-GAL-005; F-27).
 - **GallerySource** — a concrete external folder feeding a gallery.
 - **Photo** — metadata for one external file with role `PROOF` | `EDITED` | `PRINT`.
 - **SelectionGroup** — an entitlement bucket ("Edited Photos 12 / 25") with base + extra limit and its own lifecycle.
@@ -94,9 +94,9 @@ stateDiagram-v2
       DRAFT --> BOOKED : Owner
       BOOKED --> SHOOTING : Owner
       SHOOTING --> POST_PROCESSING : Owner
-      POST_PROCESSING --> DELIVERED : publish final delivery
-      BOOKED --> DELIVERED : publish final delivery
-      SHOOTING --> DELIVERED : publish final delivery
+      POST_PROCESSING --> DELIVERED : Owner (Tandai terkirim)
+      BOOKED --> DELIVERED : Owner (Tandai terkirim)
+      SHOOTING --> DELIVERED : Owner (Tandai terkirim)
       DELIVERED --> COMPLETED : Owner
       DRAFT --> CANCELLED
       BOOKED --> CANCELLED
@@ -112,15 +112,6 @@ stateDiagram-v2
       SUBMITTED --> LOCKED : Owner
       SUBMITTED --> OPEN : add-on approved
       OPEN --> LOCKED : Owner closes
-    }
-    state Gallery {
-      [*] --> G_DRAFT
-      G_DRAFT --> PUBLISHED
-      PUBLISHED --> EXPIRED
-      PUBLISHED --> ARCHIVED
-      EXPIRED --> PUBLISHED : later expiry
-      EXPIRED --> ARCHIVED
-      G_DRAFT --> [*] : delete (never published)
     }
 ```
 

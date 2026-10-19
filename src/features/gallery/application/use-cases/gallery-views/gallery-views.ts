@@ -1,7 +1,7 @@
 import "server-only";
 
 import { driveFileUrl } from "@/features/gallery/domain/drive-folder-link/drive-folder-link";
-import { effectiveGalleryStatus } from "@/features/gallery/domain/gallery-status/gallery-status";
+import { galleryState } from "@/features/gallery/domain/gallery-state/gallery-state";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
 import type { GalleryPasswordCipherPort } from "../../ports/gallery-password-cipher/gallery-password-cipher.port";
@@ -23,7 +23,7 @@ export function toProjectView(project: GalleryProjectFacts): GalleryProjectView 
   return { id: project.id, title: project.title, status: project.status };
 }
 
-/** Builds the Owner's gallery summary with the decrypted password and the derived status (ADR-017, D-1). @param summary - the stored summary @param cipher - password cipher @param context - verified workspace @param now - the current instant @returns the summary view */
+/** Builds the Owner's gallery summary with the decrypted password and the derived state (ADR-017, D-1). @param summary - the stored summary @param cipher - password cipher @param context - verified workspace @param now - the current instant @returns the summary view */
 export async function toSummaryView(
   summary: GallerySummaryRecord,
   cipher: GalleryPasswordCipherPort,
@@ -37,10 +37,10 @@ export async function toSummaryView(
   });
   return {
     id: gallery.id,
-    status: effectiveGalleryStatus(gallery.status, gallery.expiresAt, now),
+    state: galleryState(gallery.projectStatus, gallery.expiresAt, now),
     password,
     expiresAt: gallery.expiresAt?.toISOString() ?? null,
-    expiryDays: gallery.expiryDays,
+    expiryDays: null,
     activeSourceCount: summary.activeSourceCount,
     failedSourceCount: summary.failedSourceCount,
     failedSourceNames: summary.failedSourceNames,

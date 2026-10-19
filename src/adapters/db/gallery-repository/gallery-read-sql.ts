@@ -14,7 +14,7 @@ import { client } from "../schema/booking/client";
 import { project } from "../schema/booking/project";
 import { gallery, gallerySource } from "../schema/gallery/gallery";
 import { workspaceSourceConfig } from "../schema/gallery/workspace-source-config";
-import { toGalleryStatus, toProjectStatus, toSourceRecord } from "./gallery-rows";
+import { toProjectStatus, toSourceRecord } from "./gallery-rows";
 
 /** Reads the project facts a gallery needs, optionally locking the project FOR SHARE (D-14). @param db - database or transaction @param context - verified workspace @param projectId - the project id @param lock - take FOR SHARE on the project row @returns the facts or null */
 export async function selectProjectFacts(
@@ -78,21 +78,26 @@ export async function selectSummary(
     await db
       .select({
         row: gallery,
+        projectStatus: project.status,
         active: ACTIVE_SOURCES,
         failed: FAILED_SOURCES,
         failedNames: FAILED_NAMES,
         counts: PHOTO_COUNTS,
       })
       .from(gallery)
+      .innerJoin(
+        project,
+        and(eq(project.workspaceId, gallery.workspaceId), eq(project.id, gallery.projectId)),
+      )
       .where(and(eq(gallery.workspaceId, context.workspaceId), eq(gallery.projectId, projectId)))
   ).at(0);
-  const status = row ? toGalleryStatus(row.row.status) : null;
-  if (!row || !status) return null;
+  const projectStatus = row ? toProjectStatus(row.projectStatus) : null;
+  if (!row || !projectStatus) return null;
   const { row: g } = row;
   return {
     gallery: {
       id: g.id,
-      status,
+      projectStatus,
       password: {
         ciphertext: g.passwordCiphertext,
         iv: g.passwordIv,
@@ -100,9 +105,6 @@ export async function selectSummary(
       },
       passwordVersion: g.passwordVersion,
       expiresAt: g.expiresAt,
-      expiryDays: g.expiryDays,
-      publishedAt: g.publishedAt,
-      archivedAt: g.archivedAt,
     },
     activeSourceCount: row.active,
     failedSourceCount: row.failed,

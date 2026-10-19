@@ -26,7 +26,7 @@ describe("renameGallerySource", () => {
   });
 
   it("AC-GAL-022 AC-GAL-025 refuses an archived gallery and another workspace", async () => {
-    const { deps } = await lifecycleSetup({ status: "ARCHIVED" });
+    const { deps } = await lifecycleSetup({ projectStatus: "CANCELLED" });
     expect(await renameGallerySource(deps, WORKSPACE, "source-1", { label: "Softball" })).toEqual({
       ok: false,
       code: "INVALID_STATE",

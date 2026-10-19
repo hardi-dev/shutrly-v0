@@ -11,7 +11,6 @@ import { projectListQuerySchema } from "@/features/booking/application/schemas/p
 import { advanceProject } from "@/features/booking/application/use-cases/advance-project/advance-project";
 import { cancelProject } from "@/features/booking/application/use-cases/cancel-project/cancel-project";
 import { countProjects } from "@/features/booking/application/use-cases/count-projects/count-projects";
-import { createProject } from "@/features/booking/application/use-cases/create-project/create-project";
 import { deleteDraft } from "@/features/booking/application/use-cases/delete-draft/delete-draft";
 import {
   addProjectSession,
@@ -34,14 +33,17 @@ import type { ProjectListParams } from "@/features/booking/domain/project-list-q
 import { PROJECT_SEARCH_MAX_LENGTH } from "@/features/booking/domain/project-record/project-record";
 import type { ProjectTab } from "@/features/booking/domain/project-status/project-status.types";
 import { todayInScheduleZone } from "@/features/booking/domain/schedule-clock/schedule-clock";
-import { archiveGalleryOfCancelledProject } from "@/features/gallery/application/use-cases/archive-gallery-of-cancelled-project/archive-gallery-of-cancelled-project";
 import { DomainError } from "@/shared/errors/domain-error";
 import { logger } from "@/shared/logging/logger";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
 import { requireOwnerOrRedirect } from "../../auth/owner-guard/owner-guard";
+import { withMarkDeliveredScope } from "../../gallery/mark-delivered-scope/mark-delivered-scope";
 import { verifyOwnerWorkspace } from "../../workspace/owner-workspace/owner-workspace";
-import { withProjectCancellationScope } from "../project-cancellation-scope/project-cancellation-scope";
+import {
+  confirmBookedProject,
+  createBookedProject,
+} from "../booking-gallery-scope/booking-gallery-scope";
 import { withProjectScope } from "../project-scope/project-scope";
 import type { CreateProjectOptions } from "./project-flow.types";
 
@@ -75,9 +77,7 @@ export async function createProjectEntry(rawWorkspaceId: string, values: unknown
   const verified = await verifyOwnerWorkspace(rawWorkspaceId);
   const locale = await getRequestFormattingLocale();
   try {
-    return await withProjectScope(({ projects, accessTokens }) =>
-      createProject(projects, accessTokens, verified.context, account.id, values, locale),
-    );
+    return await createBookedProject(verified.context, account.id, values, locale);
   } catch (error) {
     return saveError(error, verified.context.workspaceId, "create");
   }
@@ -110,6 +110,26 @@ async function loadProjectDetailUncached(rawWorkspaceId: string, rawProjectId: s
 /** Loads a project's detail; one lookup per request (ADR-026). */
 export const loadProjectDetail = cache(loadProjectDetailUncached);
 
+/**
+ * Tandai terkirim as a project step: project and gallery move together, and a refusal becomes a booking code (BR-DEL-003, C-005).
+ * @param context - verified workspace
+ * @param actorId - the signed-in Owner
+ * @param projectId - the project id
+ * @returns undefined, or STALE when the status moved, or DELIVERY_REFUSED without a synced finished file
+ */
+async function markDeliveredStep(
+  context: WorkspaceContext,
+  actorId: string,
+  projectId: string,
+): Promise<ProjectWriteResult> {
+  const refused = await withMarkDeliveredScope({ context, actorId, projectId });
+  if (refused === undefined) return undefined;
+  return {
+    ok: false,
+    code: refused.reasons.includes("PROJECT_STATUS") ? "STALE" : "DELIVERY_REFUSED",
+  };
+}
+
 export async function advanceProjectEntry(
   rawWorkspaceId: string,
   rawProjectId: string,
@@ -119,6 +139,12 @@ export async function advanceProjectEntry(
   const account = await requireOwnerOrRedirect();
   const verified = await verifyOwnerWorkspace(rawWorkspaceId);
   try {
+    if (step === "CONFIRM_BOOKING") {
+      return await confirmBookedProject(verified.context, account.id, projectId);
+    }
+    if (step === "MARK_DELIVERED") {
+      return await markDeliveredStep(verified.context, account.id, projectId);
+    }
     return await withProjectScope(({ projects }) =>
       advanceProject(projects, verified.context, account.id, projectId, step),
     );
@@ -218,19 +244,10 @@ export async function cancelProjectEntry(
   const account = await requireOwnerOrRedirect();
   const verified = await verifyOwnerWorkspace(rawWorkspaceId);
   try {
-    // One transaction: a published gallery is archived with the cancel, or neither happens (AC-GAL-024).
-    return await withProjectCancellationScope(async ({ projects, galleries, now }) => {
-      const result = await cancelProject(projects, verified.context, account.id, projectId, values);
-      if (result === undefined) {
-        await archiveGalleryOfCancelledProject(
-          { sources: galleries, now },
-          verified.context,
-          account.id,
-          projectId,
-        );
-      }
-      return result;
-    });
+    // A cancelled project's gallery closes by its project status alone (AC-GFL-016); nothing else to write.
+    return await withProjectScope(({ projects }) =>
+      cancelProject(projects, verified.context, account.id, projectId, values),
+    );
   } catch (error) {
     return saveError(error, verified.context.workspaceId, "cancel");
   }

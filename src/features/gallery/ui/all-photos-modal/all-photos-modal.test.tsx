@@ -27,7 +27,7 @@ const PAGE = {
   project: { id: "p-1", title: "Wisuda Basic — Rina", status: "BOOKED" as const },
   gallery: {
     id: "g-1",
-    status: "DRAFT" as const,
+    state: "OPEN" as const,
     password: "mawar-4821",
     expiresAt: null,
     expiryDays: null,

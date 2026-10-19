@@ -1,4 +1,5 @@
 /* eslint-disable max-lines-per-function -- one switch maps every menu item kind to its label, icon and action */
+import type { ProjectMenuItem } from "@/features/booking/domain/project-menu/project-menu.types";
 import { whatsappChatUrl } from "@/features/booking/domain/whatsapp-number/whatsapp-number";
 
 import type { ProjectTranslate } from "../project-copy/project-copy.types";
@@ -7,7 +8,7 @@ import type { ProjectMenuHandlers, ProjectMenuProps, ResolvedMenuItem } from "./
 
 function resolve(
   t: ProjectTranslate,
-  item: ProjectMenuProps["groups"]["project"][number],
+  item: ProjectMenuItem,
   whatsappNumber: string | null,
   handlers: ProjectMenuHandlers,
 ): ResolvedMenuItem {
@@ -52,6 +53,28 @@ function resolve(
         isDestructive: false,
         run: handlers.onAddNumber,
       };
+    case "SHARE_GALLERY":
+      return {
+        key: item.kind,
+        item,
+        label: t("menuShareGallery"),
+        icon: "send",
+        isDestructive: false,
+        run: handlers.onShareGallery,
+      };
+    case "MARK_DELIVERED": {
+      const isDisabled = !item.hasFinishedFiles;
+      return {
+        key: item.kind,
+        item,
+        label: t("menuMarkDelivered"),
+        icon: "circle-check-big",
+        isDestructive: false,
+        isDisabled,
+        description: isDisabled ? t("menuMarkDeliveredHint") : undefined,
+        run: handlers.onMarkDelivered,
+      };
+    }
     case "CANCEL":
       return {
         key: item.kind,
@@ -83,7 +106,7 @@ export function resolveMenuGroups(
   t: ProjectTranslate,
   props: Pick<ProjectMenuProps, "groups" | "whatsappNumber" | "handlers">,
 ) {
-  const map = (items: ProjectMenuProps["groups"]["project"]) =>
+  const map = (items: readonly ProjectMenuItem[]) =>
     items.map((item) => resolve(t, item, props.whatsappNumber, props.handlers));
   return {
     project: map(props.groups.project),

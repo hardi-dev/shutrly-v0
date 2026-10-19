@@ -2,10 +2,7 @@ import "server-only";
 
 import { and, eq } from "drizzle-orm";
 
-import type {
-  ClientAccessRecord,
-  ClientAccessRepositoryPort,
-} from "@/features/gallery/application/ports/client-access-repository/client-access-repository.port";
+import type { ClientAccessRepositoryPort } from "@/features/gallery/application/ports/client-access-repository/client-access-repository.port";
 import { parseAppLocale } from "@/shared/locale/locale";
 import type { AppLocale } from "@/shared/locale/locale.types";
 
@@ -15,15 +12,6 @@ import { client } from "../schema/booking/client";
 import { project } from "../schema/booking/project";
 import { gallery } from "../schema/gallery/gallery";
 import { workspace } from "../schema/workspace/workspace";
-
-type GalleryStatus = ClientAccessRecord["galleryStatus"];
-
-function toGalleryStatus(value: string | null): GalleryStatus {
-  if (value === null || value === "DRAFT" || value === "PUBLISHED" || value === "ARCHIVED") {
-    return value;
-  }
-  throw new Error("Stored gallery status is invalid.");
-}
 
 function firstName(name: string): string {
   return name.trim().split(/\s+/)[0] ?? name;
@@ -74,7 +62,6 @@ export function createDrizzleClientAccessRepository(db: DbExecutor): ClientAcces
             workspaceName: workspace.name,
             brandName: workspace.brandName,
             galleryId: gallery.id,
-            galleryStatus: gallery.status,
             expiresAt: gallery.expiresAt,
             passwordHash: gallery.passwordHash,
             passwordVersion: gallery.passwordVersion,
@@ -95,12 +82,11 @@ export function createDrizzleClientAccessRepository(db: DbExecutor): ClientAcces
           .limit(1)
       ).at(0);
       if (!row) return null;
-      const { clientName, workspaceName, brandName, galleryStatus, ...rest } = row;
+      const { clientName, workspaceName, brandName, ...rest } = row;
       return {
         ...rest,
         clientFirstName: firstName(clientName),
         studioName: brandName ?? workspaceName,
-        galleryStatus: toGalleryStatus(galleryStatus),
       };
     },
   };

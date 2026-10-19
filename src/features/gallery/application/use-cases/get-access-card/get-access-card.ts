@@ -31,7 +31,7 @@ export async function getAccessCard(
   if (!token) throw new GalleryError("NOT_FOUND");
   const origin = new URL(deps.origin);
   return {
-    state: accessCardState(card.gallery.status, card.project.status),
+    state: accessCardState(card.gallery.state),
     projectId,
     gallery: card.gallery,
     link: `${origin.origin}/g/${token}`,

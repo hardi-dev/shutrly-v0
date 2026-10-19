@@ -34,6 +34,8 @@ export async function getProjectDetail(
     menu: buildProjectMenu({
       status: detail.status,
       hasWhatsappNumber: detail.client.whatsappNumber !== null,
+      canShareGallery: false,
+      hasFinishedFiles: false,
     }),
   };
 }

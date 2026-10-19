@@ -36,7 +36,7 @@ const PAGE = {
   project: { id: "p-1", title: "Wisuda Rina", status: "BOOKED" as const },
   gallery: {
     id: "g-1",
-    status: "DRAFT" as const,
+    state: "OPEN" as const,
     password: "mawar-4821",
     expiresAt: null,
     expiryDays: null,
@@ -140,7 +140,7 @@ describe("GallerySourcesSection", () => {
 
   it("AC-GAL-022 offers no source changes on an archived gallery", () => {
     const actions = fakePageActions();
-    const archived = { ...PAGE, gallery: { ...PAGE.gallery, status: "ARCHIVED" as const } };
+    const archived = { ...PAGE, gallery: { ...PAGE.gallery, state: "CLOSED" as const } };
     render(<GallerySourcesSection workspaceId="ws-1" page={archived} actions={actions} />);
     expect(screen.queryByRole("button", { name: "Sinkronkan semua" })).not.toBeInTheDocument();
     expect(screen.getAllByText("Diarsipkan")).toHaveLength(2);

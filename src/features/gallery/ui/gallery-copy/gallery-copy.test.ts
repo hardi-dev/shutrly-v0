@@ -24,15 +24,15 @@ describe("gallery copy: folder guidance (F-24 D5, AC-SFX-015)", () => {
     );
   });
 
-  it("shows the approved empty-state body in English", () => {
+  it("shows the Owner-approved empty-state body in English (AC-GFL-007, copy draft iteration 5)", () => {
     expect(GALLERY_COPY.messages.en.sourcesEmptyBody).toBe(
-      "Link a project folder. Photos are for selection unless you map a subfolder to a package item; files in mapped subfolders are final files.",
+      "No folder yet. Add a Google Drive folder with this project’s photos; then you can send the gallery link to the client.",
     );
   });
 
-  it("shows the approved empty-state body in Indonesian", () => {
+  it("shows the Owner-approved empty-state body in Indonesian (AC-GFL-007, copy draft iteration 5)", () => {
     expect(GALLERY_COPY.messages.id.sourcesEmptyBody).toBe(
-      "Tautkan folder proyek. Foto digunakan untuk pilihan kecuali subfolder dipetakan ke item paket; file di subfolder yang dipetakan menjadi hasil akhir.",
+      "Belum ada folder. Tambahkan folder Google Drive berisi foto proyek ini; setelah itu kamu bisa mengirim link galeri ke klien.",
     );
   });
 

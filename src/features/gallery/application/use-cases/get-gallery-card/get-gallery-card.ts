@@ -1,6 +1,6 @@
 import "server-only";
 
-import { galleryAllowedForProject } from "@/features/gallery/domain/gallery-status/gallery-status";
+import { galleryAllowedForProject } from "@/features/gallery/domain/gallery-state/gallery-state";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
 import { GalleryError } from "../../errors/gallery-errors/gallery-errors";

@@ -1,4 +1,5 @@
 import type {
+  ManualStep,
   ProjectStatus,
   ProjectStep,
   ProjectTab,
@@ -14,7 +15,7 @@ export const PROJECT_STATUSES: readonly ProjectStatus[] = [
   "COMPLETED",
   "CANCELLED",
 ];
-const TRANSITIONS: Readonly<Record<ProjectStep, StepTransition>> = {
+const TRANSITIONS: Readonly<Record<ManualStep, StepTransition>> = {
   CONFIRM_BOOKING: { from: "DRAFT", to: "BOOKED" },
   START_SHOOTING: { from: "BOOKED", to: "SHOOTING" },
   FINISH_SHOOTING: { from: "SHOOTING", to: "POST_PROCESSING" },
@@ -23,7 +24,7 @@ const NEXT_STEP: Readonly<Record<ProjectStatus, ProjectStep | null>> = {
   DRAFT: "CONFIRM_BOOKING",
   BOOKED: "START_SHOOTING",
   SHOOTING: "FINISH_SHOOTING",
-  POST_PROCESSING: null,
+  POST_PROCESSING: "MARK_DELIVERED",
   DELIVERED: null,
   COMPLETED: null,
   CANCELLED: null,
@@ -42,7 +43,7 @@ const NEEDS_SESSION: readonly ProjectStatus[] = [
 ];
 
 /** Returns the one manual forward move a step performs (BR-PRJ-004, D-3). @param step - the requested step @returns its from and to status */
-export function stepTransition(step: ProjectStep): StepTransition {
+export function stepTransition(step: ManualStep): StepTransition {
   return TRANSITIONS[step];
 }
 /** Finds the manual step offered for a status, or null when F-07 offers none (BR-PRJ-004). @param status - stored status @returns the step or null */

@@ -1,5 +1,3 @@
-import type { GalleryStatus } from "../gallery-status/gallery-status.types";
-
 export type ExpiryInput =
   | { readonly type: "NONE" }
   | { readonly type: "DATE"; readonly date: string }
@@ -13,9 +11,3 @@ export interface ResolvedExpiry {
 export type ExpiryResolution =
   | { readonly ok: true; readonly expiry: ResolvedExpiry }
   | { readonly ok: false; readonly code: "PAST_DATE" };
-
-export interface StoredExpiry {
-  readonly status: GalleryStatus;
-  readonly expiresAt: Date | null;
-  readonly expiryDays: number | null;
-}

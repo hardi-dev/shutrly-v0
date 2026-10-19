@@ -5,7 +5,7 @@ import { ONBOARDING_COPY } from "@/features/workspace/ui/onboarding-screen/onboa
 import type { AppLocale } from "@/shared/locale/locale.types";
 
 import { registerAndVerify, uniqueEmail } from "../auth/auth-e2e";
-import { FOLDER_URL, publishedGallery } from "../client-access/client-access-e2e";
+import { FOLDER_URL, linkedGallery } from "../client-access/client-access-e2e";
 
 // I8.1 build smoke. Run against a production build with `E2E_PROD=1` (see playwright.config.ts).
 
@@ -154,12 +154,12 @@ for (const locale of LOCALES) {
 }
 
 // Registered only when a public Drive folder is configured (GALLERY_SMOKE_FOLDER_URL).
-// The gallery follows the owner's language, and publishedGallery registers an Indonesian owner.
+// The gallery follows the owner's language, and linkedGallery registers an Indonesian owner.
 if (FOLDER_URL) {
   test("client gallery renders in the owner's language (id)", async ({ page }) => {
     test.setTimeout(600_000);
     const problems = watchProblems(page);
-    const { clientPath } = await publishedGallery(page);
+    const { clientPath } = await linkedGallery(page);
     await expectRouteRenders(page, clientPath, "id", problems);
   });
 }

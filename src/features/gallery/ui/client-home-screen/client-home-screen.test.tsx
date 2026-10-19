@@ -25,6 +25,7 @@ const BASE: ClientHomeView = {
       unit: "foto",
       action: "CONTINUE",
       isPrimary: true,
+      isDisabled: false,
       progress: 0.375,
     },
     {
@@ -36,6 +37,7 @@ const BASE: ClientHomeView = {
       unit: "lembar",
       action: "VIEW",
       isPrimary: false,
+      isDisabled: false,
       progress: 1,
     },
   ],
@@ -66,6 +68,29 @@ describe("ClientHomeScreen (A-24)", () => {
       "href",
       "/g/T1/picks/g-print/review",
     );
+  });
+
+  it("AC-GFL-009 shows the empty Semua foto line and a disabled pick button without photos", () => {
+    renderHome({
+      ...BASE,
+      greeting: { kind: "START" },
+      proofCount: 0,
+      groups: BASE.groups.map((group) => ({ ...group, action: "START", isDisabled: true })),
+    });
+    expect(
+      screen.getByText("Belum ada foto · fotografer belum menambahkan foto. Coba lagi nanti."),
+    ).toBeVisible();
+    expect(screen.getAllByRole("button", { name: "Mulai memilih" })[0]).toBeDisabled();
+  });
+
+  it("AC-GFL-019 links Hasil akhir before delivery once a finished file is synced", () => {
+    renderHome({ ...BASE, editedCount: 2, printCount: 1 });
+    expect(screen.getByRole("link", { name: /Hasil akhir/ })).toHaveAttribute(
+      "href",
+      "/g/T1/final",
+    );
+    expect(screen.getByText("2 Foto edit · 1 Foto cetak")).toBeVisible();
+    expect(screen.queryByText(/Belum tersedia/)).toBeNull();
   });
 
   it("AC-SEL-020 puts Hasil akhir siap at the top once delivered", () => {

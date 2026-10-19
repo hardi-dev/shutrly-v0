@@ -114,15 +114,13 @@ async function addProject(base: Base, seed: ProjectSeed): Promise<string> {
   return row.id;
 }
 
-/** Adds a published gallery; a final delivery time marks it delivered (AC-DASH-025). */
+/** Adds a gallery; a final delivery time marks it delivered (AC-DASH-025). */
 async function addGallery(base: Base, projectId: string, finalDeliveryAt?: Date): Promise<string> {
   const [row] = await db
     .insert(gallery)
     .values({
       workspaceId: base.workspaceId,
       projectId,
-      status: "PUBLISHED",
-      publishedAt: new Date(),
       passwordCiphertext: "enc",
       passwordIv: "iv",
       passwordHash: "hash",

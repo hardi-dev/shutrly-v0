@@ -45,7 +45,7 @@ import { present, type SeedEnv, type Studio } from "./seed-support";
 
 const DEFAULT_FOLDER = "https://drive.google.com/drive/folders/1yyis5MpfzQHuJs1DZAE_StzDXC8HEvhC";
 
-// Projects whose client link goes to the credentials file: they have a published gallery.
+// Projects whose client link goes to the credentials file: they have a gallery with a linked folder.
 const CLIENT_LINKS = ["Wisuda Rina", "Wisuda Fajar", "Prewedding Kevin & Maya", "Wisuda Lina"];
 
 function required(name: string): string {

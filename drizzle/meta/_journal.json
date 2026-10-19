@@ -155,6 +155,20 @@
       "when": 1791653283454,
       "tag": "0021_default_item_keys",
       "breakpoints": true
+    },
+    {
+      "idx": 22,
+      "version": "7",
+      "when": 1792331497506,
+      "tag": "0022_gallery_without_status",
+      "breakpoints": true
+    },
+    {
+      "idx": 23,
+      "version": "7",
+      "when": 1792387192275,
+      "tag": "0023_drop_gallery_status",
+      "breakpoints": true
     }
   ]
 }

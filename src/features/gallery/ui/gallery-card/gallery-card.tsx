@@ -4,16 +4,17 @@ import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 
 import type { GalleryCardView } from "@/features/gallery/application/use-cases/gallery-views/gallery-views.types";
+import { canShareGallery } from "@/features/gallery/domain/gallery-state/gallery-state";
 import type { FormattingLocale } from "@/shared/locale/locale.types";
 import { useFormattingLocale } from "@/ui/hooks/use-formatting-locale/use-formatting-locale";
 import { useMobileViewport } from "@/ui/hooks/use-mobile-viewport/use-mobile-viewport";
+import { useProjectGalleryActions } from "@/ui/hooks/use-project-gallery-actions/use-project-gallery-actions";
 import { Alert } from "@/ui/patterns/alert/alert";
 import { EmptyState } from "@/ui/patterns/empty-state/empty-state";
 import { SectionCard } from "@/ui/patterns/section-card/section-card";
 import { Button } from "@/ui/primitives/button/button";
 import { StatusChip } from "@/ui/primitives/status-chip/status-chip";
 
-import { CreateGalleryDialog } from "../create-gallery-dialog/create-gallery-dialog";
 import type { GalleryTranslate } from "../gallery-copy/gallery-copy.types";
 import { GalleryFacts } from "../gallery-facts/gallery-facts";
 import type { GalleryFact } from "../gallery-facts/gallery-facts.types";
@@ -24,23 +25,24 @@ import {
   galleryStatusChip,
   photoCountsText,
 } from "../gallery-text/gallery-text";
-import { useCreateGalleryLauncher } from "../use-create-gallery-launcher/use-create-gallery-launcher";
 import {
   GALLERY_CARD_COPY_NAMESPACE,
   GALLERY_CARD_DELIVERY_NAMESPACE,
   GALLERY_CARD_SELECTION_NAMESPACE,
   GALLERY_CARD_SUMMARY_NAMESPACE,
 } from "./gallery-card.copy";
-import type { SummaryTranslators } from "./gallery-card.types";
 import type {
+  AddFolderButtonProps,
   EmptyText,
   GalleryCardProps,
   GallerySummaryFactsProps,
+  NoFolderProps,
   NoGalleryProps,
+  SummaryTranslators,
 } from "./gallery-card.types";
 import { GallerySummaryRows } from "./gallery-summary-rows";
 
-/** The project detail's Galeri card (board `ZiJzF`, Owner 7): *Buat galeri*, the draft-project hint, or the gallery facts with the *Pilihan klien* and *Hasil akhir* rows (AC-GAL-001, 003, A-34). */
+/** The project detail's Galeri card (design `kartu-galeri-board`, F-27 P1–P6): the booking hint, the no-folder prompt, or the gallery facts with the *Pilihan klien* and *Hasil akhir* rows (AC-GFL-004, 006, 007, 012, 016). On phones the button is a full-width block under the facts (design P4, P7); on desktop it sits in the header. @param props - workspace, the card view and the optional summaries @returns the card */
 export function GalleryCard(props: Readonly<GalleryCardProps>) {
   const t = useTranslations(GALLERY_CARD_COPY_NAMESPACE);
   const summaryT = useTranslations(GALLERY_CARD_SUMMARY_NAMESPACE);
@@ -54,16 +56,22 @@ export function GalleryCard(props: Readonly<GalleryCardProps>) {
   const handleManage = () => {
     router.push(galleryHref);
   };
-  if (card.gallery === null) return <NoGallery {...props} galleryHref={galleryHref} />;
+  if (card.gallery === null) return <NoGallery card={card} />;
+  if (card.gallery.state === "OPEN" && card.gallery.activeSourceCount === 0) {
+    return <NoFolder galleryHref={galleryHref} />;
+  }
   const manageLabel = isMobile ? t("manageMobile") : t("manage");
   return (
     <SectionCard
       title={t("cardTitle")}
       content="flush"
       actions={
-        <Button variant="secondary" iconLeading="arrow-right" onPress={handleManage}>
-          {card.gallery.status === "ARCHIVED" ? t("view") : manageLabel}
-        </Button>
+        <>
+          <Button variant="secondary" iconLeading="arrow-right" onPress={handleManage}>
+            {card.gallery.state === "CLOSED" ? t("view") : manageLabel}
+          </Button>
+          {isMobile ? null : <DesktopShare card={card} />}
+        </>
       }
     >
       <div className="flex flex-col gap-(--space-4) p-(--space-4) md:gap-(--space-5) md:p-(--space-6)">
@@ -72,6 +80,7 @@ export function GalleryCard(props: Readonly<GalleryCardProps>) {
           rows={summaryRows(props, { summaryT, selectionT, deliveryT }, isMobile, locale)}
         />
       </div>
+      {isMobile ? <MobileShare card={card} /> : null}
       {card.gallery.failedSourceCount > 0 ? (
         <div className="px-(--space-4) pb-(--space-4) md:px-(--space-6) md:pb-(--space-6)">
           <Alert
@@ -85,6 +94,45 @@ export function GalleryCard(props: Readonly<GalleryCardProps>) {
   );
 }
 
+/** Whether the card may offer *Kirim link ke klien*: the gallery exists and BR-GAL-010 allows the share (AC-GFL-020). @param card - the card view @returns true when the share button shows */
+function canShareCard(card: GalleryCardView): boolean {
+  if (card.gallery === null) return false;
+  return canShareGallery({
+    projectStatus: card.project.status,
+    state: card.gallery.state,
+    activeSourceCount: card.gallery.activeSourceCount,
+  });
+}
+
+/** The header *Kirim link ke klien* on desktop, when BR-GAL-010 allows the share. @param props - the card view @returns the button, or null */
+function DesktopShare({ card }: Readonly<{ card: GalleryCardView }>) {
+  return canShareCard(card) ? <ShareButton projectId={card.project.id} /> : null;
+}
+
+/** The phone *Kirim link ke klien* block under the facts, full width (design P4, P7). @param props - the card view @returns the block, or null */
+function MobileShare({ card }: Readonly<{ card: GalleryCardView }>) {
+  if (!canShareCard(card)) return null;
+  return (
+    <div className="p-(--space-4)">
+      <ShareButton projectId={card.project.id} />
+    </div>
+  );
+}
+
+/** The desktop *Kirim link ke klien* on the Galeri card: it asks the app host to open the share dialog (AC-GFL-020). @param props - the project id @returns the primary button */
+function ShareButton({ projectId }: Readonly<{ projectId: string }>) {
+  const t = useTranslations(GALLERY_CARD_COPY_NAMESPACE);
+  const gallery = useProjectGalleryActions();
+  const handleShare = () => {
+    gallery?.openShare(projectId);
+  };
+  return (
+    <Button variant="primary" iconLeading="send" className="w-full md:w-auto" onPress={handleShare}>
+      {t("sendLink")}
+    </Button>
+  );
+}
+
 function summaryRows(
   { selection, delivery }: Readonly<GalleryCardProps>,
   translators: SummaryTranslators,
@@ -95,9 +143,7 @@ function summaryRows(
     selection
       ? selectionSummary(translators.summaryT, translators.selectionT, selection, isMobile)
       : null,
-    delivery
-      ? deliverySummary(translators.summaryT, translators.deliveryT, delivery, isMobile, locale)
-      : null,
+    delivery ? deliverySummary(translators.deliveryT, delivery, locale) : null,
   ];
   return rows.filter((row) => row !== null);
 }
@@ -106,88 +152,96 @@ function failedNames(t: GalleryTranslate, names: readonly string[]): string {
   return names.map((name) => name || t("sourceFallbackName")).join(", ");
 }
 
+/** The card text while there is no gallery: the booking hint on a draft, otherwise the cancelled note (AC-GFL-003, AC-GFL-016). @param t - gallery translator @param card - the card view @returns the title and body */
 function noGalleryText(t: GalleryTranslate, card: GalleryCardView): EmptyText {
-  if (card.canCreate) return { title: t("cardEmptyTitle"), body: t("cardEmptyBody") };
   if (card.project.status === "DRAFT") {
     return { title: t("cardDraftProjectTitle"), body: t("cardDraftProjectBody") };
   }
   return { title: t("cardCancelledTitle"), body: t("cardCancelledBody") };
 }
 
-function NoGallery(props: Readonly<NoGalleryProps>) {
+function NoGallery({ card }: Readonly<NoGalleryProps>) {
   const t = useTranslations(GALLERY_CARD_COPY_NAMESPACE);
-  const router = useRouter();
-  const { card } = props;
-  const launcher = useCreateGalleryLauncher({
-    workspaceId: props.workspaceId,
-    projectId: card.project.id,
-    proposeAction: props.proposeAction,
-  });
-  // Revision OT #3: a folder linked while creating syncs once the gallery page opens.
-  const handleCreated = (_galleryId: string, sourceId: string | null) => {
-    launcher.close();
-    router.push(sourceId ? `${props.galleryHref}?sync=${sourceId}` : props.galleryHref);
-  };
+  const text = noGalleryText(t, card);
+  return (
+    <SectionCard title={t("cardTitle")} description={t("cardDescription")}>
+      <EmptyState icon="images" placement="in-card" title={text.title} body={text.body} />
+    </SectionCard>
+  );
+}
+
+/** The card of an open gallery without a folder: the prompt to add one (design P2, AC-GFL-007). @param props - the gallery page's href @returns the card */
+function NoFolder({ galleryHref }: Readonly<NoFolderProps>) {
+  const t = useTranslations(GALLERY_CARD_COPY_NAMESPACE);
   return (
     <SectionCard title={t("cardTitle")} description={t("cardDescription")}>
       <EmptyState
         icon="images"
         placement="in-card"
-        title={noGalleryText(t, card).title}
-        body={noGalleryText(t, card).body}
-        action={
-          card.canCreate ? (
-            <Button
-              variant="secondary"
-              iconLeading="plus"
-              isPending={launcher.isOpening}
-              onPress={launcher.handleOpen}
-            >
-              {t("create")}
-            </Button>
-          ) : undefined
-        }
+        title={t("cardNoFolderTitle")}
+        body={t("cardNoFolderBody")}
+        action={<AddFolderButton galleryHref={galleryHref} />}
       />
-      {launcher.initialPassword === null ? null : (
-        <CreateGalleryDialog
-          isOpen
-          onOpenChange={launcher.handleOpenChange}
-          workspaceId={props.workspaceId}
-          projectId={card.project.id}
-          initialPassword={launcher.initialPassword}
-          linkableSources={card.linkableSources ?? []}
-          createAction={props.createAction}
-          proposeAction={props.proposeAction}
-          checkFolderAction={props.checkFolderAction}
-          onCreated={handleCreated}
-        />
-      )}
     </SectionCard>
   );
+}
+
+function AddFolderButton({ galleryHref }: Readonly<AddFolderButtonProps>) {
+  const t = useTranslations(GALLERY_CARD_COPY_NAMESPACE);
+  const router = useRouter();
+  const handleAddFolder = () => {
+    router.push(galleryHref);
+  };
+  return (
+    <Button variant="secondary" iconLeading="plus" onPress={handleAddFolder}>
+      {t("addFolderCta")}
+    </Button>
+  );
+}
+
+/** The status fact shows only when the gallery is not open: expired or closed (design P5, P6). @param t - gallery translator @param gallery - the summary @returns the status fact, or null for an open gallery */
+function statusFact(
+  t: GalleryTranslate,
+  gallery: GallerySummaryFactsProps["gallery"],
+): GalleryFact | null {
+  if (gallery.state === "OPEN") return null;
+  return { label: t("factStatus"), value: <StatusChip {...galleryStatusChip(t, gallery.state)} /> };
 }
 
 function GallerySummaryFacts({ gallery, isMobile }: Readonly<GallerySummaryFactsProps>) {
   const t = useTranslations(GALLERY_CARD_COPY_NAMESPACE);
   const locale = useFormattingLocale();
-  const expiry = galleryExpiryFact(t, gallery, locale);
-  const status: GalleryFact = {
-    label: t("factStatus"),
-    value: <StatusChip {...galleryStatusChip(t, gallery.status)} />,
-  };
+  const status = statusFact(t, gallery);
   const photos: GalleryFact = {
     label: t("factPhotos"),
     value: photoCountsText(t, gallery.counts),
   };
-  if (isMobile) return <GalleryFacts facts={[status, photos]} isFlush />;
+  if (isMobile) return <GalleryFacts facts={[status, photos].filter(isFact)} isFlush />;
   const sources =
     gallery.activeSourceCount === 0
       ? t("noSources")
       : t("sourceCount", { count: gallery.activeSourceCount });
   const facts: GalleryFact[] = [
     status,
+    { label: t("factPassword"), value: gallery.password },
     { label: t("factSources"), value: sources },
     photos,
-    { label: t("factExpiry"), value: expiry.text, isMuted: expiry.isMuted },
-  ];
+    expiryFact(t, gallery, locale),
+  ].filter(isFact);
   return <GalleryFacts facts={facts} isFlush />;
+}
+
+/** The expiry fact, hidden once the gallery is closed (design P6 shows no expiry). */
+function expiryFact(
+  t: GalleryTranslate,
+  gallery: GallerySummaryFactsProps["gallery"],
+  locale: FormattingLocale,
+): GalleryFact | null {
+  if (gallery.state === "CLOSED") return null;
+  const expiry = galleryExpiryFact(t, gallery, locale);
+  return { label: t("factExpiry"), value: expiry.text, isMuted: expiry.isMuted };
+}
+
+function isFact(fact: GalleryFact | null): fact is GalleryFact {
+  return fact !== null;
 }

@@ -1,5 +1,7 @@
 # Acceptance Criteria — Gallery (F-09)
 
+> **Superseded in part by F-27 (2026-10-19):** [simplify-project-gallery-flow](../simplify-project-gallery-flow/spec.md) and [ADR-028](../../architecture/decisions/ADR-028-gallery-without-stored-status.md) replace this document's gallery status, *Buat galeri*, publish, archive and draft deletion, A-17 and A-23: the gallery is created when the project is booked, has no stored status, and closes through its expiry or the project's cancellation. Where they differ, F-27 wins.
+
 > Localization amendment (Owner 2026-10-06): [product policy](../../product/localization.md), BR-L10N-* and [ADR-025](../../architecture/decisions/ADR-025-next-intl-bilingual-localization.md) supersede language-only instructions in this document. English is the default; EN/ID switching and complete localized copy are required. Earlier Indonesian labels/defaults remain reference examples, not an approved single-language implementation. Feature business behavior is unchanged. Update reviewed copy and approved Pencil exports before implementation; legacy data and recipient-language policies remain pending.
 
 Assumption references (A-n) point to [spec.md](spec.md#assumptions-low-risk-reversible--confirm-or-change-anytime). UI labels are working copy; the design may rename them.

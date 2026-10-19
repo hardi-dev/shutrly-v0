@@ -12,19 +12,30 @@ vi.mock("@/ui/hooks/use-mobile-viewport/use-mobile-viewport", () => ({
   useMobileViewport: () => isMobile.value,
 }));
 
-function renderMenu(status: ProjectStatus, whatsappNumber: string | null = "6281234567890") {
+function renderMenu(
+  status: ProjectStatus,
+  whatsappNumber: string | null = "6281234567890",
+  gallery: { canShareGallery?: boolean; hasFinishedFiles?: boolean } = {},
+) {
   const handlers = {
     onStep: vi.fn(),
     onEditInfo: vi.fn(),
     onCancel: vi.fn(),
     onDeleteDraft: vi.fn(),
     onAddNumber: vi.fn(),
+    onShareGallery: vi.fn(),
+    onMarkDelivered: vi.fn(),
   };
   render(
     <ProjectMenu
       title="Wisuda Basic — Rina"
       meta="Rina · 10 Nov 2026 · Dibooking"
-      groups={buildProjectMenu({ status, hasWhatsappNumber: whatsappNumber !== null })}
+      groups={buildProjectMenu({
+        status,
+        hasWhatsappNumber: whatsappNumber !== null,
+        canShareGallery: gallery.canShareGallery ?? false,
+        hasFinishedFiles: gallery.hasFinishedFiles ?? false,
+      })}
       whatsappNumber={whatsappNumber}
       variant="row"
       handlers={handlers}
@@ -50,6 +61,7 @@ describe("ProjectMenu (AC-PRJ-027)", () => {
         .map((item) => item.textContent),
     ).toEqual([
       "Mulai pemotretan",
+      "Tandai terkirimBelum ada hasil akhir yang tersinkron. Sinkronkan folder hasil akhir dulu.",
       "Ubah info proyek",
       "Kirim pesan lewat WhatsApp",
       "Batalkan proyek",
@@ -91,5 +103,23 @@ describe("ProjectMenu (AC-PRJ-027)", () => {
     expect(within(sheet).getByText("Kirim ke klien")).toBeInTheDocument();
     await userEvent.click(within(sheet).getByRole("button", { name: "Ubah info proyek" }));
     expect(handlers.onEditInfo).toHaveBeenCalled();
+  });
+
+  it("AC-GFL-017 disables Tandai terkirim with its hint until a finished file is synced", async () => {
+    renderMenu("SHOOTING");
+    await userEvent.click(
+      screen.getByRole("button", { name: "Tindakan untuk Wisuda Basic — Rina" }),
+    );
+    const item = screen.getByRole("menuitem", { name: /Tandai terkirim/ });
+    expect(item.getAttribute("aria-disabled") ?? item.getAttribute("data-disabled")).not.toBeNull();
+  });
+
+  it("AC-GFL-020 sends the share from the menu when the gallery can be shared", async () => {
+    const handlers = renderMenu("BOOKED", "6281234567890", { canShareGallery: true });
+    await userEvent.click(
+      screen.getByRole("button", { name: "Tindakan untuk Wisuda Basic — Rina" }),
+    );
+    await userEvent.click(screen.getByRole("menuitem", { name: "Kirim link ke klien" }));
+    expect(handlers.onShareGallery).toHaveBeenCalledTimes(1);
   });
 });

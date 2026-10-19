@@ -15,6 +15,7 @@ import type {
   ViewerPickActions,
 } from "../use-pick-targets/use-pick-targets.types";
 import type { PhotosActions } from "../use-proof-downloads/use-proof-downloads.types";
+import type { PhotosGroupsProps } from "./photos-actions.types";
 
 export interface ClientBrowseScreenProps {
   readonly gate: ClientGateView;
@@ -58,6 +59,13 @@ export interface BrowseCardProps {
   readonly browse: ClientBrowseHandle;
   readonly onOpenPhoto: (index: number) => void;
   readonly downloads: GridDownloads;
+  /** No photos or folders yet: the card has no search field or trail (klien-semua-foto-tanpa-foto). */
+  readonly isEmpty: boolean;
+}
+
+export interface PhotosTopProps extends PhotosGroupsProps {
+  /** Without photos there is nothing to download or pick, so the phone actions stay hidden. */
+  readonly isEmpty: boolean;
 }
 
 /** The pick whose note the viewer's sheet edits (A-32). */

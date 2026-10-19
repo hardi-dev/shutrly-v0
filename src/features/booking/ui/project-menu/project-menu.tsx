@@ -60,7 +60,9 @@ function DesktopEntry({ entry }: Readonly<{ entry: ResolvedMenuItem }>) {
   return (
     <MenuItem
       label={entry.label}
+      description={entry.description}
       icon={entry.icon}
+      isDisabled={entry.isDisabled}
       variant={entry.isDestructive ? "destructive" : "default"}
       href={entry.href}
       target={entry.href ? "_blank" : undefined}
@@ -109,7 +111,9 @@ function MobileMenu({
               <SheetItem
                 key={entry.key}
                 label={entry.label}
+                description={entry.description}
                 icon={entry.icon}
+                isDisabled={entry.isDisabled}
                 variant={entry.isDestructive ? "destructive" : "default"}
                 href={entry.href}
                 target={entry.href ? "_blank" : undefined}

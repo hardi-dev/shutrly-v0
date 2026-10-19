@@ -1,10 +1,7 @@
 import "server-only";
 
 import { resolveExpiry } from "@/features/gallery/domain/gallery-expiry/gallery-expiry";
-import {
-  canSetExpiry,
-  effectiveGalleryStatus,
-} from "@/features/gallery/domain/gallery-status/gallery-status";
+import { galleryState, isWritable } from "@/features/gallery/domain/gallery-state/gallery-state";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
 import { setGalleryExpirySchema } from "../../schemas/set-gallery-expiry/set-gallery-expiry.schema";
@@ -32,13 +29,13 @@ export async function setGalleryExpiry(
     context,
     galleryId,
     async (gallery, writer) => {
-      const status = effectiveGalleryStatus(gallery.status, gallery.expiresAt, deps.now);
-      if (!canSetExpiry(status, gallery.projectStatus)) return galleryFailure("INVALID_STATE");
-      const resolved = resolveExpiry(parsed.data.expiry, status, deps.now);
+      const before = galleryState(gallery.projectStatus, gallery.expiresAt, deps.now);
+      if (!isWritable(before)) return galleryFailure("INVALID_STATE");
+      const resolved = resolveExpiry(parsed.data.expiry, deps.now);
       if (!resolved.ok) return galleryFieldFailure({ "expiry.date": "PAST_DATE" });
-      await writer.setExpiry(resolved.expiry, actorId, deps.now);
-      const after = effectiveGalleryStatus(gallery.status, resolved.expiry.expiresAt, deps.now);
-      return { ok: true, reopened: status === "EXPIRED" && after === "PUBLISHED" };
+      await writer.setExpiry(resolved.expiry.expiresAt, actorId, deps.now);
+      const after = galleryState(gallery.projectStatus, resolved.expiry.expiresAt, deps.now);
+      return { ok: true, reopened: before === "EXPIRED" && after === "OPEN" };
     },
   );
 }

@@ -3,6 +3,7 @@ import { fakePageActions } from "@tests/support/gallery/fake-page-actions";
 import { stubViewport } from "@tests/support/gallery/viewport";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
+import { GALLERY_COPY } from "../gallery-copy/gallery-copy.copy";
 import { GalleryPageScreen } from "./gallery-page-screen";
 
 vi.mock("@/ui/patterns/toast/toast", () => ({ showToast: vi.fn() }));
@@ -17,7 +18,7 @@ const PAGE = {
   project: { id: "p-1", title: "Wisuda Basic — Rina", status: "BOOKED" as const },
   gallery: {
     id: "g-1",
-    status: "DRAFT" as const,
+    state: "OPEN" as const,
     password: "mawar-4821",
     expiresAt: null,
     expiryDays: null,
@@ -39,7 +40,7 @@ describe("GalleryPageScreen", () => {
 
   it("AC-GAL-014 shows an empty Sumber foto and no photos yet", () => {
     render(<GalleryPageScreen workspaceId="ws-1" page={PAGE} actions={ACTIONS} />);
-    expect(screen.getByText("Belum ada folder")).toBeInTheDocument();
+    expect(screen.getByText(GALLERY_COPY.messages.id.sourcesEmptyBody)).toBeInTheDocument();
     expect(screen.getByText("Belum ada foto")).toBeInTheDocument();
   });
 
@@ -64,10 +65,10 @@ describe("GalleryPageScreen", () => {
     expect(screen.queryByRole("button", { name: "Salin kata sandi" })).not.toBeInTheDocument();
   });
 
-  it("design shows the status and meta in the phone header block", () => {
+  it("AC-GFL-001 the phone header of an open gallery shows the meta line and no status chip", () => {
     stubViewport(true);
     render(<GalleryPageScreen workspaceId="ws-1" page={PAGE} actions={ACTIONS} />);
-    expect(screen.getByText("Draf")).toBeInTheDocument();
+    expect(screen.queryByText("Dipublikasikan")).not.toBeInTheDocument();
     expect(screen.getByText("Belum ada folder · Tanpa kedaluwarsa")).toBeInTheDocument();
   });
 });

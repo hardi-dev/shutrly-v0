@@ -32,7 +32,7 @@ const CARD: AccessCardView = {
   maskedLink: "shutrly.app/g/••••••••3kQ9",
   gallery: {
     id: "g1",
-    status: "PUBLISHED",
+    state: "OPEN",
     password: "mawar-4821",
     expiresAt: null,
     expiryDays: null,
@@ -95,11 +95,6 @@ describe("ProjectAccessCard (aksesklien-kartu A–C)", () => {
       title: "Link belum tersalin",
       body: "Teksnya sudah ditandai. Salin dengan Ctrl+C atau ⌘C, atau tekan lama lalu Salin.",
     });
-  });
-
-  it("B: a draft gallery explains the link can't be opened yet", () => {
-    renderCard({ ...CARD, state: "DRAFT" });
-    expect(screen.getByText(/sampai galeri dipublikasikan/)).toBeTruthy();
   });
 
   it("C: an archived gallery shows no link and no buttons", () => {

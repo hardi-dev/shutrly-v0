@@ -1,9 +1,6 @@
 import "server-only";
 
-import {
-  canRotatePassword,
-  effectiveGalleryStatus,
-} from "@/features/gallery/domain/gallery-status/gallery-status";
+import { galleryState, isWritable } from "@/features/gallery/domain/gallery-state/gallery-state";
 import type { WorkspaceContext } from "@/shared/workspace-context/workspace-context.types";
 
 import { rotateGalleryPasswordSchema } from "../../schemas/rotate-gallery-password/rotate-gallery-password.schema";
@@ -33,8 +30,8 @@ export async function rotateGalleryPassword(
     context,
     galleryId,
     async (gallery, writer) => {
-      const status = effectiveGalleryStatus(gallery.status, gallery.expiresAt, deps.now);
-      if (!canRotatePassword(status, gallery.projectStatus)) return galleryFailure("INVALID_STATE");
+      const state = galleryState(gallery.projectStatus, gallery.expiresAt, deps.now);
+      if (!isWritable(state)) return galleryFailure("INVALID_STATE");
       await writer.rotatePassword({ password, passwordHash }, actorId, deps.now);
       return { ok: true };
     },

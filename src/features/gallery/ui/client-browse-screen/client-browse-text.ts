@@ -18,6 +18,13 @@ export function browseCardMeta(t: BrowseTranslate, state: ClientBrowseState): st
     : t("cardMeta", { photos: page.proofTotal });
 }
 
+/** The gallery has no photos or folders to browse, outside a search: the page drops *Unduh*, the search field and the trail (klien-semua-foto-tanpa-foto). @param state - browse state @returns true when there is nothing to act on */
+export function isBrowseEmpty(state: ClientBrowseState): boolean {
+  const page = state.page;
+  if (!page || state.hasFailed || page.mode === "SEARCH") return false;
+  return page.proofTotal === 0 && page.folders.length === 0;
+}
+
 /** The line above the grid: the root summary, or the search summary (klien-3 exports). @param t - the browse translate function @param state - browse state @returns the summary, or null inside a folder (the trail shows instead) */
 export function browseSummary(t: BrowseTranslate, state: ClientBrowseState): string | null {
   const page = state.page;

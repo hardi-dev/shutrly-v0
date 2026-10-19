@@ -68,7 +68,8 @@ describe("get project detail", () => {
       ["DRAFT", "CONFIRM_BOOKING", true, true],
       ["BOOKED", "START_SHOOTING", true, true],
       ["SHOOTING", "FINISH_SHOOTING", false, true],
-      ["POST_PROCESSING", null, false, true],
+      // AC-GFL-017: POST_PROCESSING offers Tandai terkirim in the header (A-6).
+      ["POST_PROCESSING", "MARK_DELIVERED", false, true],
       ["DELIVERED", null, false, true],
       ["COMPLETED", null, false, true],
       ["CANCELLED", null, false, false],

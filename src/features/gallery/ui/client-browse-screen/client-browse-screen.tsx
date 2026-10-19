@@ -25,11 +25,16 @@ import type {
   BrowseCardProps,
   ClientBrowseCardProps,
   ClientBrowseScreenProps,
+  PhotosTopProps,
   SearchFieldProps,
 } from "./client-browse-screen.types";
-import { browseCardMeta, browseSummary, type BrowseTranslate } from "./client-browse-text";
+import {
+  browseCardMeta,
+  browseSummary,
+  type BrowseTranslate,
+  isBrowseEmpty,
+} from "./client-browse-text";
 import { PhotosHeaderActions, SelectingActions } from "./photos-actions";
-import type { PhotosGroupsProps } from "./photos-actions.types";
 import { DownloadAllConfirm, PhotosDownloadStatus } from "./photos-status";
 
 function SearchField({ searchText, onSearch, className }: Readonly<SearchFieldProps>) {
@@ -88,13 +93,15 @@ function baseHeader(
   };
 }
 
-// F-20: *Unduh ▾* and *Pilih foto* in the header, or the select-mode title and actions.
+// F-20: *Unduh ▾* and *Pilih foto* in the header, or the select-mode title and actions; none without photos.
 function browseHeader(
   t: BrowseTranslate,
   base: ClientPageHeader,
   photos: ProofDownloads,
   groups: readonly PickGroupView[],
+  isEmpty: boolean,
 ): ClientPageHeader {
+  if (isEmpty) return base;
   if (!photos.isSelecting)
     return { ...base, action: <PhotosHeaderActions photos={photos} groups={groups} /> };
   return {
@@ -105,7 +112,7 @@ function browseHeader(
   };
 }
 
-function BrowseCard({ browse, onOpenPhoto, downloads }: Readonly<BrowseCardProps>) {
+function BrowseCard({ browse, onOpenPhoto, downloads, isEmpty }: Readonly<BrowseCardProps>) {
   const t = useTranslations(CLIENT_BROWSE_COPY_NAMESPACE);
   const { state } = browse;
   const openFolder = (folder: FolderTileView) => {
@@ -124,10 +131,12 @@ function BrowseCard({ browse, onOpenPhoto, downloads }: Readonly<BrowseCardProps
     <SectionCard
       title={t("cardTitle")}
       description={browseCardMeta(t, state)}
-      actions={<SearchField {...search} className="hidden md:block md:w-[260px]" />}
+      actions={
+        isEmpty ? undefined : <SearchField {...search} className="hidden md:block md:w-[260px]" />
+      }
     >
-      <SearchField {...search} className="md:hidden" />
-      <Trail state={state} onRoot={toRoot} />
+      {isEmpty ? null : <SearchField {...search} className="md:hidden" />}
+      {isEmpty ? null : <Trail state={state} onRoot={toRoot} />}
       <ClientBrowseGrid
         state={state}
         onOpenFolder={openFolder}
@@ -141,10 +150,10 @@ function BrowseCard({ browse, onOpenPhoto, downloads }: Readonly<BrowseCardProps
 
 // Phones: the Mobile Header has no action slot, so the page actions open the content (as *Hasil akhir*);
 // then the download progress or failure (F-20).
-function PhotosTop({ photos, groups }: Readonly<PhotosGroupsProps>) {
+function PhotosTop({ photos, groups, isEmpty }: Readonly<PhotosTopProps>) {
   const isMobile = useMobileViewport();
   let phone = null;
-  if (isMobile) {
+  if (isMobile && !isEmpty) {
     phone = photos.isSelecting ? (
       <SelectingActions photos={photos} groups={groups} />
     ) : (
@@ -165,10 +174,13 @@ function useBrowseHeader(
   isPhotosOnly: boolean,
   photos: ProofDownloads,
   groups: readonly PickGroupView[],
+  isEmpty: boolean,
 ): ClientPageHeader {
   const t = useTranslations(CLIENT_BROWSE_COPY_NAMESPACE);
   const shared = useTranslations(BROWSE_SHARED_NAMESPACE);
-  return browseHeader(t, baseHeader(t, shared, gate, token, isPhotosOnly), photos, groups);
+  // Without photos the page reads as *Semua foto* (the design), not the project title.
+  const base = baseHeader(t, shared, gate, token, isPhotosOnly && !isEmpty);
+  return browseHeader(t, base, photos, groups, isEmpty);
 }
 
 /** The client's *Semua foto* page: search, folders, the photo grid and the read-only viewer (klien-3, pratinjau NxnKv, AC-ACC-011/013, A-26, A-31). @param props - gate names, token, whether Beranda holds only this page, the first page and the browse action @returns the page */
@@ -193,10 +205,11 @@ export function ClientBrowseScreen({
   const close = () => {
     setOpen(null);
   };
-  const header = useBrowseHeader(gate, token, isPhotosOnly, photos, handle.targets.groups);
+  const isEmpty = isBrowseEmpty(browse.state);
+  const header = useBrowseHeader(gate, token, isPhotosOnly, photos, handle.targets.groups, isEmpty);
   return (
     <ClientShell gate={gate} width="wide" header={header}>
-      <PhotosTop photos={photos} groups={handle.targets.groups} />
+      <PhotosTop photos={photos} groups={handle.targets.groups} isEmpty={isEmpty} />
       {browse.state.hasFailed ? (
         <Alert
           tone="danger"
@@ -205,7 +218,7 @@ export function ClientBrowseScreen({
           action={{ label: t("retry"), onAction: retry }}
         />
       ) : null}
-      <BrowseCard browse={browse} onOpenPhoto={setOpen} downloads={photos} />
+      <BrowseCard browse={browse} onOpenPhoto={setOpen} downloads={photos} isEmpty={isEmpty} />
       <DownloadAllConfirm photos={photos} />
       <BrowseViewer
         photos={browse.state.photos}

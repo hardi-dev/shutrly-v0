@@ -57,7 +57,6 @@ describe("serveClientFile (D-18)", () => {
   });
 
   it.each([
-    ["before delivery", EDITED, { finalDeliveryPublished: false }],
     ["a missing proof", { ...EDITED, kind: "PROOF" as const, missing: true }, {}],
     ["a missing file", { ...EDITED, missing: true }, {}],
     ["a removed folder", { ...EDITED, sourceRemoved: true }, {}],
@@ -68,14 +67,21 @@ describe("serveClientFile (D-18)", () => {
     expect(download).not.toHaveBeenCalled();
   });
 
-  it("F-20 streams the original of a visible proof, before and after final delivery", async () => {
+  it("F-20 streams the original of a visible proof", async () => {
     const proof = { ...EDITED, kind: "PROOF" as const, fileName: "IMG_001.jpg" };
-    for (const finalDeliveryPublished of [false, true]) {
-      const { value } = deps(proof);
-      expect(
-        await serveClientFile(value, { ...CLIENT, finalDeliveryPublished }, "x"),
-      ).toMatchObject({ ok: true, fileName: "IMG_001.jpg" });
-    }
+    const { value } = deps(proof);
+    expect(await serveClientFile(value, CLIENT, "x")).toMatchObject({
+      ok: true,
+      fileName: "IMG_001.jpg",
+    });
+  });
+
+  it("AC-GFL-019 streams a synced edited file before any delivery step", async () => {
+    const { value, download } = deps(EDITED);
+    expect(
+      await serveClientFile(value, { ...CLIENT, finalDeliveryPublished: false }, "x"),
+    ).toMatchObject({ ok: true, fileName: "E_001.jpg" });
+    expect(download).toHaveBeenCalledOnce();
   });
 
   it("AC-DEL-005 a file Drive no longer has is not ok", async () => {

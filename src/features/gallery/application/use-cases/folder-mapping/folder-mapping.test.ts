@@ -66,7 +66,7 @@ describe("folder mapping (F-21)", () => {
   });
 
   it("AC-GAL-022 AC-GAL-025 refuses an archived gallery and another workspace", async () => {
-    const archived = await lifecycleSetup({ status: "ARCHIVED" });
+    const archived = await lifecycleSetup({ projectStatus: "CANCELLED" });
     archived.sources.mappableItems = [{ id: EDIT, name: "Foto edit", pickMode: "COUNT" }];
     expect(
       await setFolderMapping(archived.deps, WORKSPACE, "source-1", {

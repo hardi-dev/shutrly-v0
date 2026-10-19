@@ -9,96 +9,88 @@ export const DELIVERY_COPY = {
     en: {
       cardTitle: "Final files",
       cardDescription: "Downloads for the client.",
-      publish: "Publish final files",
-      complete: "Mark complete",
+      complete: "Mark as delivered",
       noFilesNote:
         "No final files have synced yet. Create and map the Drive final-file subfolder, then sync the gallery.",
-      inactiveNote: "The gallery must be published before the client can open final files.",
       // PROPOSED (pending Owner review): the item counts of the readiness rows.
       itemCount: "{count, plural, one {# file} other {# files}}",
       // PROPOSED (pending Owner review): no deck row yet; see copy-deck.md section 15.x.
       itemFiles: "{count, plural, one {# file} other {# files}} {name}",
       and: " and ",
-      // PROPOSED (pending Owner review): the published and completed rows.
-      publishedTitle: "Published {when}",
       // PROPOSED (pending Owner review): no deck row yet; see copy-deck.md section 15.x.
-      publishedMeta: "The client can download {files}.",
-      // PROPOSED (pending Owner review): no deck row yet; see copy-deck.md section 15.x.
-      completedTitle: "Completed {when}",
+      completedTitle: "Delivered {when}",
       completedMeta: "The gallery stays open while it remains published.",
-      // PROPOSED (pending Owner review): the status chips; PUBLISHED reuses the gallery status row (§10.1).
-      chipReady: "Ready",
-      chipPublished: "Published",
       // PROPOSED (pending Owner review): no deck row yet; see copy-deck.md section 15.x.
       chipCompleted: "Completed",
       // PROPOSED (pending Owner review): the project header of a delivered project.
       headerMeta: "Final files published {when}",
-      // PROPOSED (pending Owner review): the publish dialog title; the description and body are deck rows.
-      publishTitle: "Publish final files?",
-      publishDescription: "The client can download through the same link and password.",
-      publishBody: "The project becomes Delivered.",
-      publishConfirm: "Publish final files",
       // PROPOSED (pending Owner review): the complete dialog.
-      completeTitle: "Mark the project complete?",
+      completeTitle: "Mark this project as delivered?",
       // PROPOSED (pending Owner review): no deck row yet; see copy-deck.md section 15.x.
-      completeDescription: "Project {title} will be marked Completed.",
-      completeBody: "The gallery stays open while it remains published.",
-      // PROPOSED (pending Owner review): the refusal dialog; the reasons use deck readiness rows where they exist.
-      refusedTitle: "Final files can’t be published yet",
-      // PROPOSED (pending Owner review): no deck row yet; see copy-deck.md section 15.x.
-      refusedDescription: "Check the following first.",
-      reasonNoFinishedFile: "No final files have synced yet.",
-      reasonGalleryNotPublished:
-        "The gallery must be published before the client can open final files.",
+      completeDescription: "Project {title} will be marked Delivered.",
+      completeBody: "The client can still open the gallery.",
+      reasonNoFinishedFile: "No final files are synced yet.",
       // PROPOSED (pending Owner review): no deck row yet; see copy-deck.md section 15.x.
       reasonProjectStatus: "This project’s status can’t be changed to Delivered.",
-      refusedConfirm: "Got it",
-      // PROPOSED (pending Owner review): the toasts after each action.
-      publishedToast: "Final files published",
       // PROPOSED (pending Owner review): no deck row yet; see copy-deck.md section 15.x.
-      completedToast: "Project marked complete",
+      completedToast: "Project marked as delivered",
       // PROPOSED (pending Owner review): no deck row yet; see copy-deck.md section 15.x.
       staleToast: "The project status has changed. Reload the page.",
       // PROPOSED (pending Owner review): no deck row yet; see copy-deck.md section 15.x.
+      // Restored original F-27 Tandai selesai wording (DELIVERED to COMPLETED, BR-PRJ-004), before iteration 5.
+      finish: "Mark complete",
+      finishTitle: "Mark the project complete?",
+      finishDescription: "Project {title} will be marked Completed.",
+      finishedToast: "Project marked complete",
+      finishStaleToast: "The project status has changed. Reload the page.",
       failedToast: "Couldn’t save. Try again.",
+      emptyNote:
+        "No final files are synced yet. Create a final-files subfolder in Drive, map it to a package item in Edit folder, then sync the gallery.",
+      deliveredStatus: "Delivered",
+      deliveredRowTitle: "Delivered {when} · {edited} edited photos · {print} print photos",
+      readyStatus: "Ready to download",
+      readyRowMeta: "{edited} edited photos · {print} print photos · visible to the client",
+      refusedCompleteTitle: "This project can’t be marked as delivered yet",
+      completeDisabledHint: "No final files are synced yet. Sync the final-files folder first.",
+      completeConfirm: "Mark as delivered",
     },
     id: {
       cardTitle: "Hasil akhir",
       cardDescription: "Unduhan untuk klien.",
-      publish: "Publikasikan hasil akhir",
-      complete: "Tandai selesai",
+      complete: "Tandai terkirim",
       noFilesNote:
         "Belum ada hasil akhir yang tersinkron. Buat subfolder hasil akhir di Drive, petakan ke item paket lewat Edit folder, lalu sinkronkan galeri.",
-      inactiveNote: "Galeri harus dipublikasikan lebih dulu supaya klien bisa membuka hasil akhir.",
       itemCount: "{count, plural, other {# file}}",
       itemFiles: "{count, plural, other {# file}} {name}",
       and: " dan ",
-      publishedTitle: "Dipublikasikan {when}",
-      publishedMeta: "Klien bisa mengunduh {files}.",
-      completedTitle: "Selesai {when}",
+      completedTitle: "Terkirim {when}",
       completedMeta: "Galeri tetap terbuka selama masih dipublikasikan.",
-      chipReady: "Siap",
-      chipPublished: "Dipublikasikan",
       chipCompleted: "Selesai",
       headerMeta: "Hasil akhir dipublikasikan {when}",
-      publishTitle: "Publikasikan hasil akhir?",
-      publishDescription: "Klien bisa mengunduh lewat link dan password yang sama.",
-      publishBody: "Status proyek menjadi Terkirim.",
-      publishConfirm: "Publikasikan hasil akhir",
-      completeTitle: "Tandai proyek selesai?",
-      completeDescription: "Proyek {title} akan berstatus Selesai.",
-      completeBody: "Galeri tetap terbuka selama masih dipublikasikan.",
-      refusedTitle: "Hasil akhir belum bisa dipublikasikan",
-      refusedDescription: "Periksa hal berikut lebih dulu.",
+      completeTitle: "Tandai proyek terkirim?",
+      completeDescription: "Proyek {title} akan berstatus Terkirim.",
+      completeBody: "Galeri tetap bisa dibuka klien.",
       reasonNoFinishedFile: "Belum ada hasil akhir yang tersinkron.",
-      reasonGalleryNotPublished:
-        "Galeri harus dipublikasikan lebih dulu supaya klien bisa membuka hasil akhir.",
       reasonProjectStatus: "Status proyek ini tidak bisa diubah menjadi Terkirim.",
-      refusedConfirm: "Mengerti",
-      publishedToast: "Hasil akhir dipublikasikan",
-      completedToast: "Proyek ditandai selesai",
+      completedToast: "Proyek ditandai terkirim",
       staleToast: "Status proyek sudah berubah. Muat ulang halaman.",
+      // Restored original F-27 Tandai selesai wording (DELIVERED to COMPLETED, BR-PRJ-004), before iteration 5.
+      finish: "Tandai selesai",
+      finishTitle: "Tandai proyek selesai?",
+      finishDescription: "Proyek {title} akan berstatus Selesai.",
+      finishedToast: "Proyek ditandai selesai",
+      finishStaleToast: "Status proyek sudah berubah. Muat ulang halaman.",
       failedToast: "Gagal menyimpan. Coba lagi.",
+      emptyNote:
+        "Belum ada hasil akhir yang tersinkron. Buat subfolder hasil akhir di Drive, petakan ke item paket lewat Edit folder, lalu sinkronkan galeri.",
+      deliveredStatus: "Terkirim",
+      deliveredRowTitle: "Terkirim {when} · {edited} Foto edit · {print} Foto cetak",
+      readyStatus: "Siap diunduh",
+      readyRowMeta: "{edited} Foto edit · {print} Foto cetak · terlihat oleh klien",
+      refusedCompleteTitle: "Proyek belum bisa ditandai terkirim",
+      completeDisabledHint:
+        "Belum ada hasil akhir yang tersinkron. Sinkronkan folder hasil akhir dulu.",
+      completeConfirm: "Tandai terkirim",
     },
   },
 } as const;

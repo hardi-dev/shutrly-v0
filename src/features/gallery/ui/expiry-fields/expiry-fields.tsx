@@ -1,17 +1,20 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useState } from "react";
 
+import { GALLERY_EXPIRY_PRESETS } from "@/features/gallery/domain/gallery-expiry/gallery-expiry";
 import { DateField } from "@/ui/patterns/date-field/date-field";
+import { Select } from "@/ui/patterns/select/select";
+import type { SelectOption } from "@/ui/patterns/select/select.types";
 import { RadioGroup } from "@/ui/primitives/radio/radio-group";
-import { TextField } from "@/ui/primitives/text-field/text-field";
 
 import { galleryErrorText } from "../gallery-error-text/gallery-error-text";
 import { EXPIRY_FIELDS_COPY_NAMESPACE } from "./expiry-fields.copy";
 import type { ExpiryFieldsProps, ExpiryTranslate } from "./expiry-fields.types";
 
-const DEFAULT_DAYS = 30;
+/** The preset chosen when the Owner switches to a number of days (design D1, AC-GFL-010). */
+const DEFAULT_DAYS = 14;
+
 function expiryOptions(t: ExpiryTranslate) {
   return [
     { value: "NONE", label: t("expiryOptionNone") },
@@ -19,25 +22,27 @@ function expiryOptions(t: ExpiryTranslate) {
     { value: "DAYS", label: t("expiryOptionDays") },
   ];
 }
-const noop = () => undefined;
 
-/** The expiry radio group of *Buat galeri* and *Kedaluwarsa galeri*: none, a date or a number of days (BR-GAL-005, A-4). */
+function durationOptions(t: ExpiryTranslate): SelectOption[] {
+  return GALLERY_EXPIRY_PRESETS.map((days) => ({
+    id: String(days),
+    label: t("expiryPreset", { count: days }),
+  }));
+}
+
+/** The expiry fields of *Kedaluwarsa galeri*: none, a date, or a duration picked from the presets (BR-GAL-005, A-1, A-4, AC-GFL-010, 011). @param props - the choice, its change handler, the field errors and the helper under the duration @returns the fields */
 export function ExpiryFields({ value, onChange, ...props }: Readonly<ExpiryFieldsProps>) {
   const t = useTranslations(EXPIRY_FIELDS_COPY_NAMESPACE);
-  const [daysText, setDaysText] = useState(value.type === "DAYS" ? String(value.days) : "");
   const handleType = (type: string) => {
     if (type === "DATE") onChange({ type: "DATE", date: "" });
-    else if (type === "DAYS") {
-      setDaysText(String(DEFAULT_DAYS));
-      onChange({ type: "DAYS", days: DEFAULT_DAYS });
-    } else onChange({ type: "NONE" });
+    else if (type === "DAYS") onChange({ type: "DAYS", days: DEFAULT_DAYS });
+    else onChange({ type: "NONE" });
   };
   const handleDate = (date: string | null) => {
     onChange({ type: "DATE", date: date ?? "" });
   };
-  const handleDays = (text: string) => {
-    setDaysText(text);
-    onChange({ type: "DAYS", days: text.trim() === "" ? Number.NaN : Number(text) });
+  const handleDuration = (id: string) => {
+    onChange({ type: "DAYS", days: Number(id) });
   };
   return (
     <div className="flex flex-col gap-(--space-3)">
@@ -58,13 +63,12 @@ export function ExpiryFields({ value, onChange, ...props }: Readonly<ExpiryField
         />
       ) : null}
       {value.type === "DAYS" ? (
-        <TextField
-          label={t("expiryDaysLabel")}
+        <Select
+          label={t("expiryDurationLabel")}
           name="expiryDays"
-          type="text"
-          value={daysText}
-          onChange={handleDays}
-          onBlur={noop}
+          options={durationOptions(t)}
+          value={String(value.days)}
+          onChange={handleDuration}
           description={props.daysHelper}
           errorMessage={galleryErrorText(t, props.daysError)}
         />

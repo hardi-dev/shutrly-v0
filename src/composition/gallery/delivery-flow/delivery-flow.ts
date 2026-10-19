@@ -9,16 +9,16 @@ import { completeProject } from "@/features/booking/application/use-cases/comple
 import type { ProjectDeliveryResult } from "@/features/booking/application/use-cases/mark-project-delivered/mark-project-delivered.types";
 import { getDeliveryCard } from "@/features/gallery/application/use-cases/get-delivery-card/get-delivery-card";
 import type { DeliveryCardView } from "@/features/gallery/application/use-cases/get-delivery-card/get-delivery-card.types";
-import type { FinalDeliveryWriteResult } from "@/features/gallery/application/use-cases/publish-final-delivery/publish-final-delivery.types";
+import type { FinalDeliveryWriteResult } from "@/features/gallery/application/use-cases/record-final-delivery/record-final-delivery.types";
 
 import { requireOwnerOrRedirect } from "../../auth/owner-guard/owner-guard";
 import { withRequestDb } from "../../request-db/request-db";
 import { verifyOwnerWorkspace } from "../../workspace/owner-workspace/owner-workspace";
-import { withFinalDeliveryScope } from "../final-delivery-scope/final-delivery-scope";
 import {
   galleryIdOrNotFound,
   gallerySaveError,
 } from "../gallery-flow-support/gallery-flow-support";
+import { withMarkDeliveredScope } from "../mark-delivered-scope/mark-delivered-scope";
 
 function saveError(error: unknown, workspaceId: string, operation: string): never {
   if (error instanceof ProjectError && error.code === "NOT_FOUND") notFound();
@@ -46,7 +46,7 @@ export async function loadDeliveryCard(
 }
 
 /** *Publikasikan hasil akhir*: the gallery and the project move together, or neither (AC-DEL-001, -002). @param rawWorkspaceId - untrusted workspace id @param rawProjectId - untrusted project id @returns undefined, or the refusal with its reasons */
-export async function publishFinalDeliveryEntry(
+export async function markDeliveredEntry(
   rawWorkspaceId: string,
   rawProjectId: string,
 ): Promise<FinalDeliveryWriteResult> {
@@ -54,13 +54,13 @@ export async function publishFinalDeliveryEntry(
   const account = await requireOwnerOrRedirect();
   const verified = await verifyOwnerWorkspace(rawWorkspaceId);
   try {
-    return await withFinalDeliveryScope({
+    return await withMarkDeliveredScope({
       context: verified.context,
       actorId: account.id,
       projectId,
     });
   } catch (error) {
-    return saveError(error, verified.context.workspaceId, "publish-final-delivery");
+    return saveError(error, verified.context.workspaceId, "record-final-delivery");
   }
 }
 

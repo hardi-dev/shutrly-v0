@@ -103,7 +103,7 @@ function AllPhotosBody({ workspaceId, page, browse, onOpenPhoto }: Readonly<AllP
             aria-hidden="true"
             className="mt-(--space-0-5) shrink-0"
           />
-          {kindVisibility(t, location.kind, page.gallery.status)}
+          {kindVisibility(t, location.kind, page.gallery.state)}
         </p>
       ) : null}
       <BrowseGrid

@@ -100,12 +100,7 @@ describe("client gate (D-4, D-5)", () => {
   it.each([
     ["an unknown token", () => Promise.resolve(randomToken())],
     ["a malformed token", () => Promise.resolve("not-a-token")],
-    ["a draft gallery", () => withGallery({ status: "DRAFT", publishedAt: null })],
     ["an expired gallery", () => withGallery({ expiresAt: new Date(Date.now() - 60_000) })],
-    [
-      "an archived gallery",
-      () => withGallery({ status: "ARCHIVED", archivedAt: new Date(), archivedBy: null }),
-    ],
     ["a project without gallery", () => withoutGallery()],
     ["a cancelled project", () => withProject({ status: "CANCELLED", cancelledAt: new Date() })],
   ])("AC-ACC-004 shows the same neutral result for %s", async (_case, tokenFor) => {

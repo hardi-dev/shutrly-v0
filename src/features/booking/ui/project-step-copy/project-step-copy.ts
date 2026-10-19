@@ -1,4 +1,4 @@
-import type { ProjectStep } from "@/features/booking/domain/project-status/project-status.types";
+import type { ManualStep } from "@/features/booking/domain/project-status/project-status.types";
 
 import type { ProjectTranslate } from "../project-copy/project-copy.types";
 import type { ProjectStepCopy } from "./project-step-copy.types";
@@ -31,7 +31,7 @@ const STEP_MESSAGE_KEY = {
  * @param step - the step
  * @returns its copy
  */
-export function projectStepCopy(t: ProjectTranslate, step: ProjectStep): ProjectStepCopy {
+export function projectStepCopy(t: ProjectTranslate, step: ManualStep): ProjectStepCopy {
   const keys = STEP_MESSAGE_KEY[step];
   return {
     label: t(keys.label),

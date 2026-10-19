@@ -8,7 +8,7 @@ import { rotateGalleryPassword } from "./rotate-gallery-password";
 
 describe("rotateGalleryPassword", () => {
   it("AC-GAL-021 replaces the hash, bumps the version and records the actor", async () => {
-    const { deps, sources } = await lifecycleSetup({ status: "PUBLISHED" });
+    const { deps, sources } = await lifecycleSetup({});
     const result = await rotateGalleryPassword(
       { ...deps, cipher: fakeCipher, hasher: fakeHasher },
       WORKSPACE,
@@ -25,7 +25,7 @@ describe("rotateGalleryPassword", () => {
   });
 
   it("AC-GAL-002 AC-GAL-022 refuses a short password or an archived gallery", async () => {
-    const { deps } = await lifecycleSetup({ status: "ARCHIVED" });
+    const { deps } = await lifecycleSetup({ projectStatus: "CANCELLED" });
     const rotateDeps = { ...deps, cipher: fakeCipher, hasher: fakeHasher };
     expect(
       await rotateGalleryPassword(rotateDeps, WORKSPACE, OWNER_ID, GALLERY_ID, {

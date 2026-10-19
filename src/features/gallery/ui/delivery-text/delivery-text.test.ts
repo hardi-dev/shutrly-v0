@@ -28,23 +28,19 @@ describe("delivery text (hasilakhirowner-kartu)", () => {
     expect(
       deliveryRows(t, CARD, "id-ID").map((row) => [row.title, row.meta, row.chip.label]),
     ).toEqual([
-      ["Foto edit", "24 file", "Siap"],
-      ["Foto cetak", "6 file", "Siap"],
+      ["Foto edit", "24 file", "Siap diunduh"],
+      ["Foto cetak", "6 file", "Siap diunduh"],
     ]);
   });
 
-  it("C: the publication with its time and what the client can download", () => {
+  it("AC-GFL-006 C: the delivery with its time and the finished files", () => {
     const rows = deliveryRows(
       t,
-      { ...CARD, state: "PUBLISHED", publishedAt: "2026-10-05T10:10:00Z" },
+      { ...CARD, state: "DELIVERED", publishedAt: "2026-10-05T10:10:00Z" },
       "id-ID",
     );
-    expect(rows.map((row) => [row.title, row.meta, row.chip.label])).toEqual([
-      [
-        "Dipublikasikan 5 Okt 2026, 17.10",
-        "Klien bisa mengunduh 24 file Foto edit dan 6 file Foto cetak.",
-        "Dipublikasikan",
-      ],
+    expect(rows.map((row) => [row.title, row.chip.label])).toEqual([
+      ["Terkirim 5 Okt 2026, 17.10 · 24 Foto edit · 6 Foto cetak", "Terkirim"],
     ]);
   });
 
@@ -54,12 +50,11 @@ describe("delivery text (hasilakhirowner-kartu)", () => {
       { ...CARD, state: "COMPLETED", completedAt: "2026-10-12T03:00:00Z" },
       "id-ID",
     );
-    expect(rows[0]?.title).toBe("Selesai 12 Okt 2026");
+    expect(rows[0]?.title).toBe("Terkirim 12 Okt 2026");
   });
 
-  it("A and E show a note instead of rows", () => {
+  it("A shows a note instead of rows", () => {
     expect(deliveryNote(t, { ...CARD, state: "NO_FILES" })).toMatch(/^Belum ada hasil akhir/);
-    expect(deliveryNote(t, { ...CARD, state: "GALLERY_INACTIVE" })).toMatch(/^Galeri harus/);
     expect(deliveryRows(t, { ...CARD, state: "NO_FILES" }, "id-ID")).toEqual([]);
   });
 
@@ -71,8 +66,8 @@ describe("delivery text (hasilakhirowner-kartu)", () => {
     expect(finishedFiles(t, { items })).toBe("3 file Foto edit");
   });
 
-  it("Owner 7: a delivered project's header says when final delivery was published", () => {
-    const published = { ...CARD, state: "PUBLISHED" as const, publishedAt: "2026-10-05T03:00:00Z" };
+  it("Owner 7: a delivered project's header says when the project was delivered", () => {
+    const published = { ...CARD, state: "DELIVERED" as const, publishedAt: "2026-10-05T03:00:00Z" };
     expect(deliveredHeaderMeta(t, published, "id-ID")).toBe(
       "Hasil akhir dipublikasikan Sen, 5 Okt 2026",
     );

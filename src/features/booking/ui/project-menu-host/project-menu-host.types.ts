@@ -29,6 +29,10 @@ export interface ProjectMenuTarget {
   readonly meta: string;
   /** When the caller already has the project's info, the dialog opens without a fetch. */
   readonly info?: ProjectInfoTarget;
+  /** BR-GAL-010 for the gallery share item; rows without the gallery data pass nothing (A-11). */
+  readonly canShareGallery?: boolean;
+  /** Whether a finished file is synced, for the Tandai terkirim item (AC-GFL-017). */
+  readonly hasFinishedFiles?: boolean;
 }
 
 export interface ProjectMenuActions {

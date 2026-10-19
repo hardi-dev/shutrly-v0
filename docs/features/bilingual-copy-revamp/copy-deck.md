@@ -1293,12 +1293,12 @@ Google Drive sharing labels refer to Drive’s own language. The Indonesian `lin
 | Element / context | English | Bahasa Indonesia |
 |---|---|---|
 | Section/page title | Gallery | Galeri |
-| Card description | Project photos from your Google Drive folders. | Foto proyek dari folder Google Drive kamu. |
-| No-gallery title | No gallery yet | Belum ada galeri |
-| No-gallery body | Create a password-protected gallery, then link the project’s Google Drive folders. | Buat galeri dengan kata sandi, lalu tautkan folder Google Drive proyek ini. |
-| No-gallery CTA | Create gallery | Buat galeri |
-| Draft-project title | Galleries are available after booking | Galeri tersedia setelah pemesanan dikonfirmasi |
-| Draft-project body | Confirm the booking, then create a gallery for this project. | Konfirmasi pemesanan dulu, lalu buat galeri untuk proyek ini. |
+| Card description | Project photos from your Google Drive folder. | Foto proyek dari folder Google Drive kamu. |
+| SUPERSEDED (F-27 iteration 5): No-gallery title| No gallery yet | Belum ada galeri |
+| SUPERSEDED (F-27 iteration 5): No-gallery body| Create a password-protected gallery, then link the project’s Google Drive folders. | Buat galeri dengan kata sandi, lalu tautkan folder Google Drive proyek ini. |
+| SUPERSEDED (F-27 iteration 5): SUPERSEDED (F-27 iteration 5): No-gallery CTA| Create gallery | Buat galeri |
+| Draft-project title | Gallery is created when the project is booked | Galeri dibuat saat proyek dibooking |
+| Draft-project body | Confirm the booking first; the gallery and its password are created automatically. | Konfirmasi booking dulu; galeri dan kata sandinya dibuat otomatis. |
 | Canceled-project title | Gallery unavailable | Galeri tidak tersedia |
 | Canceled-project body | This project is canceled, so a gallery can’t be created. | Proyek ini dibatalkan, jadi galeri tidak bisa dibuat. |
 | Manage CTA | Manage gallery | Kelola galeri |
@@ -1311,7 +1311,7 @@ Google Drive sharing labels refer to Drive’s own language. The Indonesian `lin
 | Combined label | Sources · Photos | Sumber · Foto |
 | Expiry label | Expiry | Kedaluwarsa |
 | Draft status | Draft | Draf |
-| Published status | Published | Dipublikasikan |
+| SUPERSEDED (F-27 iteration 5): SUPERSEDED (F-27 iteration 5): Published status| Published | Dipublikasikan |
 | Expired status | Expired | Kedaluwarsa |
 | Archived status | Archived | Diarsipkan |
 | Folder count | {count} folders | {count} folder |
@@ -1330,6 +1330,13 @@ Google Drive sharing labels refer to Drive’s own language. The Indonesian `lin
 | Clipboard failed body | Copy the password manually. | Salin kata sandi secara manual. |
 | Failed-folders card title | {count} folders couldn’t be synced | {count} folder belum bisa disinkronkan |
 | Failed-folders card body | {names} couldn’t be read. Open the gallery for details. | {names} belum bisa dibaca. Buka galeri untuk melihat penyebabnya. |
+| P2 booked, no folder, AC-GFL-007 | No folder yet | Belum ada folder |
+| P2 body | The gallery is ready with a password. Add a Google Drive folder with this project’s photos, then send the link to the client. | Galeri sudah siap dengan kata sandi. Tambahkan folder Google Drive berisi foto proyek ini, lalu kirim link ke klien. |
+| P6 chip, A-3 | Closed | Ditutup |
+| P6 summary title | Project cancelled, gallery closed | Proyek dibatalkan, galeri ditutup |
+| *Kirim link ke klien* button, AC-GFL-020, shown on P3/P4 and G2 | Send link to client | Kirim link ke klien |
+| G1 header meta, AC-GFL-001 | {title} · No folder yet · No expiry | {title} · Belum ada folder · Tanpa kedaluwarsa |
+| G4 Alert body, AC-GFL-016 | The client can no longer open the gallery. Photos, folders and the client’s selections stay saved and can only be viewed. | Klien tidak bisa membuka galeri lagi. Foto, folder dan pilihan klien tetap tersimpan dan hanya bisa dilihat. |
 
 Client-dependent visibility and sharing rows describe the intended F-10–F-15 behavior. They must not be presented as usable client access while those features are unavailable; publishing the Owner gallery alone does not deliver the complete client journey.
 
@@ -1339,7 +1346,7 @@ The missing-count summary replaces word-based `.replace(" proof", …)` processi
 
 | Element / context | English | Bahasa Indonesia |
 |---|---|---|
-| Create-dialog title | Create gallery | Buat galeri |
+| SUPERSEDED (F-27 iteration 5): SUPERSEDED (F-27 iteration 5): Create-dialog title| Create gallery | Buat galeri |
 | Access description | Clients use the gallery link and this password to open the gallery. | Klien membuka galeri dengan tautan dan kata sandi ini. |
 | Access-limit note; beside access settings and public-link warnings | The password controls access to the Shutrly gallery. Direct Drive links and saved image URLs may still open outside Shutrly. | Kata sandi membatasi akses ke galeri Shutrly. Tautan Drive dan alamat gambar yang sudah disimpan bisa tetap dibuka di luar Shutrly. |
 | Future sharing helper, only when sharing is implemented | The password is filled in when you prepare a gallery-sharing message. | Kata sandi terisi saat kamu menyiapkan pesan untuk membagikan galeri. |
@@ -1353,9 +1360,9 @@ The missing-count summary replaces word-based `.replace(" proof", …)` processi
 | Date label | Expiry date | Tanggal kedaluwarsa |
 | Date helper | The gallery expires at the end of that day. You can change it later. | Galeri kedaluwarsa di akhir hari itu. Bisa diubah nanti. |
 | Duration label | Number of days | Jumlah hari |
-| Draft-duration helper | Counted from publishing. You can change it later. | Dihitung sejak galeri dipublikasikan. Bisa diubah nanti. |
-| Create CTA | Create gallery | Buat galeri |
-| Created title | Gallery created | Galeri dibuat |
+| SUPERSEDED (F-27 iteration 5): Draft-duration helper| Counted from publishing. You can change it later. | Dihitung sejak galeri dipublikasikan. Bisa diubah nanti. |
+| SUPERSEDED (F-27 iteration 5): SUPERSEDED (F-27 iteration 5): Create CTA| Create gallery | Buat galeri |
+| SUPERSEDED (F-27 iteration 5): Created title| Gallery created | Galeri dibuat |
 | Created body | Add a Google Drive folder to get started. | Tambahkan folder Google Drive untuk mulai. |
 | Access section title | Client access | Akses klien |
 | Rotate action | Change password | Ganti kata sandi |
@@ -1367,10 +1374,10 @@ The missing-count summary replaces word-based `.replace(" proof", …)` processi
 | Element / context | English | Bahasa Indonesia |
 |---|---|---|
 | Sources section | Photo sources | Sumber foto |
-| Sources description | Link publicly shared Drive folders, then sync to read their photos. | Tautkan folder Drive yang dibagikan lewat tautan publik, lalu sinkronkan untuk membaca fotonya. |
-| Empty title | No folders yet | Belum ada folder |
-| Empty body · Approved (Owner, 2026-10-12) | Link a project folder. Photos are for selection unless you map a subfolder to a package item; files in mapped subfolders are final files. | Tautkan folder proyek. Foto digunakan untuk pilihan kecuali subfolder dipetakan ke item paket; file di subfolder yang dipetakan menjadi hasil akhir. |
-| Empty body mobile | Link the project’s Google Drive folder. | Tautkan folder Google Drive proyek ini. |
+| Sources description · Owner 2026-10-19, design wording | Google Drive folders shared as “Anyone with the link”. | Folder Google Drive yang dibagikan sebagai “Siapa saja yang memiliki link”. |
+| Empty title · REMOVED (2026-10-19, unused; the gallery e2e waits on the empty body instead) | ~~No folders yet~~ | ~~Belum ada folder~~ |
+| Empty body · Approved (Owner, 2026-10-12) | No folder yet. Add a Google Drive folder with this project’s photos; then you can send the gallery link to the client. | Belum ada folder. Tambahkan folder Google Drive berisi foto proyek ini; setelah itu kamu bisa mengirim link galeri ke klien. |
+| Empty body mobile · REMOVED (Owner 2026-10-19, unused; no key in the code) | ~~Link the project’s Google Drive folder.~~ | ~~Tautkan folder Google Drive proyek ini.~~ |
 | Add-folder title/action | Add folder | Tambah folder |
 | Add description · Approved (Owner, 2026-10-12) | Photos stay available for selection unless their subfolder is mapped to a package item. Mapped files are final files. | Foto tetap tersedia untuk dipilih kecuali subfoldernya dipetakan ke item paket. File yang dipetakan menjadi hasil akhir. |
 | Source label | Source | Sumber |
@@ -1391,6 +1398,7 @@ The missing-count summary replaces word-based `.replace(" proof", …)` processi
 | Pre-sync fallback name | Google Drive folder | Folder Google Drive |
 | Open external folder | Open in Google Drive | Buka di Google Drive |
 | Open external folder mobile | Open in Drive | Buka di Drive |
+| P2 action | Add Drive folder | Tambah folder Drive |
 
 ### 10.4 Sync progress, results and failures
 
@@ -1424,6 +1432,8 @@ The missing-count summary replaces word-based `.replace(" proof", …)` processi
 | Completed body | {count} folders synced. | {count} folder disinkronkan. |
 | Failed title | Sync failed | Sinkronisasi gagal |
 | Failed folder names | Couldn’t read {names}. | {names} belum bisa dibaca. |
+| P3 summary line | {count, plural, one {# folder} other {# folders}} · syncing {done} of {total} folders | {count, plural, other {# folder}} · menyinkronkan {done} dari {total} folder |
+| P4 failed folder, count | {count} folder failed to sync | {count} folder gagal disinkronkan |
 
 A failed multi-step sync may have already saved earlier steps. These error messages do not promise rollback or that stored metadata is unchanged. Files in Google Drive are not edited by Shutrly (ADR-019).
 
@@ -1435,7 +1445,7 @@ A failed multi-step sync may have already saved earlier steps. These error messa
 | Empty description | Photos appear after syncing, ordered by filename. | Foto muncul setelah sinkronisasi, urut nama file. |
 | Mobile ordering note | Ordered by filename. | Urut nama file. |
 | Empty title | No photos yet | Belum ada foto |
-| Empty body | Photos appear here after the folder is synced. | Foto muncul di sini setelah folder disinkronkan. |
+| Empty body · Owner 2026-10-19, design wording | Photos appear after the Google Drive folder is linked and synced. | Foto muncul setelah folder Google Drive ditautkan dan disinkronkan. |
 | Preview description | The first 8 photos. View all to browse folders, search and preview photos. | Cuplikan 8 foto pertama. Buka semua untuk menjelajah folder, mencari, dan melihat pratinjau. |
 | Preview mobile description | A preview of the first photos. | Cuplikan foto pertama. |
 | View-all action | View all photos | Lihat semua foto |
@@ -1462,61 +1472,68 @@ A failed multi-step sync may have already saved earlier steps. These error messa
 | Preview missing title | File not found in Google Drive | File tidak ditemukan di Google Drive |
 | Preview missing note | Hidden from clients until found again during sync. | Disembunyikan dari klien sampai ditemukan lagi saat sinkronisasi. |
 | Draft visibility | Visible to clients after publishing. | Terlihat oleh klien setelah galeri dipublikasikan. |
-| Published visibility | Visible to clients now. | Terlihat oleh klien sekarang. |
+| Published visibility | Visible to clients with the link and password. | Terlihat oleh klien yang punya link dan kata sandi. |
 | Expired visibility | Hidden from clients while the gallery is expired. | Disembunyikan dari klien selama galeri kedaluwarsa. |
 | Archived visibility | Hidden from clients. | Disembunyikan dari klien. |
-| Canceled-draft visibility | Won’t be visible to clients. | Tidak akan terlihat oleh klien. |
+| Canceled-draft visibility | Hidden from clients: the project was cancelled. | Tidak terlihat oleh klien: proyek dibatalkan. |
 | Final-file visibility | Hidden until final delivery. Clients can’t select these photos. | Disembunyikan sampai hasil akhir dikirim. Foto ini tidak bisa dipilih klien. |
 | Missing visibility | Missing photos are hidden until found again. | Foto yang hilang disembunyikan sampai ditemukan lagi. |
 | Edited-tab explanation · Approved (Owner, 2026-10-12) | Hidden until final delivery is published. Files come from subfolders mapped to an edited-photo package item. | Disembunyikan sampai hasil akhir dipublikasikan. File berasal dari subfolder yang dipetakan ke item paket Hasil edit. |
 | Print-tab explanation · Approved (Owner, 2026-10-12) | Hidden until final delivery is published. Files come from subfolders mapped to a printed-photo package item. | Disembunyikan sampai hasil akhir dipublikasikan. File berasal dari subfolder yang dipetakan ke item paket Foto cetak. |
+| G1 "Pilihan klien" note, AC-GFL-001 | The client can choose once photos arrive. | Klien bisa memilih setelah foto masuk. |
+| G1 *Hasil akhir* empty | No final files yet. | Belum ada file hasil akhir. |
+| G2 *Hasil akhir* note, AC-GFL-019 | The client can download once files are synced. | Klien bisa mengunduh begitu file tersinkron. |
+| G2 *Pilihan klien* status | Selections are final. | Pilihan sudah final. |
 
 ### 10.6 Publish, expiry and password changes
 
 | Element / context | English | Bahasa Indonesia |
 |---|---|---|
-| Publish action | Publish gallery | Publikasikan galeri |
-| Publish confirmation | Publish this gallery? | Publikasikan galeri ini? |
+| SUPERSEDED (F-27 iteration 5): Publish action| Publish gallery | Publikasikan galeri |
+| SUPERSEDED (F-27 iteration 5): Publish confirmation| Publish this gallery? | Publikasikan galeri ini? |
 | Publish body | Folders are checked again now. After that, clients can open the gallery using its link and password. | Folder dicek ulang sekarang. Setelah itu, klien bisa membuka galeri dengan tautan dan kata sandinya. |
 | Publish expiry summary | Expiry: {expiryDescription}. | Kedaluwarsa: {expiryDescription}. |
 | Publish refusal title | This gallery isn’t ready to publish | Galeri belum bisa dipublikasikan |
 | Publish refusal body | No readable folders were found during the check. | Tidak ada folder yang bisa dibaca saat dicek ulang. |
 | Publish refusal hint | Check that the folder is shared with “Anyone with the link”, then try again. | Pastikan folder dibagikan sebagai “Siapa saja yang memiliki link”, lalu coba lagi. |
-| Published toast | Gallery published | Galeri dipublikasikan |
+| SUPERSEDED (F-27 iteration 5): Published toast| Gallery published | Galeri dipublikasikan |
 | Published body | Share the gallery link and password with your client. | Bagikan tautan galeri dan kata sandi ke klien. |
 | Expiry-dialog title | Gallery expiry | Kedaluwarsa galeri |
-| Expiry body | After expiry, clients can’t open the gallery until you change its expiry settings. | Setelah kedaluwarsa, klien tidak bisa membuka galeri sampai kamu mengubah pengaturannya. |
-| Live duration helper | Counted from when you save. | Dihitung sejak disimpan. |
+| Expiry body | After expiry, the client can’t open the gallery until you change it. | Setelah kedaluwarsa, klien tidak bisa membuka galeri sampai kamu mengubahnya. |
+| Live duration helper | Counted from when you save. The gallery closes on {date}. | Dihitung dari saat disimpan. Galeri tertutup pada {date}. |
 | Expiry saved | Expiry saved | Kedaluwarsa disimpan |
-| Reopened toast | Gallery reopened | Galeri dibuka lagi |
+| SUPERSEDED (F-27 iteration 5): Reopened toast| Gallery reopened | Galeri dibuka lagi |
 | Expired alert title | Gallery expired since {date} | Galeri kedaluwarsa sejak {date} |
-| Expired alert body | Set a new expiry date or remove expiry to reopen it with the same link and password. | Atur tanggal baru atau hapus kedaluwarsa untuk membukanya lagi dengan tautan dan kata sandi yang sama. |
+| Expired alert body | The client can’t open the gallery. Set a new date or remove the expiry to open it again with the same link and password. | Klien tidak bisa membuka galeri. Atur tanggal baru atau hapus kedaluwarsa untuk membukanya lagi dengan link dan kata sandi yang sama. |
 | Rotate-dialog title | Change gallery password | Ganti kata sandi galeri |
 | Rotate body | The old password stops working immediately. Clients viewing the gallery must enter the new password. | Kata sandi lama langsung tidak berlaku. Klien yang sedang membuka galeri harus memasukkan kata sandi baru. |
 | New password label | New password | Kata sandi baru |
 | New password helper | Generated for you. You can change it to 6–64 characters. | Dibuat otomatis. Bisa diganti dengan 6–64 karakter. |
 | Password changed title | Password changed | Kata sandi diganti |
 | Password changed body | Share the new password with your client. The old password no longer works. | Bagikan kata sandi baru ke klien. Kata sandi lama tidak berlaku lagi. |
+| D1 Select label | Duration | Durasi |
+| Presets 7/14/30/60/90, AC-GFL-010, A-1 | {count, plural, one {# day} other {# days}} | {count, plural, other {# hari}} |
 
 ### 10.7 Unlink, archive and delete gallery
 
 | Element / context | English | Bahasa Indonesia |
 |---|---|---|
-| Unlink action | Unlink folder | Lepas folder |
-| Unlink title | Unlink {name}? | Lepas {name}? |
+| Unlink action | Remove folder | Lepas folder |
+| Unlink title | Remove {name}? | Lepas {name}? |
 | Unlink body | {count} photos will be hidden from clients. The Drive folder stays unchanged. To use this folder again, add it as a new folder. | {count} foto disembunyikan dari klien. Folder di Drive tidak berubah. Untuk memakainya lagi, tambahkan sebagai folder baru. |
-| Last-folder constraint | A published gallery needs at least one active folder. | Galeri yang dipublikasikan butuh minimal satu folder aktif. |
+| SUPERSEDED (F-27 iteration 5): Last-folder constraint| A published gallery needs at least one active folder. | Galeri yang dipublikasikan butuh minimal satu folder aktif. |
 | Unlinked toast | Folder unlinked | Folder dilepas |
-| Archive title | Archive this gallery? | Arsipkan galeri ini? |
+| SUPERSEDED (F-27 iteration 5): Archive title| Archive this gallery? | Arsipkan galeri ini? |
 | Archive body | Clients will no longer be able to open it. An archived gallery can’t be published again. | Klien tidak bisa membuka galeri lagi. Galeri yang diarsipkan tidak bisa dipublikasikan kembali. |
-| Archive CTA | Archive gallery | Arsipkan galeri |
-| Archived toast | Gallery archived | Galeri diarsipkan |
-| Archived read-only body | You can view this gallery, but can’t sync or edit it. Clients can’t open it. | Galeri ini bisa dilihat, tetapi tidak bisa disinkronkan atau diubah. Klien tidak bisa membukanya. |
-| Delete draft title | Delete this draft gallery? | Hapus galeri draf ini? |
+| SUPERSEDED (F-27 iteration 5): Archive CTA| Archive gallery | Arsipkan galeri |
+| SUPERSEDED (F-27 iteration 5): SUPERSEDED (F-27 iteration 5): Archived toast| Gallery archived | Galeri diarsipkan |
+| SUPERSEDED (F-27 iteration 5): Archived read-only body| You can view this gallery, but can’t sync or edit it. Clients can’t open it. | Galeri ini bisa dilihat, tetapi tidak bisa disinkronkan atau diubah. Klien tidak bisa membukanya. |
+| SUPERSEDED (F-27 iteration 5): Delete draft title| Delete this draft gallery? | Hapus galeri draf ini? |
 | Delete draft body | The gallery, {folderCount} folders and {photoCount} photo records will be deleted from Shutrly. Google Drive files stay unchanged. | Galeri, {folderCount} folder, dan data {photoCount} foto dihapus dari Shutrly. File Google Drive tidak berubah. |
-| Delete CTA | Delete gallery | Hapus galeri |
-| Deleted toast | Draft gallery deleted | Galeri draf dihapus |
+| SUPERSEDED (F-27 iteration 5): Delete CTA| Delete gallery | Hapus galeri |
+| SUPERSEDED (F-27 iteration 5): Deleted toast| Draft gallery deleted | Galeri draf dihapus |
 | Canceled-project draft restriction | This draft can’t be published, synced or edited. You can still delete it. | Draf ini tidak bisa dipublikasikan, disinkronkan, atau diubah. Kamu masih bisa menghapusnya. |
+| D3 body, design wording | This is the gallery’s last folder. {count} photos from it are removed from the gallery, and Send link to client stays hidden until you add a folder. The folder in Google Drive doesn’t change. | Ini folder terakhir galeri. {count} foto dari folder ini dihapus dari galeri, dan Kirim link ke klien tidak muncul sampai kamu menambah folder lagi. Folder di Google Drive tidak berubah. |
 
 ### 10.8 Gallery field validation and domain refusals
 
@@ -1542,6 +1559,34 @@ A failed multi-step sync may have already saved earlier steps. These error messa
 | Sync rate limited | Too many sync requests. Try again in a moment. | Terlalu banyak permintaan sinkronisasi. Coba lagi sebentar lagi. |
 | Save failure title | Changes couldn’t be saved | Perubahan belum tersimpan |
 | Save failure body | Check your connection, then try again. | Cek koneksi, lalu coba lagi. |
+
+### 10.9 Share gallery link — share dialog and entry points (F-27 iteration 6)
+
+Source: `gallery-share-dialog.copy.ts` (`galleryShare`), Owner-approved in `copy-draft.md` iteration 6. Owner decisions of 2026-10-18: `{name}` in the `GALLERY_SHARE` message is the client’s first name, and a failed copy shows the *copyFailed* toast. The project menu rows are in §10.9 too; the gallery card and page button reuse the §10.1 *Kirim link ke klien* row.
+
+| Element / context | English | Bahasa Indonesia |
+|---|---|---|
+| Dialog title (K1, K2) | Send link to client | Kirim link ke klien |
+| Dialog description | Check the message, then send it from WhatsApp. Shutrly doesn’t send anything itself. | Periksa pesannya, lalu kirim dari WhatsApp. Shutrly tidak mengirim apa pun sendiri. |
+| Recipient label | To | Kepada |
+| Recipient value | {name} · {phone} | {name} · {phone} |
+| Recipient without number | {name} · no WhatsApp number | {name} · belum ada nomor WhatsApp |
+| Password note (K1) | The gallery password is in this message. Anyone who gets it can open the gallery. | Kata sandi galeri ikut di pesan ini. Siapa pun yang menerima pesan ini bisa membuka galeri. |
+| Edit template link | Edit template | Ubah template |
+| Copy message button | Copy message | Salin pesan |
+| Copied toast title and body | Message copied / Paste it into WhatsApp. | Pesan disalin / Tempel di WhatsApp. |
+| Copy failed toast (Owner 2026-10-18) | Couldn’t copy the message. Copy it from the message box. | Pesan tidak bisa disalin. Salin manual dari kotak pesan. |
+| Open WhatsApp button | Open WhatsApp | Buka WhatsApp |
+| No-number alert title (K2) | {name} doesn’t have a WhatsApp number yet | {name} belum punya nomor WhatsApp |
+| No-number alert body (K2) | Add a number in the client’s details to open WhatsApp. You can still copy the message. | Tambahkan nomor di data klien untuk membuka WhatsApp. Kamu tetap bisa menyalin pesannya. |
+| Add number action (K2) | Add WhatsApp number | Tambah nomor WhatsApp |
+| Loading state | Preparing the message… | Menyiapkan pesan… |
+| Error state title | The gallery link can’t be sent yet | Link galeri belum bisa dikirim |
+| Error state body | Try again in a moment. The gallery can’t be shared right now. | Coba lagi sebentar lagi. Galeri belum bisa dibagikan saat ini. |
+| Close (error state) | Close | Tutup |
+| Project ⋯ menu: share item (AC-GFL-013, 014, 020) | Send link to client | Kirim link ke klien |
+| Project ⋯ menu: Tandai terkirim item (A-6) | Mark as delivered | Tandai terkirim |
+| Project ⋯ menu: Tandai terkirim hint, no finished file (AC-GFL-017) | No final files are synced yet. Sync the final-files folder first. | Belum ada hasil akhir yang tersinkron. Sinkronkan folder hasil akhir dulu. |
 
 ## 11. Message templates and WhatsApp defaults
 
@@ -1901,7 +1946,7 @@ These rows come from client gallery strings that have no deck row yet. The Engli
 | Client gallery client-browse-screen: unavailableTitle | Photos can’t be shown yet | Foto belum bisa ditampilkan |
 | Client gallery client-browse-screen: unavailableBody | We couldn’t get the photos right now. | Kami tidak bisa mengambil foto saat ini. |
 | Client gallery client-browse-screen: emptyTitle | No photos yet | Belum ada foto |
-| Client gallery client-browse-screen: emptyBody | Your photographer hasn’t added photos here yet. | Fotografer belum menambahkan foto di sini. |
+| Client gallery client-browse-screen: emptyBody (changed in F-27 iteration 7, was “Your photographer hasn’t added photos here yet.”) | The photographer hasn’t added photos to this gallery yet. Try again later. | Fotografer belum menambahkan foto ke galeri ini. Coba lagi nanti. |
 | Client gallery client-browse-screen: searchEmptyTitle | No photos “{text}” | Tidak ada foto “{text}” |
 | Client gallery client-browse-screen: searchEmptyBody | Try another file name. | Coba nama file lain. |
 | Client gallery client-browse-screen: loadingMore | Loading more photos… | Memuat foto lainnya… |
@@ -1928,36 +1973,38 @@ These rows come from client gallery strings that have no deck row yet. The Engli
 | Client gallery client-copy: usageReview | {usage} of {limit} {unit} · {remaining} left | {usage} dari {limit} {unit} · sisa {remaining} |
 | Client gallery client-copy: usageSubmitted | {usage} {unit} submitted · waiting for your photographer | {usage} {unit} dikirim · menunggu fotografer |
 | Client gallery client-copy: usageLocked | {usage} {unit} · locked by your photographer | {usage} {unit} · dikunci fotografer |
-| Client gallery client-gate-screen: description | {projectTitle} gallery from {studioName}. Your photographer sent the password with this link. | Galeri {projectTitle} dari {studioName}. Password dikirim fotografer bersama link ini. |
+| Client gallery client-gate-screen: description | {projectTitle} gallery from {studioName}. Your photographer sent the password with this link. | Galeri {projectTitle} dari {studioName}. Kata sandi dikirim fotografer bersama link ini. |
 | Client gallery client-home-screen: greeting | Hello, {name} | Halo, {name} |
 | Client gallery client-home-screen: subtitleStart | Choose photos for your package, then send them to your photographer. | Pilih foto untuk paket Anda, lalu kirim ke fotografer. |
 | Client gallery client-home-screen: subtitlePartly | {sent} sent. Left to choose: {open}. | {sent} sudah dikirim. Tinggal {open}. |
 | Client gallery client-home-screen: subtitleAllSent | All selections are sent. Your photographer will let you know. | Semua pilihan sudah dikirim. Fotografer akan mengabari Anda. |
 | Client gallery client-home-screen: subtitleDelivered | Your photos have been edited. | Foto Anda sudah selesai diedit. |
 | Client gallery client-home-screen: subtitleNoGroups | See all your photos. | Lihat semua foto Anda. |
+| Client gallery client-home-screen: subtitleNoPhotos (new, F-27 iteration 7; Owner-approved, C1 empty *Beranda*) | No photos yet · the photographer hasn’t added any. Try again later. | Belum ada foto · fotografer belum menambahkan foto. Coba lagi nanti. |
 | Client gallery client-home-screen: listJoin |  and  |  dan  |
 | Client gallery client-home-screen: finalReadyTitle | Final photos are ready | Hasil akhir siap |
 | Client gallery client-home-screen: finalReadyBody | {edited, plural, one {# edited photo} other {# edited photos}} and {print, plural, one {# print photo} other {# print photos}}. Download one at a time, several, or all. | {edited, plural, other {# foto edit}} dan {print, plural, other {# foto cetak}}. Unduh satu per satu, beberapa, atau semuanya. |
 | Client gallery client-home-screen: finalReadyAction | View & download | Lihat & unduh |
+| Client gallery client-home-screen: finalReadyNoDate (new, F-27 iteration 7; EN uses ICU plural, ID keeps the same wording with a plural wrapper; no delivery date) | {edited, plural, one {# edited photo} other {# edited photos}} · {print, plural, one {# print photo} other {# print photos}} | {edited, plural, other {# Foto edit}} · {print, plural, other {# Foto cetak}} |
 | Client gallery client-home-screen: photosTitle | Your photos | Foto Anda |
 | Client gallery client-home-screen: photosDescription | View all photos, then download the final files when they’re ready. | Lihat semua foto, lalu unduh hasil akhir saat sudah siap. |
 | Client gallery client-home-screen: photosDescriptionDelivered | View all preview photos from your session. | Lihat semua foto pratinjau dari sesi Anda. |
 | Client gallery client-home-screen: allPhotosMeta | {count, plural, one {# photo} other {# photos}} · browse and pick from previews | {count, plural, other {# foto}} · lihat-lihat dan pilih dari pratinjau |
 | Client gallery client-home-screen: allPhotosMetaNoGroups | {count, plural, one {# photo} other {# photos}} · browse previews | {count, plural, other {# foto}} · lihat-lihat pratinjau |
-| Client gallery client-home-screen: finalPendingMeta | Not available yet · appears here when your photos are edited. | Belum tersedia · muncul di sini setelah foto selesai diedit. |
+| Client gallery client-home-screen: finalUnavailable (replaces finalPendingMeta, F-27 iteration 7; *Hasil akhir* row when no finished file is visible yet) | Not available yet · it appears here once the photos are edited. | Belum tersedia · muncul di sini setelah foto selesai diedit. |
 | Client gallery client-home-screen: pickTitle | Choose photos | Pilih foto |
 | Client gallery client-home-screen: pickDescription | One row for each part of your package. Choose and send each part on its own. | Satu baris untuk tiap bagian paket Anda. Pilih dan kirim tiap bagian sendiri. |
 | Client gallery client-home-screen: actionStart | Start choosing | Mulai memilih |
 | Client gallery client-home-screen: actionContinue | Continue choosing | Lanjut memilih |
 | Client gallery client-home-screen: actionView | View choices | Lihat pilihan |
-| Client gallery client-password-form: placeholder | Type the password from your photographer | Ketik password dari fotografer |
+| Client gallery client-password-form: placeholder | Type the password from your photographer | Ketik kata sandi dari fotografer |
 | Client gallery client-password-form: helper | Lowercase letters and numbers, for example mawar-4821. | Huruf kecil dan angka, contoh mawar-4821. |
-| Client gallery client-password-form: empty | Enter the password from your photographer. | Isi password dari fotografer. |
+| Client gallery client-password-form: empty | Enter the password from your photographer. | Isi kata sandi dari fotografer. |
 | Client gallery client-password-form: lockedBody | Try again in {minutes, plural, one {# minute} other {# minutes}}. | Coba lagi dalam {minutes, plural, other {# menit}}. |
-| Client gallery client-password-form: lockedHelper | The password isn’t checked until the time limit ends. | Password tidak diperiksa sampai batas waktu habis. |
-| Client gallery client-password-form: showPassword | Show password | Tampilkan password |
-| Client gallery client-password-form: hidePassword | Hide password | Sembunyikan password |
-| Client gallery client-password-form: failed | The password couldn’t be checked. Try again. | Gagal memeriksa password. Coba lagi. |
+| Client gallery client-password-form: lockedHelper | The password isn’t checked until the time limit ends. | Kata sandi tidak diperiksa sampai batas waktu habis. |
+| Client gallery client-password-form: showPassword | Show password | Tampilkan kata sandi |
+| Client gallery client-password-form: hidePassword | Hide password | Sembunyikan kata sandi |
+| Client gallery client-password-form: failed | The password couldn’t be checked. Try again. | Gagal memeriksa kata sandi. Coba lagi. |
 | Client gallery pick-note-sheet: title | Note for {fileName} | Catatan untuk {fileName} |
 | Client gallery pick-note-sheet: description | Optional. Write what you’d like your photographer to change in this photo. | Opsional. Tulis apa yang ingin diubah fotografer dari foto ini. |
 | Client gallery pick-note-sheet: pickedFor | Picked for {groupName} | Dipilih untuk {groupName} |
@@ -2043,8 +2090,8 @@ These rows come from client gallery strings that have no deck row yet. The Engli
 
 | Element / context | English | Bahasa Indonesia |
 |---|---|---|
-| Client access card | Client access / Link and password for the client. | Akses klien / Link dan password untuk klien. |
-| Access actions | Change link / Change password / Copy link / Copy password / Link / Password / Expires / Inactive | Ganti link / Ganti password / Salin link / Salin password / Link / Password / Kedaluwarsa / Tidak aktif |
+| Client access card | Client access / Link and password for the client. | Akses klien / Link dan kata sandi untuk klien. |
+| Access actions | Change link / Change password / Copy link / Copy password / Link / Password / Expires / Inactive | Ganti link / Ganti kata sandi / Salin link / Salin kata sandi / Link / Kata sandi / Kedaluwarsa / Tidak aktif |
 | Draft and archived notes | The client can’t open this link until the gallery is published. / The gallery is archived. The link can’t be opened or changed. | Klien belum bisa membuka link ini sampai galeri dipublikasikan. / Galeri diarsipkan. Link tidak bisa dibuka dan tidak bisa diganti. |
 | Rotate-link confirmation | Change the gallery link? The old link will stop working. All shared links, including invoice links, will stop working. The password won’t change. Share the new link with the client. | Ganti link galeri? Link lama berhenti bekerja. Semua link yang sudah dibagikan, termasuk link invoice, tidak bisa dibuka lagi. Password tidak berubah. Bagikan link baru ke klien. |
 | Selection card | Client selections / See the client’s photo selections and lock them when finished. / The client chooses photos through the gallery. | Pilihan klien / Lihat pilihan foto klien dan kunci setelah selesai. / Klien memilih foto lewat galeri. |
@@ -2117,20 +2164,20 @@ These rows come from owner gallery strings that have no deck row yet. The Englis
 | Selection owner: lockFailed | Selections aren’t locked yet. Try again. | Pilihan belum terkunci. Coba lagi. |
 | Owner delivery: itemCount | {count, plural, one {# file} other {# files}} | {count, plural, other {# file}} |
 | Owner delivery: itemFiles | {count, plural, one {# file} other {# files}} {name} | {count, plural, other {# file}} {name} |
-| Owner delivery: publishedTitle | Published {when} | Dipublikasikan {when} |
-| Owner delivery: publishedMeta | The client can download {files}. | Klien bisa mengunduh {files}. |
-| Owner delivery: completedTitle | Completed {when} | Selesai {when} |
-| Owner delivery: chipReady | Ready | Siap |
+| SUPERSEDED (F-27 iteration 5): Owner delivery: publishedTitle| Published {when} | Dipublikasikan {when} |
+| SUPERSEDED (F-27 iteration 5): Owner delivery: publishedMeta| The client can download {files}. | Klien bisa mengunduh {files}. |
+| Owner delivery: completedTitle | Delivered {when} | Terkirim {when} |
+| SUPERSEDED (F-27 iteration 5): Owner delivery: chipReady| Ready | Siap |
 | Owner delivery: chipCompleted | Completed | Selesai |
 | Owner delivery: headerMeta | Final files published {when} | Hasil akhir dipublikasikan {when} |
-| Owner delivery: publishTitle | Publish final files? | Publikasikan hasil akhir? |
-| Owner delivery: completeTitle | Mark the project complete? | Tandai proyek selesai? |
-| Owner delivery: completeDescription | Project {title} will be marked Completed. | Proyek {title} akan berstatus Selesai. |
-| Owner delivery: refusedTitle | Final files can’t be published yet | Hasil akhir belum bisa dipublikasikan |
-| Owner delivery: refusedDescription | Check the following first. | Periksa hal berikut lebih dulu. |
+| SUPERSEDED (F-27 iteration 5): Owner delivery: publishTitle| Publish final files? | Publikasikan hasil akhir? |
+| Owner delivery: completeTitle | Mark this project as delivered? | Tandai proyek terkirim? |
+| Owner delivery: completeDescription | Project {title} will be marked Delivered. | Proyek {title} akan berstatus Terkirim. |
+| SUPERSEDED (F-27 iteration 5): Owner delivery: refusedTitle| Final files can’t be published yet | Hasil akhir belum bisa dipublikasikan |
+| SUPERSEDED (F-27 iteration 5): Owner delivery: refusedDescription| Check the following first. | Periksa hal berikut lebih dulu. |
 | Owner delivery: reasonProjectStatus | This project’s status can’t be changed to Delivered. | Status proyek ini tidak bisa diubah menjadi Terkirim. |
-| Owner delivery: publishedToast | Final files published | Hasil akhir dipublikasikan |
-| Owner delivery: completedToast | Project marked complete | Proyek ditandai selesai |
+| SUPERSEDED (F-27 iteration 5): Owner delivery: publishedToast| Final files published | Hasil akhir dipublikasikan |
+| Owner delivery: completedToast | Project marked as delivered | Proyek ditandai terkirim |
 | Owner delivery: staleToast | The project status has changed. Reload the page. | Status proyek sudah berubah. Muat ulang halaman. |
 | Owner delivery: failedToast | Couldn’t save. Try again. | Gagal menyimpan. Coba lagi. |
 | Gallery summary: groupUsage | {name} {usage}/{limit} | {name} {usage}/{limit} |
@@ -2143,7 +2190,7 @@ These rows come from owner gallery strings that have no deck row yet. The Englis
 | Gallery summary: item | {count} {name} | {count} {name} |
 | Gallery summary: ready | {files} ready | {files} siap |
 | Gallery summary: readyMobile | Ready to publish | Siap dipublikasikan |
-| Gallery summary: published | Published {when} | Dipublikasikan {when} |
+| SUPERSEDED (F-27 iteration 5): Gallery summary: published| Published {when} | Dipublikasikan {when} |
 | Final delivery screen: downloadAll | Download all ({count, plural, one {# photo} other {# photos}}) | Unduh semua ({count, plural, other {# foto}}) |
 | Final delivery screen: pickSeveral | Choose several | Pilih beberapa |
 | Final delivery screen: readyTitle | Final photos are ready | Hasil akhir sudah tersedia |
@@ -2204,7 +2251,7 @@ These rows come from owner gallery strings that have no deck row yet. The Englis
 | Owner gallery: newFoldersBody | {folders}. Map them to package items if they hold final files. | {folders}. Petakan ke item paket bila berisi hasil akhir. |
 | Owner gallery: mapFolders | Map | Petakan |
 | Owner gallery: cancelledAlertTitle | Project canceled | Proyek dibatalkan |
-| Owner gallery: archivedAlertTitle | Gallery archived | Galeri diarsipkan |
+| SUPERSEDED (F-27 iteration 5): SUPERSEDED (F-27 iteration 5): Owner gallery: archivedAlertTitle| Gallery archived | Galeri diarsipkan |
 | Owner gallery: createFolderTitle | Google Drive folder | Folder Google Drive |
 | Owner gallery: createFolderHelper | Optional. You can also add one later on the gallery page. | Opsional. Bisa juga ditambahkan nanti di halaman galeri. |
 | Owner gallery: createFolderInUseConfirm | Create gallery anyway | Tetap buat galeri |
@@ -2213,6 +2260,30 @@ These rows come from owner gallery strings that have no deck row yet. The Englis
 | Owner gallery: previewMissingBadge | Missing | Hilang |
 | Owner gallery: refusedHasPicks | The client has already chosen photos from this folder. | Ada foto dari folder ini yang sudah dipilih klien. |
 | Owner gallery: crumbFolders | {folders, plural, =0 {· {photos} photos} other {· # folders · {photos} photos}} | {folders, plural, =0 {· {photos} foto} other {· # folder · {photos} foto}} |
+| Header step and menu label (P7, BOOKED/SHOOTING menu item) | Mark as delivered | Tandai terkirim |
+| Confirm dialog body | The client can still open the gallery. | Galeri tetap bisa dibuka klien. |
+| Confirm button | Mark as delivered | Tandai terkirim |
+| Disabled hint, no finished file, AC-GFL-017 | No final files are synced yet. Sync the final-files folder first. | Belum ada hasil akhir yang tersinkron. Sinkronkan folder hasil akhir dulu. |
+| DELIVERY_REFUSED toast title, A-6 | This project can’t be marked as delivered yet | Proyek belum bisa ditandai terkirim |
+| DELIVERY_REFUSED toast body | No final files are synced yet. | Belum ada hasil akhir yang tersinkron. |
+| P7 row, AC-GFL-019 | {edited} edited photos · {print} print photos · visible to the client | {edited} Foto edit · {print} Foto cetak · terlihat oleh klien |
+| P7 status | Ready to download | Siap diunduh |
+| P4 row, AC-GFL-006 | Delivered {when} · {edited} edited photos · {print} print photos | Terkirim {when} · {edited} Foto edit · {print} Foto cetak |
+| P4 status | Delivered | Terkirim |
+| No synced finished file | No final files are synced yet. Create a final-files subfolder in Drive, map it to a package item in Edit folder, then sync the gallery. | Belum ada hasil akhir yang tersinkron. Buat subfolder hasil akhir di Drive, petakan ke item paket lewat Edit folder, lalu sinkronkan galeri. |
+
+### 15.y Tandai selesai — DELIVERED to COMPLETED (restored in F-27 iteration 6)
+
+The iteration 5 draft removed these rows by mistake and reused the `delivery.complete*` keys for *Tandai terkirim*. The original approved wording is restored under new keys (`delivery.finish*`, `finishedToast`, `finishStaleToast`); the confirm has no body, because the original body described a publish that ADR-028 removed.
+
+| Element / context | English | Bahasa Indonesia |
+|---|---|---|
+| Header step on a DELIVERED project (`delivery.finish`) | Mark complete | Tandai selesai |
+| Confirm title (`delivery.finishTitle`) | Mark the project complete? | Tandai proyek selesai? |
+| Confirm description (`delivery.finishDescription`) | Project {title} will be marked Completed. | Proyek {title} akan berstatus Selesai. |
+| Confirm button | Mark complete | Tandai selesai |
+| Success toast (`delivery.finishedToast`) | Project marked complete | Proyek ditandai selesai |
+| Stale status toast (`delivery.finishStaleToast`) | The project status has changed. Reload the page. | Status proyek sudah berubah. Muat ulang halaman. |
 
 ## 16. Add-ons
 

@@ -69,12 +69,11 @@ async function renderShareText(
   workspaceName: string,
   locale: AppLocale,
 ): Promise<string> {
-  const template = await getMessageTemplate(
-    createDrizzleMessageTemplateRepository(db),
-    context,
-    "GALLERY_SHARE",
-  );
-  const profile = await getWorkspaceProfile(createDrizzleWorkspaceRepository(db), context);
+  // The template and the workspace profile are independent reads, so they run together.
+  const [template, profile] = await Promise.all([
+    getMessageTemplate(createDrizzleMessageTemplateRepository(db), context, "GALLERY_SHARE"),
+    getWorkspaceProfile(createDrizzleWorkspaceRepository(db), context),
+  ]);
   return renderTemplateForRecipient(template, locale, {
     clientName: clientFirstName(share.recipient.name),
     projectTitle: share.projectTitle,

@@ -3,6 +3,7 @@ import { fakePageActions } from "@tests/support/gallery/fake-page-actions";
 import { stubViewport } from "@tests/support/gallery/viewport";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
+import { GALLERY_COPY } from "../gallery-copy/gallery-copy.copy";
 import { GalleryPageScreen } from "./gallery-page-screen";
 
 vi.mock("@/ui/patterns/toast/toast", () => ({ showToast: vi.fn() }));
@@ -39,7 +40,7 @@ describe("GalleryPageScreen", () => {
 
   it("AC-GAL-014 shows an empty Sumber foto and no photos yet", () => {
     render(<GalleryPageScreen workspaceId="ws-1" page={PAGE} actions={ACTIONS} />);
-    expect(screen.getByText("Belum ada folder")).toBeInTheDocument();
+    expect(screen.getByText(GALLERY_COPY.messages.id.sourcesEmptyBody)).toBeInTheDocument();
     expect(screen.getByText("Belum ada foto")).toBeInTheDocument();
   });
 

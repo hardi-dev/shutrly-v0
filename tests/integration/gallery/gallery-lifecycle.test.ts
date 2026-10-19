@@ -94,8 +94,6 @@ describe("gallery lifecycle against Postgres", () => {
     const seed = await seedGalleryWorkspace(db);
     const { galleryId, sourceId } = await linkedGallery(seed);
     const opened = await galleryRow(galleryId);
-    expect(opened.status).toBeNull();
-    expect(opened.expiryDays).toBeNull();
     expect(opened.expiresAt).toBeNull();
 
     expect(
@@ -117,7 +115,7 @@ describe("gallery lifecycle against Postgres", () => {
 
     // AC-GFL-015: the last folder of an open gallery can go when no photo is picked.
     expect(await deleteGallerySource(deps(), seed.context, sourceId)).toEqual({ ok: true });
-    expect(await galleryRow(galleryId)).toMatchObject({ status: null });
+    expect(await galleryRow(galleryId)).toMatchObject({ id: galleryId });
   });
 
   it("AC-GFL-001 AC-GAL-036 a booked gallery starts at version 2 and the version rises on each change a client could see", async () => {

@@ -16,7 +16,6 @@ import type { WorkspaceContext } from "@/shared/workspace-context/workspace-cont
 export interface StoredGallery extends NewGallery {
   workspaceId: string;
   passwordVersion: number;
-  archivedAt: Date | null;
 }
 
 export interface StoredProject extends GalleryProjectFacts {
@@ -57,7 +56,6 @@ export class FakeGalleryRepository implements GalleryRepositoryPort {
         password: gallery.password,
         passwordVersion: gallery.passwordVersion,
         expiresAt: gallery.expiresAt,
-        archivedAt: gallery.archivedAt,
       },
       activeSourceCount: active.length,
       failedSourceCount: active.filter((row) => row.syncStatus === "FAILED").length,
@@ -88,7 +86,6 @@ export class FakeGalleryRepository implements GalleryRepositoryPort {
           ...gallery,
           workspaceId: context.workspaceId,
           passwordVersion: 1,
-          archivedAt: null,
         });
         return "CREATED" as const;
       },

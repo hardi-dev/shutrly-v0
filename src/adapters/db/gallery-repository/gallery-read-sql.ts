@@ -105,7 +105,6 @@ export async function selectSummary(
       },
       passwordVersion: g.passwordVersion,
       expiresAt: g.expiresAt,
-      archivedAt: g.archivedAt,
     },
     activeSourceCount: row.active,
     failedSourceCount: row.failed,

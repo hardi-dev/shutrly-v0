@@ -68,7 +68,7 @@ function cancelInOneTransaction(seed: GallerySeed, failAfterCancel: boolean) {
 async function states(seed: GallerySeed, galleryId: string) {
   const [p] = await db.select().from(project).where(eq(project.id, seed.bookedProjectId));
   const [g] = await db.select().from(gallery).where(eq(gallery.id, galleryId));
-  return { project: p.status, gallery: g.status, archivedBy: g.archivedBy };
+  return { project: p.status, galleryContentVersion: g.contentVersion };
 }
 
 describe("cancelling a project with a gallery", () => {
@@ -79,8 +79,7 @@ describe("cancelling a project with a gallery", () => {
     await cancelInOneTransaction(seed, false);
     expect(await states(seed, galleryId)).toEqual({
       project: "CANCELLED",
-      gallery: null,
-      archivedBy: null,
+      galleryContentVersion: 1,
     });
   });
 
@@ -90,8 +89,7 @@ describe("cancelling a project with a gallery", () => {
     await expect(cancelInOneTransaction(seed, true)).rejects.toThrow("forced failure");
     expect(await states(seed, galleryId)).toEqual({
       project: "BOOKED",
-      gallery: null,
-      archivedBy: null,
+      galleryContentVersion: 1,
     });
   });
 });

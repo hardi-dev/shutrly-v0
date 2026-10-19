@@ -34,8 +34,7 @@ async function insertGalleryWithoutStatus(seed: GallerySeed): Promise<string> {
       createdBy: seed.ownerId,
       updatedBy: seed.ownerId,
     })
-    .returning({ id: gallery.id, status: gallery.status });
-  expect(row.status).toBeNull();
+    .returning({ id: gallery.id });
   return row.id;
 }
 

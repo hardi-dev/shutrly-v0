@@ -56,7 +56,6 @@ export interface GalleryRecord {
   readonly password: EncryptedPassword;
   readonly passwordVersion: number;
   readonly expiresAt: Date | null;
-  readonly archivedAt: Date | null;
 }
 
 export type GallerySyncStatus = "NEVER" | "SYNCING" | "SUCCEEDED" | "FAILED";

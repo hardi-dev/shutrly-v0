@@ -41,6 +41,7 @@ import {
 } from "./mobile-account-sheets";
 import type { MobileAccountSheet } from "./mobile-account-sheets.types";
 import { hidesOwnerBottomNav } from "./owner-bottom-nav";
+import { hasServerPageHeading } from "./owner-server-heading";
 import { OWNER_SHELL_COPY_NAMESPACE } from "./owner-shell.copy";
 import type { OwnerShellProps } from "./owner-shell.types";
 
@@ -104,6 +105,10 @@ export function OwnerShell({
   const subPage = subPages?.find((page) => page.path === currentPathname);
   const resolvedHeading = resolvePageHeading(currentPathname, workspaceId, workspaceName, navT);
   const heading = subPage ?? resolvedHeading ?? { title };
+  // The slot is an element on every route, empty where its page sets no heading: only the routes that set one use it.
+  const serverHeading = hasServerPageHeading(currentPathname, workspaceId)
+    ? pageHeading
+    : undefined;
   const shellSubPage: AppShellSubPage | undefined = subPage
     ? { parent: subPage.parent }
     : undefined;
@@ -175,7 +180,7 @@ export function OwnerShell({
         <AppShell
           title={heading.title}
           subtitle={heading.subtitle}
-          heading={pageHeading}
+          heading={serverHeading}
           hidesBottomNav={hidesOwnerBottomNav(currentPathname, workspaceId)}
           mobileSubtitle={"mobileSubtitle" in heading ? heading.mobileSubtitle : undefined}
           workspace={{ name: workspaceName }}

@@ -33,8 +33,14 @@ const GALLERY_HOST_ACTIONS: ProjectGalleryHostActions = {
 export default async function WorkspaceLayout({
   children,
   crumbs,
+  heading,
   params,
-}: Readonly<{ children: ReactNode; crumbs: ReactNode; params: Promise<{ workspaceId: string }> }>) {
+}: Readonly<{
+  children: ReactNode;
+  crumbs: ReactNode;
+  heading: ReactNode;
+  params: Promise<{ workspaceId: string }>;
+}>) {
   const { workspaceId } = await params;
   const t = await getTranslations(WORKSPACE_LAYOUT_COPY_NAMESPACE);
   const templateT = await getTranslations(MESSAGE_TEMPLATE_SUB_PAGES_COPY_NAMESPACE);
@@ -57,6 +63,7 @@ export default async function WorkspaceLayout({
       localeAction={setOwnerLocaleAction}
       subPages={messageTemplateSubPages(templateT, workspaceId)}
       trail={crumbs}
+      pageHeading={heading}
     >
       <ProjectGalleryHost workspaceId={workspaceId} actions={GALLERY_HOST_ACTIONS}>
         {children}

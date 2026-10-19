@@ -27,8 +27,6 @@ export interface AppShellProps {
   nav: ReactNode;
   navBottom?: ReactNode;
   panelActions?: ReactNode;
-  panelTitleAdornment?: ReactNode;
-  panelMeta?: string;
   panelUtilities?: ReactNode;
   panelTabs?: NonNullable<PageHeaderProps["tabs"]>;
   panelBreadcrumbs?: NonNullable<PageHeaderProps["breadcrumbs"]>;
@@ -42,4 +40,8 @@ export interface AppShellProps {
   onLayoutChange?: () => void;
   workspaceSwitcher?: ReactNode | ((isCompact: boolean) => ReactNode);
   subPage?: AppShellSubPage;
+  /** The page heading rendered on the server (`@heading` slot): replaces the title, status, meta and the phone compact bar title. */
+  heading?: ReactNode;
+  /** Hides the phone Bottom Nav on a page with its own sticky action bar. */
+  hidesBottomNav?: boolean;
 }

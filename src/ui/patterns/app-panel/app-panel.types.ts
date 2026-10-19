@@ -14,6 +14,8 @@ export interface AppPanelProps {
   actions?: ReactNode;
   tabs?: NonNullable<PageHeaderProps["tabs"]>;
   trail?: ReactNode;
+  /** Replaces the title, adornment and meta block (see PageHeader `titleBlock`). */
+  titleBlock?: ReactNode;
   /** Sits left of the breadcrumb, e.g. the sidebar toggle (F-23). */
   leading?: ReactNode;
   children: ReactNode;

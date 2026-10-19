@@ -15,6 +15,7 @@ export function AppPanel({
   tabs,
   trail,
   leading,
+  titleBlock,
   children,
 }: Readonly<AppPanelProps>) {
   return (
@@ -37,6 +38,7 @@ export function AppPanel({
         tabs={tabs}
         trail={trail}
         leading={leading}
+        titleBlock={titleBlock}
       />
       {children}
     </main>

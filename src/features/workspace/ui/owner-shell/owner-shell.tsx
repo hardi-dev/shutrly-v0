@@ -16,7 +16,6 @@ import { SidebarBrandLogo } from "@/ui/patterns/sidebar/sidebar";
 import { Avatar } from "@/ui/primitives/avatar/avatar";
 import { Button } from "@/ui/primitives/button/button";
 import { IconButton } from "@/ui/primitives/icon-button/icon-button";
-import { StatusChip } from "@/ui/primitives/status-chip/status-chip";
 
 import { AccountMenu } from "../account-menu/account-menu";
 import type { OwnerLocaleAction } from "../account-menu/account-menu.types";
@@ -29,8 +28,6 @@ import {
 } from "../owner-nav/owner-nav";
 import type { OwnerNavTranslator } from "../owner-nav/owner-nav.types";
 import { OwnerWorkspaceProvider } from "../owner-workspace-context/owner-workspace-context";
-import { PageHeadingOverrideProvider } from "../page-heading-override/page-heading-override";
-import type { PageHeadingOverrideValue } from "../page-heading-override/page-heading-override.types";
 import {
   sortWorkspaces,
   useWorkspaceSwitch,
@@ -43,6 +40,7 @@ import {
   useMobileAccountSheets,
 } from "./mobile-account-sheets";
 import type { MobileAccountSheet } from "./mobile-account-sheets.types";
+import { hidesOwnerBottomNav } from "./owner-bottom-nav";
 import { OWNER_SHELL_COPY_NAMESPACE } from "./owner-shell.copy";
 import type { OwnerShellProps } from "./owner-shell.types";
 
@@ -99,20 +97,16 @@ export function OwnerShell({
   localeAction,
   subPages,
   trail,
+  pageHeading,
 }: Readonly<OwnerShellProps>) {
   const currentPathname = usePathname();
   const navT = useOwnerNavTranslations();
   const subPage = subPages?.find((page) => page.path === currentPathname);
-  const [headingOverride, setHeadingOverride] = useState<PageHeadingOverrideValue | null>(null);
   const resolvedHeading = resolvePageHeading(currentPathname, workspaceId, workspaceName, navT);
-  const heading = headingOverride ?? subPage ?? resolvedHeading ?? { title };
-  let shellSubPage: AppShellSubPage | undefined;
-  if (headingOverride) {
-    shellSubPage = {
-      parent: headingOverride.parent,
-      hidesBottomNav: headingOverride.hidesBottomNav,
-    };
-  } else if (subPage) shellSubPage = { parent: subPage.parent };
+  const heading = subPage ?? resolvedHeading ?? { title };
+  const shellSubPage: AppShellSubPage | undefined = subPage
+    ? { parent: subPage.parent }
+    : undefined;
   const panelTabs = "tabs" in heading ? heading.tabs : undefined;
   const router = useRouter();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -177,82 +171,76 @@ export function OwnerShell({
 
   return (
     <OwnerWorkspaceProvider workspaceId={workspaceId} workspaceName={workspaceName}>
-      <PageHeadingOverrideProvider onChange={setHeadingOverride}>
-        <>
-          <AppShell
-            title={heading.title}
-            subtitle={heading.subtitle}
-            panelTitleAdornment={
-              headingOverride?.status ? <StatusChip {...headingOverride.status} /> : undefined
-            }
-            panelMeta={headingOverride?.meta}
-            mobileSubtitle={"mobileSubtitle" in heading ? heading.mobileSubtitle : undefined}
-            workspace={{ name: workspaceName }}
-            subPage={shellSubPage}
-            panelTrail={trail}
-            panelTabs={panelTabs}
-            account={{ name: accountName, email: accountEmail, initials: initials(accountName) }}
-            nav={<OwnerNav workspaceId={workspaceId} pathname={currentPathname} />}
-            navBottom={<OwnerNavBottom workspaceId={workspaceId} pathname={currentPathname} />}
-            workspaceSwitcher={renderWorkspaceSwitcher}
-            panelUtilities={
-              <DesktopUtilities
-                onSearch={handleOpenSearch}
-                onNotifications={handleOpenNotifications}
+      <>
+        <AppShell
+          title={heading.title}
+          subtitle={heading.subtitle}
+          heading={pageHeading}
+          hidesBottomNav={hidesOwnerBottomNav(currentPathname, workspaceId)}
+          mobileSubtitle={"mobileSubtitle" in heading ? heading.mobileSubtitle : undefined}
+          workspace={{ name: workspaceName }}
+          subPage={shellSubPage}
+          panelTrail={trail}
+          panelTabs={panelTabs}
+          account={{ name: accountName, email: accountEmail, initials: initials(accountName) }}
+          nav={<OwnerNav workspaceId={workspaceId} pathname={currentPathname} />}
+          navBottom={<OwnerNavBottom workspaceId={workspaceId} pathname={currentPathname} />}
+          workspaceSwitcher={renderWorkspaceSwitcher}
+          panelUtilities={
+            <DesktopUtilities
+              onSearch={handleOpenSearch}
+              onNotifications={handleOpenNotifications}
+            />
+          }
+          panelActions={<div id={PAGE_ACTIONS_ID} className="flex items-center gap-(--space-2)" />}
+          onLogout={logoutAction ? handleLogout : undefined}
+          accountMenu={renderAccountMenu}
+          mobileBottomNav={{
+            items: mobileItems,
+            ctaLabel: navT("create"),
+            onCtaPress: handleCreateProject,
+          }}
+          mobileUtilities={
+            <MobileUtilities
+              onSearch={handleOpenSearch}
+              onNotifications={handleOpenNotifications}
+              onMenu={handleOpenMobileMenu}
+            />
+          }
+          onMobileWorkspacePress={handleOpenMobileWorkspaceSwitcher}
+          onLayoutChange={handleLayoutChange}
+          mobileSheet={
+            <>
+              <MobileWorkspaceSheet
+                isOpen={isMobileMenuOpen}
+                onOpenChange={setIsMobileMenuOpen}
+                workspaces={workspaces}
+                accountName={accountName}
+                accountEmail={accountEmail}
+                onNavigate={handleMobileNavigate}
+                onOpenProfile={handleOpenProfile}
+                localeAction={localeAction}
+                onLogout={logoutAction ? handleLogout : undefined}
               />
-            }
-            panelActions={
-              <div id={PAGE_ACTIONS_ID} className="flex items-center gap-(--space-2)" />
-            }
-            onLogout={logoutAction ? handleLogout : undefined}
-            accountMenu={renderAccountMenu}
-            mobileBottomNav={{
-              items: mobileItems,
-              ctaLabel: navT("create"),
-              onCtaPress: handleCreateProject,
-            }}
-            mobileUtilities={
-              <MobileUtilities
-                onSearch={handleOpenSearch}
-                onNotifications={handleOpenNotifications}
-                onMenu={handleOpenMobileMenu}
+              <MobileWorkspaceSwitcherSheet
+                isOpen={isMobileWorkspaceSwitcherOpen}
+                onOpenChange={setIsMobileWorkspaceSwitcherOpen}
+                currentName={workspaceName}
+                workspaces={workspaces}
+                onSwitch={onSwitch}
+                onCreate={handleMobileCreate}
               />
-            }
-            onMobileWorkspacePress={handleOpenMobileWorkspaceSwitcher}
-            onLayoutChange={handleLayoutChange}
-            mobileSheet={
-              <>
-                <MobileWorkspaceSheet
-                  isOpen={isMobileMenuOpen}
-                  onOpenChange={setIsMobileMenuOpen}
-                  workspaces={workspaces}
-                  accountName={accountName}
-                  accountEmail={accountEmail}
-                  onNavigate={handleMobileNavigate}
-                  onOpenProfile={handleOpenProfile}
-                  localeAction={localeAction}
-                  onLogout={logoutAction ? handleLogout : undefined}
-                />
-                <MobileWorkspaceSwitcherSheet
-                  isOpen={isMobileWorkspaceSwitcherOpen}
-                  onOpenChange={setIsMobileWorkspaceSwitcherOpen}
-                  currentName={workspaceName}
-                  workspaces={workspaces}
-                  onSwitch={onSwitch}
-                  onCreate={handleMobileCreate}
-                />
-              </>
-            }
-          >
-            {children}
-          </AppShell>
-          <CreateWorkspaceDialog
-            isOpen={isCreateOpen}
-            onOpenChange={setIsCreateOpen}
-            action={onCreate}
-          />
-        </>
-      </PageHeadingOverrideProvider>
+            </>
+          }
+        >
+          {children}
+        </AppShell>
+        <CreateWorkspaceDialog
+          isOpen={isCreateOpen}
+          onOpenChange={setIsCreateOpen}
+          action={onCreate}
+        />
+      </>
     </OwnerWorkspaceProvider>
   );
 }

@@ -37,7 +37,7 @@ const targetOf = (w: World) => ({
 
 async function create(w: World, values: Record<string, unknown>) {
   const result = await runAddOnTransaction(db, (scope) =>
-    createAddOnWithTarget(scope, targetOf(w), values),
+    createAddOnWithTarget(scope, targetOf(w), values, "id-ID"),
   );
   if (!result.ok) throw new Error(`create failed: ${JSON.stringify(result)}`);
   return result.addOnId;
@@ -125,7 +125,12 @@ describe("add-ons (D-16, ADR-016)", () => {
       [other.edit, "NOT_AN_OPTION"],
     ] as const) {
       const result = await runAddOnTransaction(db, (scope) =>
-        createAddOnWithTarget(scope, targetOf(w), { ...FIVE_EDITS(w), selectionGroupId: groupId }),
+        createAddOnWithTarget(
+          scope,
+          targetOf(w),
+          { ...FIVE_EDITS(w), selectionGroupId: groupId },
+          "id-ID",
+        ),
       );
       expect(result).toEqual({
         ok: false,
@@ -236,11 +241,16 @@ describe("add-ons (D-16, ADR-016)", () => {
   it("AC-ADD-006 invalid values are refused server-side with field errors and nothing is stored", async () => {
     const w = await seedWorld(db, fixture);
     const result = await runAddOnTransaction(db, (scope) =>
-      createAddOnWithTarget(scope, targetOf(w), {
-        description: "",
-        quantity: "0",
-        unitPrice: "-1",
-      }),
+      createAddOnWithTarget(
+        scope,
+        targetOf(w),
+        {
+          description: "",
+          quantity: "0",
+          unitPrice: "-1",
+        },
+        "id-ID",
+      ),
     );
     expect(result).toEqual({
       ok: false,

@@ -2,6 +2,30 @@
 
 Older handoffs, the early status table, the component-library and design-system notes, and superseded next steps, moved out of [HANDOFF.md](HANDOFF.md) on 2026-10-04 to keep the file that every session reads small. Nothing was edited. Read this only when you need history; the live sources are the feature folders, `docs/design-system/` and `docs/features/README.md`.
 
+## Previous handoff — F-26 dashboard-overview built, awaiting verification (2026-10-15)
+
+- **State:** F-26 `IN PROGRESS` (built). All seven plan iterations are committed on `feat/dashboard-overview`; build notes and deviations: [build-notes.md](features/dashboard-overview/build-notes.md). Nothing uncommitted.
+- **Checks:** typecheck and eslint clean; related unit suites green; integration 12 + 7 green (R-2 timings 0.31 ms and 0.54 ms, no index); e2e `tests/e2e/dashboard-overview/overview.spec.ts` 5/5 against `pnpm dev`.
+- **Not verified:** the visual fidelity pass against the exports (plan 5.7, 6.4); Storybook stories not run; the mutating e2e cases (confirm booking from the row menu, confirm a draft) and the fresh-owner checklist case.
+- **Next:** `/sdv:verify-feature dashboard-overview` (visual pass against the exports at 1440, tablet and 390; the mutating e2e cases), then the Owner decides on a PR to `staging`. Before a deploy, note that the phone layout and the tablet are not yet compared with the exports.
+- **Old state (kept for reference):** F-26 was `PLANNED` on `docs/dashboard-feature-row` (spec, design and plan, pushed, no PR).
+- **Done this session:**
+  - Design approved by the Owner 2026-10-15 ([design.md](features/dashboard-overview/design.md), 11 exports): the Owner's library plan replaced the four summaries. *New project* in the header, four tiles (trend and sparkline on *New projects* and *Delivered*, a ring on *To review* and *In editing*), and the *Active projects* table (10 rows, the project list's search, filter and ⋯ menu), in the 720 column.
+  - [spec](features/dashboard-overview/spec.md), [AC](features/dashboard-overview/acceptance-criteria.md) (004–017 and 028 withdrawn, 021–037 new) and [intent](features/dashboard-overview/intent.md) revised to that direction; copy deck §1 subtitle and §4.3b approved.
+  - [technical-design.md](features/dashboard-overview/technical-design.md) (D-1…D-14, R-1…R-6) and [plan.md](features/dashboard-overview/plan.md) (7 iterations): the overview lives in `features/booking` and fills a slot on the workspace dashboard; two read statements per visit; no migration, dependency or ADR.
+- **Checks:** none needed (docs only). The plan was self-reviewed: weekday, Jakarta boundary and `formatIdr`/`canonicalIdrAmount` fixes.
+- **Owner actions:** review the technical design (status *PLANNED, for Owner review*); decide when `docs/dashboard-feature-row` gets a PR to `staging`; at verification, accept or change the EN date order (R-1: *Sun, Oct 18, 07:00* vs the export's *Sat 18 Oct, 07:00*).
+- **Open items:**
+  - F-07 bug found while planning: the project list shows the empty-tab state when only filters match nothing; fixed in F-26 plan iteration 5.1 (technical design R-6).
+  - Between F-26 iterations 3 and 5 the dashboard with projects renders empty on the branch; don't deploy it in between.
+  - F-25 checklist frames still show the old subtitle; note it at F-26 verification, no re-export.
+  - F-25: DV-3, DV-4, and DV-5/DV-6/DV-9 re-runs at ship ([verification report](features/setup-checklist/verification-report.md) §6); shared list-card row focus ring (separate task).
+  - F-24 follow-ups: [verification report](features/setup-flow-fixes/verification-report.md) §6.
+  - F-22 bilingual copy: merged, **not verified** ([coverage-report.md](features/bilingual-copy-revamp/coverage-report.md)); copy deck still `DRAFT`.
+  - Carried from F-10: Netlify 60 s / 20 MB stream limit on large Print downloads; staging *Wisuda Rina* group still `SUBMITTED`; R-6 needs a real phone.
+  - `/sdv:ship setup-checklist` not run yet (staging deploy of F-24/F-25).
+- **Next:** `/sdv:build-feature dashboard-overview 1` in a fresh session (domain: metric windows, tiles, next-session label).
+
 ## Previous handoff — F-26 dashboard-overview SPECIFIED (2026-10-13)
 
 - Outcome: F-26 added to the feature map; intent accepted and spec + AC-DASH-001..020 written around four summaries (*Needs you*, *Upcoming sessions*, *Projects by status*, *Galleries expiring soon*). Superseded on 2026-10-14 by the Owner's design direction (tiles and table).

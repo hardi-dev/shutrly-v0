@@ -11,7 +11,7 @@
     "dev": "next dev",
     "build": "next build",
     "deploy:staging": "scripts/deploy/netlify-deploy.sh staging",
-    "deploy:prod": "scripts/deploy/netlify-deploy.sh prod",
+    "deploy:prod": "scripts/deploy/coolify-deploy.sh",
     "start": "next start",
     "typecheck": "next typegen && tsc --noEmit",
     "lint": "prettier --check . && eslint . && pnpm tokens:check",

@@ -1,33 +1,28 @@
 # Handoff — Shutrly
 
-Last updated: 2026-10-15 (F-26 dashboard-overview IN PROGRESS, built, awaiting verification; F-25 DONE, merged to `staging`; F-24 DONE; F-22 merged, not verified) · Read this first when resuming work, then [docs/README.md](README.md). Feature status lives in [feature-map.md](product/feature-map.md), not here.
+Last updated: 2026-10-21 (production on Coolify, DNS moved, Resend and Google pending). Read this first when resuming work, then [docs/README.md](README.md). Feature status lives in [feature-map.md](product/feature-map.md), not here. Older handoffs, including F-26 (built on `feat/dashboard-overview`, awaiting verification), are in [HANDOFF-archive.md](HANDOFF-archive.md).
 Branch: `feat/dashboard-overview` (worktree `.claude/worktrees/dashboard-overview`, from `docs/dashboard-feature-row`, 12 commits on top of the F-26 docs; nothing pushed, no PR). Other work sits in worktrees under `.claude/worktrees/` (`git worktree list`).
 
 History (previous handoffs, early status table, Pencil and design-library notes): [HANDOFF-archive.md](HANDOFF-archive.md). Don't read it unless you need history.
 
-## Current handoff — F-26 dashboard-overview built, awaiting verification (2026-10-15)
+## Current handoff — production live on Coolify, cutover pending checks (2026-10-21)
 
-- **State:** F-26 `IN PROGRESS` (built). All seven plan iterations are committed on `feat/dashboard-overview`; build notes and deviations: [build-notes.md](features/dashboard-overview/build-notes.md). Nothing uncommitted.
-- **Checks:** typecheck and eslint clean; related unit suites green; integration 12 + 7 green (R-2 timings 0.31 ms and 0.54 ms, no index); e2e `tests/e2e/dashboard-overview/overview.spec.ts` 5/5 against `pnpm dev`.
-- **Not verified:** the visual fidelity pass against the exports (plan 5.7, 6.4); Storybook stories not run; the mutating e2e cases (confirm booking from the row menu, confirm a draft) and the fresh-owner checklist case.
-- **Next:** `/sdv:verify-feature dashboard-overview` (visual pass against the exports at 1440, tablet and 390; the mutating e2e cases), then the Owner decides on a PR to `staging`. Before a deploy, note that the phone layout and the tablet are not yet compared with the exports.
-- **Old state (kept for reference):** F-26 was `PLANNED` on `docs/dashboard-feature-row` (spec, design and plan, pushed, no PR).
-- **Done this session:**
-  - Design approved by the Owner 2026-10-15 ([design.md](features/dashboard-overview/design.md), 11 exports): the Owner's library plan replaced the four summaries. *New project* in the header, four tiles (trend and sparkline on *New projects* and *Delivered*, a ring on *To review* and *In editing*), and the *Active projects* table (10 rows, the project list's search, filter and ⋯ menu), in the 720 column.
-  - [spec](features/dashboard-overview/spec.md), [AC](features/dashboard-overview/acceptance-criteria.md) (004–017 and 028 withdrawn, 021–037 new) and [intent](features/dashboard-overview/intent.md) revised to that direction; copy deck §1 subtitle and §4.3b approved.
-  - [technical-design.md](features/dashboard-overview/technical-design.md) (D-1…D-14, R-1…R-6) and [plan.md](features/dashboard-overview/plan.md) (7 iterations): the overview lives in `features/booking` and fills a slot on the workspace dashboard; two read statements per visit; no migration, dependency or ADR.
-- **Checks:** none needed (docs only). The plan was self-reviewed: weekday, Jakarta boundary and `formatIdr`/`canonicalIdrAmount` fixes.
-- **Owner actions:** review the technical design (status *PLANNED, for Owner review*); decide when `docs/dashboard-feature-row` gets a PR to `staging`; at verification, accept or change the EN date order (R-1: *Sun, Oct 18, 07:00* vs the export's *Sat 18 Oct, 07:00*).
-- **Open items:**
-  - F-07 bug found while planning: the project list shows the empty-tab state when only filters match nothing; fixed in F-26 plan iteration 5.1 (technical design R-6).
-  - Between F-26 iterations 3 and 5 the dashboard with projects renders empty on the branch; don't deploy it in between.
-  - F-25 checklist frames still show the old subtitle; note it at F-26 verification, no re-export.
-  - F-25: DV-3, DV-4, and DV-5/DV-6/DV-9 re-runs at ship ([verification report](features/setup-checklist/verification-report.md) §6); shared list-card row focus ring (separate task).
-  - F-24 follow-ups: [verification report](features/setup-flow-fixes/verification-report.md) §6.
-  - F-22 bilingual copy: merged, **not verified** ([coverage-report.md](features/bilingual-copy-revamp/coverage-report.md)); copy deck still `DRAFT`.
-  - Carried from F-10: Netlify 60 s / 20 MB stream limit on large Print downloads; staging *Wisuda Rina* group still `SUBMITTED`; R-6 needs a real phone.
-  - `/sdv:ship setup-checklist` not run yet (staging deploy of F-24/F-25).
-- **Next:** `/sdv:build-feature dashboard-overview 1` in a fresh session (domain: metric windows, tiles, next-session label).
+Read first: [operations/production-runbook.md](operations/production-runbook.md) (IDs, commands, file locations, gotchas, open steps) and [operations/development-log.md](operations/development-log.md) (dated history).
+
+- **State:** production runs on Coolify, server 1 (`168.110.219.5`). Application uuid `paj7d979xt4ubruq6uuskwss`, image `ghcr.io/hardi-dev/shutrly:main-e8d816da` (from `main` at `e8d816da`), port 3000, domains `shutrly.space` and `www.shutrly.space`. Deploy finished; Let's Encrypt cert issued. Namecheap DNS: `@` A → `168.110.219.5`, `www` CNAME → `shutrly.space`. Staging stays on Netlify (`staging` branch, Neon `staging`).
+- **Verified:** on server 1 directly, `/` returns 200 and `/login` returns 404 (landing-only gate, [ADR-021](architecture/decisions/ADR-021-production-on-netlify-landing-only.md), intended). Neon `main`: 24 migrations applied, 30 tables, not seeded.
+- **Not verified yet:** public DNS on some resolvers (cache still shows Netlify IP `52.74.6.109`); Resend domain `shutrly.space` is **Verified** (2026-10-21), sender `Shutrly <auth@shutrly.space>`, test email Delivered; Google consent screen is **Testing** (only test users can sign in).
+- **Next, in order** (full detail in the runbook, section 11):
+  1. `dig +short A shutrly.space @8.8.8.8` returns `168.110.219.5`; check `https://shutrly.space` and `https://www.shutrly.space`.
+  2. Resend: done. Auth emails send once the login is open.
+  3. Google: privacy policy page, Search Console domain verification, authorized domain, **Publish app**.
+  4. Owner decision: lift the landing-only gate (ADR-021) before login is public.
+  5. Done (2026-10-21): `shutrly.space` and `www` removed from the Netlify site, and the Netlify DNS zone deleted. Netlify now only serves staging (`*.netlify.app`).
+  6. Optional: waitlist keys (`RESEND_WAITLIST_*`) are empty in `.env.production`.
+  7. Delete GHCR tag `wip-74db37e2`.
+- **Deploy production:** `pnpm deploy:prod` (`scripts/deploy/coolify-deploy.sh`) builds `origin/main`, pushes GHCR, updates Coolify and waits. Staging is still `pnpm deploy:staging` (Netlify).
+- **Secrets (never print or paste):** `.env.production` (repo root, git-ignored); Coolify token `~/shutrly-secrets/coolify.token` (expires 2026-11-19); GHCR classic token expires about 2027-01-18.
+- **Top gotchas:** never use `head` (use `sed -n`); the auto-mode classifier blocks DNS and some Namecheap/Resend clicks, so ask the Owner to click and verify with `dig`; Coolify deploy is `POST …/applications/{uuid}/start` (GET returns 405); Coolify bulk env creates duplicates (delete the extra copy); browser clipboard from web pages is unreliable.
 
 ## Key decisions (Owner)
 

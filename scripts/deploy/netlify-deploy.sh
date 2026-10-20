@@ -2,7 +2,7 @@
 # Builds and deploys to Netlify (ADR-020).
 # Usage: scripts/deploy/netlify-deploy.sh <staging|prod> [--yes] [--dry-run]
 #   staging  draft deploy with the stable alias  https://staging--<site>.netlify.app
-#   prod     deploy to the site's main URL; only from a clean, up-to-date `main`, and it asks first
+#   prod     retired (refused): production runs on Coolify, see scripts/deploy/coolify-deploy.sh
 # The site comes from the linked project (`netlify init`, stored in the git-ignored .netlify/).
 set -euo pipefail
 
@@ -13,6 +13,11 @@ CLI="netlify-cli@27.11.0"
 FUNCTIONS_DIR=".netlify/functions-internal"
 target="${1:-}"
 shift || true
+# Production runs on Coolify since 2026-10-21 (docs/operations/production-runbook.md); use scripts/deploy/coolify-deploy.sh.
+if [ "$target" = "prod" ]; then
+  echo "Netlify prod is retired: production runs on Coolify. Use pnpm deploy:prod." >&2
+  exit 2
+fi
 assume_yes=false
 dry_run=false
 for arg in "$@"; do

@@ -1,6 +1,12 @@
-import { initOpenNextCloudflareForDev } from "@opennextjs/cloudflare";
+import { existsSync } from "node:fs";
+
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
+
+// `next dev` reads local values from .dev.vars (git-ignored, non-production only). Production never loads it.
+if (process.env.NODE_ENV !== "production" && existsSync(".dev.vars")) {
+  process.loadEnvFile(".dev.vars");
+}
 
 // F-10 D-8: client gallery pages and actions are private and never indexed or edge-cached.
 const CLIENT_GALLERY_HEADERS = [
@@ -31,6 +37,3 @@ const nextConfig: NextConfig = {
 const withNextIntl = createNextIntlPlugin("./src/app/i18n/request.ts");
 
 export default withNextIntl(nextConfig);
-
-// Exposes .dev.vars bindings to getCloudflareContext() under `next dev`; not needed on Netlify.
-if (!process.env.NETLIFY) void initOpenNextCloudflareForDev();

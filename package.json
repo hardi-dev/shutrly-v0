@@ -34,7 +34,6 @@
     "onlyBuiltDependencies": [
       "esbuild",
       "sharp",
-      "workerd",
       "@tailwindcss/oxide"
     ]
   },
@@ -45,7 +44,6 @@
     "@hugeicons/react": "1.1.10",
     "@internationalized/date": "3.12.4",
     "@neondatabase/serverless": "1.1.0",
-    "@opennextjs/cloudflare": "1.20.6",
     "@react-aria/toast": "3.0.8",
     "@react-stately/toast": "3.2.1",
     "better-auth": "1.7.6",
@@ -105,7 +103,6 @@
     "typescript": "6.0.3",
     "typescript-eslint": "8.70.1",
     "vite": "8.3.1",
-    "vitest": "5.0.2",
-    "wrangler": "4.141.0"
+    "vitest": "5.0.2"
   }
 }

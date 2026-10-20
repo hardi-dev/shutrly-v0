@@ -19,7 +19,6 @@ const VENDOR_BACKEND = [
   "better-auth/*",
   "resend",
 ];
-const RUNTIME = ["@opennextjs/*"];
 const RAC = ["react-aria-components"];
 const FRAMEWORK = ["react", "react-dom", "react/*", "next", "next/*"];
 
@@ -124,7 +123,6 @@ export default defineConfig([
   globalIgnores([
     ".next/**",
     ".open-next/**",
-    ".wrangler/**",
     "out/**",
     "build/**",
     "next-env.d.ts",
@@ -180,15 +178,15 @@ export default defineConfig([
     files: ["src/composition/request-context/request-context.ts"],
     rules: { "no-restricted-properties": "off" },
   },
-  banPackages(["src/features/*/domain/**"], [...FRAMEWORK, ...RAC, ...VENDOR_BACKEND, ...RUNTIME]),
+  banPackages(["src/features/*/domain/**"], [...FRAMEWORK, ...RAC, ...VENDOR_BACKEND]),
   banPackages(
     ["src/features/**", "src/app/**", "src/shared/**"],
-    [...RAC, ...VENDOR_BACKEND, ...RUNTIME],
+    [...RAC, ...VENDOR_BACKEND],
     ["src/features/*/domain/**"],
   ),
-  banPackages(["src/ui/**"], [...VENDOR_BACKEND, ...RUNTIME]),
+  banPackages(["src/ui/**"], [...VENDOR_BACKEND]),
   banPackages(["src/composition/**"], [...RAC, ...VENDOR_BACKEND]),
-  banPackages(["src/adapters/**"], [...RAC, ...RUNTIME]),
+  banPackages(["src/adapters/**"], [...RAC]),
   {
     files: [
       "src/adapters/**/*.ts",

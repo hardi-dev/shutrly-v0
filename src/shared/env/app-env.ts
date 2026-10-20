@@ -3,7 +3,7 @@ import type { AppEnv } from "./app-env.types";
 
 /**
  * Parse Worker bindings into the typed app environment, naming invalid keys but never their values.
- * @param raw - the bindings object from the Cloudflare context
+ * @param raw - the process environment (or the bindings object passed in by a test)
  * @returns the validated environment, without unknown bindings
  */
 export function parseAppEnv(raw: unknown): AppEnv {

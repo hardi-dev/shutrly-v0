@@ -20,7 +20,7 @@ Read first: [operations/production-runbook.md](operations/production-runbook.md)
   5. Done (2026-10-21): `shutrly.space` and `www` removed from the Netlify site, and the Netlify DNS zone deleted. Netlify now only serves staging (`*.netlify.app`).
   6. Optional: waitlist keys (`RESEND_WAITLIST_*`) are empty in `.env.production`.
   7. Delete GHCR tag `wip-74db37e2`.
-- **Deploy production:** `pnpm deploy:prod` (`scripts/deploy/coolify-deploy.sh`) builds `origin/main`, pushes GHCR, updates Coolify and waits. Staging is still `pnpm deploy:staging` (Netlify).
+- **Deploy production (live, not build-only):** `pnpm deploy:prod` (`scripts/deploy/coolify-deploy.sh`) builds `origin/main`, pushes GHCR, sets the image tag in Coolify, restarts the app and waits. It changes what `shutrly.space` serves. Confirm with the Owner first. Staging is still `pnpm deploy:staging` (Netlify).
 - **Secrets (never print or paste):** `.env.production` (repo root, git-ignored); Coolify token `~/shutrly-secrets/coolify.token` (expires 2026-11-19); GHCR classic token expires about 2027-01-18.
 - **Top gotchas:** never use `head` (use `sed -n`); the auto-mode classifier blocks DNS and some Namecheap/Resend clicks, so ask the Owner to click and verify with `dig`; Coolify deploy is `POST …/applications/{uuid}/start` (GET returns 405); Coolify bulk env creates duplicates (delete the extra copy); browser clipboard from web pages is unreliable.
 

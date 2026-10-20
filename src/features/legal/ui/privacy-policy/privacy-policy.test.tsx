@@ -8,7 +8,7 @@ describe("PrivacyPolicy", () => {
     render(<PrivacyPolicy locale="en" />);
     expect(screen.getByRole("heading", { level: 1, name: "Privacy Policy" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "2. Photos and Google Drive" })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "hello@shutrly.space" })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: "Contact" })).toHaveAttribute(
       "href",
       "mailto:hello@shutrly.space",
     );

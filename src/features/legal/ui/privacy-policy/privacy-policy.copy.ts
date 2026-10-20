@@ -8,6 +8,10 @@ export interface PolicySection {
 
 export interface PrivacyPolicyCopy {
   readonly title: string;
+  readonly wordmark: string;
+  readonly backLabel: string;
+  readonly copyright: string;
+  readonly contactLabel: string;
   readonly intro: string;
   readonly sections: readonly PolicySection[];
   readonly contactEmail: string;
@@ -18,6 +22,10 @@ export interface PrivacyPolicyCopy {
 export const PRIVACY_POLICY_COPY: Readonly<Record<AppLocale, PrivacyPolicyCopy>> = {
   en: {
     title: "Privacy Policy",
+    wordmark: "Shutrly",
+    backLabel: "Back to home",
+    copyright: "© 2026 Shutrly",
+    contactLabel: "Contact",
     intro:
       "Shutrly is an app that helps photographers and studios manage projects, client photo selections, services, and invoices. This policy explains what data we collect, why, and your rights.",
     sections: [
@@ -100,6 +108,10 @@ export const PRIVACY_POLICY_COPY: Readonly<Record<AppLocale, PrivacyPolicyCopy>>
   },
   id: {
     title: "Kebijakan Privasi",
+    wordmark: "Shutrly",
+    backLabel: "Kembali ke beranda",
+    copyright: "© 2026 Shutrly",
+    contactLabel: "Kontak",
     intro:
       "Shutrly adalah aplikasi untuk fotografer dan studio mengelola proyek, pilihan foto klien, layanan, dan invoice. Kebijakan ini menjelaskan data apa yang kami kumpulkan, untuk apa, dan hak Anda.",
     sections: [

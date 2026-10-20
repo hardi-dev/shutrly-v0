@@ -53,9 +53,9 @@ describe("proxy (production gate, then early redirect)", () => {
     }
   });
 
-  it("AC-LND-013 still serves the landing page, the waitlist and the metadata files", async () => {
+  it("AC-LND-013 still serves the landing page, the waitlist, the metadata files and the privacy policy", async () => {
     vi.mocked(isLandingOnly).mockResolvedValue(true);
-    for (const path of ["/", "/api/waitlist", "/robots.txt"]) {
+    for (const path of ["/", "/api/waitlist", "/robots.txt", "/privacy"]) {
       expect(isLandingPath(path)).toBe(true);
       expect(rewrittenTo(await proxy(request(path)))).toBeNull();
     }

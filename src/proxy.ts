@@ -9,8 +9,8 @@ import { GALLERY_TOKEN_HEADER } from "@/shared/gallery-token/gallery-token-heade
 // (C-004).
 
 // What production serves during the development phase (ADR-021, AC-LND-013): the landing page,
-// its waitlist endpoint and its metadata files. Static assets never reach the proxy (matcher).
-const LANDING_PATHS = ["/", "/api/waitlist", "/robots.txt"];
+// its waitlist endpoint, its metadata files and the privacy policy (Google OAuth needs its URL). Static assets never reach the proxy (matcher).
+const LANDING_PATHS = ["/", "/api/waitlist", "/robots.txt", "/privacy"];
 // Not a route, so a rewrite here renders the root not-found page with HTTP 404 (no redirect, A-5).
 const NOT_FOUND_PATH = "/_gated";
 // Gallery token header (D-7): set only on the forwarded request, never on the response.

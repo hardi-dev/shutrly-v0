@@ -69,6 +69,8 @@ This returns a `deployment_uuid`. Poll `GET /api/v1/deployments/{deployment_uuid
 
 ### 2.5 One-command deploy
 
+**`pnpm deploy:prod` is a live production deploy, not a build-only command.** It changes what `shutrly.space` serves within minutes. Run it only after the change is on `main` and the Owner has agreed.
+
 `pnpm deploy:prod` runs `scripts/deploy/coolify-deploy.sh`. It builds `origin/main` in a temporary worktree (arm64), pushes `ghcr.io/hardi-dev/shutrly:main-<sha>`, sets that tag on the Coolify application, restarts it, waits for `finished`, and checks `https://shutrly.space/`. It asks for confirmation unless run with `--yes`. Netlify's `prod` mode is refused. Run it from the repo, after the change is merged to `main` (`origin/main` is what gets built).
 
 ## 3. Building and pushing the image

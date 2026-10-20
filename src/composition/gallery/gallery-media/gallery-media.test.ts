@@ -1,6 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
 
-vi.mock("@opennextjs/cloudflare", () => ({ getCloudflareContext: vi.fn() }));
 vi.mock("next/headers", () => ({ headers: vi.fn() }));
 
 const { OWNER_MEDIA_HEADERS } = await import("./gallery-media");

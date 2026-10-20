@@ -1,7 +1,5 @@
 node_modules/
 .next/
-.open-next/
-.wrangler/
 .env*
 !.env.example
 .DS_Store

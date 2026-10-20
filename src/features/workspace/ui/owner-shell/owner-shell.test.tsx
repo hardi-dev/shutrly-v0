@@ -143,6 +143,7 @@ describe("OwnerShell sub-pages", () => {
   });
 
   it("AC-CAT-004 lets a service detail page replace the shell heading", () => {
+    route.pathname = "/w/A/services/service-1";
     render(
       <OwnerShell
         workspaceId="A"
@@ -181,6 +182,7 @@ describe("OwnerShell sub-pages", () => {
   });
 
   it("F-23 shows the trail it is given, not one built in the browser", () => {
+    route.pathname = "/w/A/services/service-1";
     render(
       <OwnerShell
         workspaceId="A"
@@ -303,6 +305,88 @@ function renderShellIn(locale: "en" | "id") {
     </NextIntlClientProvider>,
   );
 }
+
+/** Stands in for a parallel slot whose page renders nothing on this route, as Next passes it. */
+function EmptyHeadingSlot() {
+  return null;
+}
+
+describe("OwnerShell page heading (regression: restored URL headings)", () => {
+  it("shows the URL-derived heading when the slot renders nothing on this route", () => {
+    route.pathname = "/w/A/settings";
+    render(
+      <OwnerShell
+        workspaceId="A"
+        workspaceName="Aster Wedding"
+        accountName="Hardi Ansari"
+        accountEmail="hardi@example.com"
+        title="Aster Wedding"
+        workspaces={workspaces}
+        onSwitch={vi.fn()}
+        onCreate={vi.fn()}
+        pageHeading={<EmptyHeadingSlot />}
+      >
+        <p>isi</p>
+      </OwnerShell>,
+    );
+
+    expect(screen.getAllByRole("heading", { level: 1, name: "Pengaturan" }).length).toBeGreaterThan(
+      0,
+    );
+    expect(screen.queryByRole("link", { name: "Kembali" })).toBeNull();
+  });
+
+  it("shows the URL-derived heading on the dashboard when the slot is empty", () => {
+    route.pathname = "/w/A";
+    render(
+      <OwnerShell
+        workspaceId="A"
+        workspaceName="Aster Wedding"
+        accountName="Hardi Ansari"
+        accountEmail="hardi@example.com"
+        title="Aster Wedding"
+        workspaces={workspaces}
+        onSwitch={vi.fn()}
+        onCreate={vi.fn()}
+        pageHeading={<EmptyHeadingSlot />}
+      >
+        <p>isi</p>
+      </OwnerShell>,
+    );
+
+    expect(screen.getAllByRole("heading", { level: 1, name: "Dasbor" }).length).toBeGreaterThan(0);
+  });
+
+  it("shows the server heading on a route that renders one", () => {
+    route.pathname = "/w/A/projects/project-1";
+    render(
+      <OwnerShell
+        workspaceId="A"
+        workspaceName="Aster Wedding"
+        accountName="Hardi Ansari"
+        accountEmail="hardi@example.com"
+        title="Aster Wedding"
+        workspaces={workspaces}
+        onSwitch={vi.fn()}
+        onCreate={vi.fn()}
+        pageHeading={
+          <OwnerPageHeading
+            title="Wisuda Rina"
+            parent={{ label: "Proyek", href: "/w/A/projects" }}
+            backLabel="Kembali"
+          />
+        }
+      >
+        <p>isi</p>
+      </OwnerShell>,
+    );
+
+    expect(
+      screen.getAllByRole("heading", { level: 1, name: "Wisuda Rina" }).length,
+    ).toBeGreaterThan(0);
+    expect(screen.queryByRole("heading", { level: 1, name: "Proyek" })).toBeNull();
+  });
+});
 
 describe("OwnerShell copy", () => {
   it("AC-L10N-002 renders the shell navigation in English", () => {
